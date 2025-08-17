@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dia de Sorte - Gerador de Palpites Avançado</title>
+    <title>Dupla Sena - Gerador de Palpites Avançado</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/xlsx/dist/xlsx.full.min.js"></script>
     <script>
@@ -15,6 +16,10 @@
                         'diasorte-light': '#ff8a5b',
                         'diasorte-dark': '#e55a2b',
                         'diasorte-bg': '#fff7ed'
+                        duplasena: '#BA184A',
+                        'duplasena-light': '#d63a6a',
+                        'duplasena-dark': '#8b1235',
+                        'duplasena-bg': '#fdf2f5'
                     }
                 }
             }
@@ -34,6 +39,10 @@
             width: 80px;
             height: 80px;
             background: linear-gradient(45deg, #FF6B35, #ff8a5b, #e55a2b);
+        .loading-circle {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(45deg, #BA184A, #d63a6a, #8b1235);
             border-radius: 50%;
             animation: pulse 2s infinite;
         }
@@ -42,6 +51,10 @@
             width: 45px;
             height: 45px;
             background: linear-gradient(135deg, #FF6B35, #ff8a5b);
+        .numero-duplasena {
+            width: 45px;
+            height: 45px;
+            background: linear-gradient(135deg, #BA184A, #d63a6a);
             color: white;
             border-radius: 50%;
             display: flex;
@@ -61,24 +74,33 @@
         }
         
         .numero-diasorte.selecionado {
+        .numero-duplasena:hover {
+            transform: scale(1.1);
+            box-shadow: 0 4px 15px rgba(186, 24, 74, 0.4);
+        }
+        
+        .numero-duplasena.selecionado {
             background: linear-gradient(135deg, #dc2626, #ef4444);
             box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.3);
             border-color: #dc2626;
         }
         
         .numero-diasorte.disabled {
+        .numero-duplasena.disabled {
             background: #9ca3af;
             cursor: not-allowed;
             opacity: 0.5;
         }
         
         .numero-diasorte.sorteado {
+        .numero-duplasena.sorteado {
             background: linear-gradient(135deg, #ef4444, #dc2626);
             border: 2px solid #fbbf24;
             position: relative;
         }
         
         .numero-diasorte.sorteado::after {
+        .numero-duplasena.sorteado::after {
             content: "🎯";
             position: absolute;
             top: -8px;
@@ -87,6 +109,7 @@
         }
         
         .numero-diasorte.sorteado.disabled {
+        .numero-duplasena.sorteado.disabled {
             background: #6b7280;
             opacity: 0.4;
             cursor: not-allowed;
@@ -190,6 +213,10 @@
         .jogo-card {
             background: linear-gradient(to right, #fff7ed, #fed7aa);
             border: 2px solid #FF6B35;
+        
+        .jogo-card {
+            background: linear-gradient(to right, #fdf2f5, #fcf1f4);
+            border: 2px solid #BA184A;
             border-radius: 12px;
             padding: 16px;
             margin: 8px 0;
@@ -199,6 +226,7 @@
             width: 35px;
             height: 35px;
             background: linear-gradient(135deg, #FF6B35, #ff8a5b);
+            background: linear-gradient(135deg, #BA184A, #d63a6a);
             color: white;
             border-radius: 50%;
             display: flex;
@@ -210,6 +238,7 @@
         
         .custo-total {
             background: linear-gradient(45deg, #FF6B35, #e55a2b);
+            background: linear-gradient(45deg, #BA184A, #8b1235);
             color: white;
             padding: 12px 20px;
             border-radius: 8px;
@@ -230,6 +259,7 @@
             width: 50px;
             height: 50px;
             background: linear-gradient(135deg, #FF6B35, #ff8a5b);
+            background: linear-gradient(135deg, #BA184A, #d63a6a);
             color: white;
             border-radius: 50%;
             display: flex;
@@ -241,6 +271,15 @@
         }
 
         .mes-sorte {
+        .sorteio-section {
+            background: linear-gradient(135deg, #BA184A, #d63a6a);
+            color: white;
+            padding: 12px;
+            border-radius: 8px;
+            margin: 8px 0;
+        }
+
+        .dupla-highlight {
             background: linear-gradient(45deg, #f59e0b, #fbbf24);
             color: #92400e;
             padding: 8px 16px;
@@ -257,12 +296,20 @@
             <h1 class="text-4xl font-bold text-diasorte mb-2">🌞 DIA DE SORTE</h1>
             <p class="text-gray-600">Gerador de Palpites com Análise Estatística</p>
             <div class="mes-sorte mt-2">🍀 7 números + 1 mês da sorte! 🍀</div>
+<body class="bg-duplasena-bg min-h-screen">
+    <div class="container mx-auto px-4 py-6">
+        <!-- Header -->
+        <div class="text-center mb-6">
+            <h1 class="text-4xl font-bold text-duplasena mb-2">🎲 DUPLA SENA</h1>
+            <p class="text-gray-600">Gerador de Palpites com Análise Estatística</p>
+            <div class="dupla-highlight mt-2">✨ Uma aposta, duas chances de ganhar! ✨</div>
         </div>
 
         <!-- Loading -->
         <div id="loading" class="text-center py-8">
             <div class="loading-circle mx-auto mb-4"></div>
             <p class="text-diasorte font-medium">Carregando último resultado...</p>
+            <p class="text-duplasena font-medium">Carregando último resultado...</p>
         </div>
 
         <!-- Último Resultado -->
@@ -308,6 +355,46 @@
                         <div id="premiacaoMes" class="flex items-center justify-center">
                             <span class="text-diasorte mr-2">📅</span>
                             <span>Mês da Sorte: 8000 apostas ganhadoras - R$ 2,50</span>
+            <div class="bg-white rounded-lg shadow-lg overflow-hidden border-2 border-duplasena">
+                <div class="bg-duplasena text-white p-4 text-center">
+                    <h2 id="tituloResultado" class="text-xl font-bold">Concurso 2846</h2>
+                    <div id="dataResultado" class="text-sm">📅 13/08/2025 (Quarta)</div>
+                </div>
+                
+                <div class="p-6">
+                    <!-- Primeiro Sorteio -->
+                    <div class="mb-6">
+                        <div class="sorteio-section">
+                            <h3 class="text-lg font-bold mb-3 text-center">1º Sorteio</h3>
+                            <div id="numerosResultado1" class="flex flex-wrap justify-center gap-1 mb-2">
+                                <!-- Números do 1º sorteio serão inseridos aqui -->
+                            </div>
+                        </div>
+                        
+                        <div id="statusResultado1" class="text-lg font-bold mb-2 text-red-600 text-center">
+                            ACUMULOU!
+                        </div>
+                        
+                        <div id="premios1" class="grid grid-cols-1 md:grid-cols-2 gap-2 text-sm mb-4">
+                            <!-- Prêmios do 1º sorteio serão inseridos dinamicamente -->
+                        </div>
+                    </div>
+
+                    <!-- Segundo Sorteio -->
+                    <div class="mb-6">
+                        <div class="sorteio-section">
+                            <h3 class="text-lg font-bold mb-3 text-center">2º Sorteio</h3>
+                            <div id="numerosResultado2" class="flex flex-wrap justify-center gap-1 mb-2">
+                                <!-- Números do 2º sorteio serão inseridos aqui -->
+                            </div>
+                        </div>
+                        
+                        <div id="statusResultado2" class="text-lg font-bold mb-2 text-red-600 text-center">
+                            ACUMULOU!
+                        </div>
+                        
+                        <div id="premios2" class="grid grid-cols-1 md:grid-cols-2 gap-2 text-sm mb-4">
+                            <!-- Prêmios do 2º sorteio serão inseridos dinamicamente -->
                         </div>
                     </div>
                     
@@ -316,6 +403,10 @@
                         <div class="text-sm text-gray-600">16/08/2025 (Sábado)</div>
                         <div class="text-2xl font-bold text-diasorte mt-2">
                             Prêmio Estimado: R$ 800.000,00
+                        <div class="text-sm text-gray-600">Próximo Sorteio: Concurso 2847</div>
+                        <div class="text-sm text-gray-600">15/08/2025 (Sexta)</div>
+                        <div class="text-2xl font-bold text-duplasena mt-2">
+                            Prêmio Estimado: R$ 2.300.000,00
                         </div>
                     </div>
                 </div>
@@ -331,6 +422,9 @@
                 <div class="bg-white rounded-lg shadow-lg p-6 border-2 border-diasorte">
                     <div class="flex justify-between items-center mb-4">
                         <h3 class="text-xl font-bold text-diasorte">🎮 Criar Novo Jogo</h3>
+                <div class="bg-white rounded-lg shadow-lg p-6 border-2 border-duplasena">
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="text-xl font-bold text-duplasena">🎮 Criar Novo Jogo</h3>
                         <button id="comoFuncionaBtn" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg text-sm">
                             ❓ Como Funciona
                         </button>
@@ -416,13 +510,30 @@
                         </div>
                         <div class="text-xs mt-1">
                             <strong>🌞 Mês selecionado:</strong> <span id="mesSelecionado" class="font-bold text-diasorte">Nenhum</span>
+                    <div class="mb-4 p-3 bg-pink-50 border border-pink-200 rounded-lg">
+                        <div class="text-sm font-medium text-pink-800 mb-2">🎲 Regras da Dupla Sena:</div>
+                        <div class="text-xs text-pink-700">
+                            Selecione <strong>6 números</strong> de 01 a 50. Sua aposta vale para <strong>2 sorteios</strong> no mesmo concurso!
+                            Custo: <strong>R$ 2,50</strong> por jogo.
+                        </div>
+                    </div>
+
+                    <!-- Análise do Jogo Atual -->
+                    <div id="analiseJogo" class="mb-4 p-3 bg-blue-50 border border-blue-200 rounded-lg">
+                        <div class="text-sm font-medium text-blue-800 mb-2">📊 Status do Jogo:</div>
+                        <div class="grid grid-cols-2 gap-2 text-xs">
+                            <div>Números selecionados: <span id="numerosCount" class="font-bold">0/6</span></div>
+                            <div>Dígitos diferentes: <span id="digitosCount" class="font-bold">0</span></div>
+                        </div>
+                        <div class="text-xs mt-1">
+                            <strong>🎲 Dupla chance:</strong> O mesmo jogo concorre nos 2 sorteios!
                         </div>
                         <div id="sugestaoDigitos" class="mt-2 text-xs text-blue-700">
                             <!-- Sugestão baseada no último sorteio -->
                         </div>
                     </div>
 
-                    <!-- NOVA FUNCIONALIDADE: Área de Drag and Drop -->
+                   <!-- NOVA FUNCIONALIDADE: Área de Drag and Drop -->
                     <div class="mb-4">
                         <label class="block text-diasorte font-medium mb-2">🎯 Área de Drag & Drop:</label>
                         <div id="dropZone" class="drop-zone">
@@ -449,6 +560,11 @@
                         </div>
                         <div id="gridNumeros" class="grid grid-cols-7 gap-1 max-h-64 overflow-y-auto">
                             <!-- Números de 01 a 31 serão gerados aqui -->
+                    <!-- Grid de Números 1-50 -->
+                    <div class="mb-4">
+                        <label class="block text-duplasena font-medium mb-3">Selecione 6 Números (01-50):</label>
+                        <div id="gridNumeros" class="grid grid-cols-7 gap-1 max-h-64 overflow-y-auto">
+                            <!-- Números de 01 a 50 serão gerados aqui -->
                         </div>
                         
                         <!-- Controle de Números Sorteados -->
@@ -464,6 +580,7 @@
                             </div>
                             <div class="text-xs text-orange-600">
                                 Por padrão, números que saíram no último sorteio estão <strong>desabilitados</strong> para evitar repetições.
+                                Por padrão, números que saíram nos últimos sorteios estão <strong>desabilitados</strong> para evitar repetições.
                             </div>
                         </div>
                     </div>
@@ -485,6 +602,7 @@
                             🎲 Aleatório
                         </button>
                         <button id="adicionarJogo" class="bg-diasorte hover:bg-diasorte-dark text-white px-4 py-2 rounded-lg disabled:opacity-50">
+                        <button id="adicionarJogo" class="bg-duplasena hover:bg-duplasena-dark text-white px-4 py-2 rounded-lg disabled:opacity-50">
                             ➕ Adicionar Jogo
                         </button>
                     </div>
@@ -508,11 +626,16 @@
                                 <tr><td class="p-1">5 acertos</td><td class="p-1 text-right">0,0016%</td><td class="p-1 text-right">63.769</td></tr>
                                 <tr class="bg-gray-50"><td class="p-1">4 acertos</td><td class="p-1 text-right">0,046%</td><td class="p-1 text-right">2.171</td></tr>
                                 <tr><td class="p-1">Mês da Sorte</td><td class="p-1 text-right">8,33%</td><td class="p-1 text-right">12</td></tr>
+                                <tr><td class="p-1">6 acertos</td><td class="p-1 text-right">0,000006%</td><td class="p-1 text-right">15.890.700</td></tr>
+                                <tr class="bg-gray-50"><td class="p-1">5 acertos</td><td class="p-1 text-right">0,00009%</td><td class="p-1 text-right">60.192</td></tr>
+                                <tr><td class="p-1">4 acertos</td><td class="p-1 text-right">0,0097%</td><td class="p-1 text-right">1.038</td></tr>
+                                <tr class="bg-gray-50"><td class="p-1">3 acertos</td><td class="p-1 text-right">0,325%</td><td class="p-1 text-right">54</td></tr>
                             </tbody>
                         </table>
                     </div>
                     <div class="mt-3 text-xs text-blue-600">
                         🌞 <strong>Dia de Sorte:</strong> 7 números + 1 mês = 5 chances de ganhar!
+                        🎲 <strong>Dupla Sena:</strong> Mesmas chances, mas em 2 sorteios diferentes!
                     </div>
                 </div>
             </div>
@@ -523,6 +646,9 @@
                 <div class="bg-white rounded-lg shadow-lg p-6 border-2 border-diasorte">
                     <div class="flex justify-between items-center mb-4">
                         <h3 class="text-xl font-bold text-diasorte">📋 Meus Jogos</h3>
+                <div class="bg-white rounded-lg shadow-lg p-6 border-2 border-duplasena">
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="text-xl font-bold text-duplasena">📋 Meus Jogos</h3>
                         <div class="flex items-center gap-2">
                             <label class="flex items-center text-sm">
                                 <input type="checkbox" id="mostrarOrdemCrescente" class="mr-2" checked>
@@ -541,6 +667,8 @@
                         </div>
                         <div class="text-center text-xs text-diasorte mt-1">
                             🌞 Cada jogo: 7 números + 1 mês da sorte!
+                        <div class="text-center text-xs text-duplasena mt-1">
+                            🎲 Cada jogo concorre em 2 sorteios!
                         </div>
                     </div>
 
@@ -601,6 +729,41 @@
                             <p><strong>📈 Contador gigante:</strong> Veja claramente quantos pares/ímpares selecionou</p>
                             <p><strong>✅ Feedback inteligente:</strong> Sabe se você está seguindo a estratégia</p>
                             <p><strong>💡 Dicas automáticas:</strong> "Faltam: 2 pares, 1 ímpar" em tempo real</p>
+                <div class="bg-duplasena text-white p-6 rounded-t-lg">
+                    <h2 class="text-2xl font-bold text-center">🎲 Como Funciona a Dupla Sena</h2>
+                </div>
+                
+                <div class="p-6 space-y-6">
+                    <div class="bg-pink-50 border border-pink-200 rounded-lg p-4">
+                        <h3 class="text-xl font-bold text-pink-800 mb-3">📋 Passo a Passo:</h3>
+                        <div class="space-y-3 text-pink-700">
+                            <p><strong>1. Uma aposta, duas chances:</strong> 6 números valem para 2 sorteios</p>
+                            <p><strong>2. Selecione os números:</strong> Escolha 6 números de 01 a 50</p>
+                            <p><strong>3. Dupla premiação:</strong> Pode ganhar nos dois sorteios simultaneamente</p>
+                            <p><strong>4. Faixas duplas:</strong> 4 faixas para cada sorteio (8 no total)</p>
+                            <p><strong>5. Custo único:</strong> R$ 2,50 para participar dos 2 sorteios</p>
+                            <p><strong>6. Download:</strong> Exporte seus jogos em HTML, TXT ou XLSX</p>
+                        </div>
+                    </div>
+
+                    <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
+                        <h3 class="text-xl font-bold text-yellow-800 mb-3">🎲 Sistema Duplo:</h3>
+                        <div class="space-y-2 text-yellow-700">
+                            <p><strong>1º Sorteio:</strong> 6 números sorteados independentemente</p>
+                            <p><strong>2º Sorteio:</strong> Outros 6 números sorteados independentemente</p>
+                            <p><strong>Mesma aposta:</strong> Seu jogo vale para os dois sorteios</p>
+                            <p><strong>Prêmios independentes:</strong> Pode ganhar em um, nos dois ou em nenhum</p>
+                            <p><strong>Acumulação dupla:</strong> Cada sorteio acumula independentemente</p>
+                        </div>
+                    </div>
+
+                    <div class="bg-blue-50 border border-blue-200 rounded-lg p-4">
+                        <h3 class="text-xl font-bold text-blue-800 mb-3">🎯 Análise de Dígitos:</h3>
+                        <div class="space-y-2 text-blue-700">
+                            <p><strong>Como contamos:</strong> Todos os dígitos únicos (0-9) que aparecem nos números</p>
+                            <p><strong>Exemplo:</strong> 05 12 27 34 45 = dígitos 0, 1, 2, 3, 4, 5, 7 = 7 dígitos diferentes</p>
+                            <p><strong>Dupla análise:</strong> Mesmo jogo concorre em 2 sorteios diferentes</p>
+                            <p><strong>Sugestão:</strong> Combine padrões dos últimos 2 sorteios</p>
                         </div>
                     </div>
 
@@ -615,6 +778,11 @@
                                     <div><strong>5 acertos:</strong> Terceira faixa</div>
                                     <div><strong>4 acertos:</strong> Quarta faixa</div>
                                     <div><strong>Mês da Sorte:</strong> Quinta faixa</div>
+                                <div class="text-sm font-medium text-green-800 mb-2">🏆 8 Faixas de Premiação (4 + 4):</div>
+                                <div class="grid grid-cols-1 gap-1 text-xs text-green-700">
+                                    <div><strong>1º Sorteio:</strong> 6, 5, 4, 3 acertos</div>
+                                    <div><strong>2º Sorteio:</strong> 6, 5, 4, 3 acertos</div>
+                                    <div><strong>Vantagem:</strong> Pode ganhar nos dois!</div>
                                 </div>
                             </div>
                             
@@ -622,6 +790,13 @@
                                 <div><strong>Valor da aposta:</strong> R$ 2,00</div>
                                 <div><strong>Desenhos:</strong> Terças, Quintas e Sábados</div>
                                 <div><strong>Diferencial:</strong> 5 chances de ganhar!</div>
+                                <div><strong>Valor da aposta:</strong> R$ 2,50 (para os 2 sorteios)</div>
+                                <div><strong>Desenhos:</strong> Terças, Quintas e Sábados</div>
+                                <div><strong>Maior diferencial:</strong> Duas chances com uma aposta!</div>
+                            </div>
+                            
+                            <div class="text-xs text-green-600">
+                                🎲 <strong>Dica:</strong> Distribua números por todas as faixas (1-12, 13-25, 26-37, 38-50)!
                             </div>
                         </div>
                     </div>
@@ -629,6 +804,7 @@
                 
                 <div class="bg-gray-50 px-6 py-4 rounded-b-lg text-center">
                     <button id="fecharModal" class="bg-diasorte hover:bg-diasorte-dark text-white font-medium py-2 px-6 rounded-lg">
+                    <button id="fecharModal" class="bg-duplasena hover:bg-duplasena-dark text-white font-medium py-2 px-6 rounded-lg">
                         ✅ Entendi, Vamos Jogar!
                     </button>
                 </div>
@@ -662,6 +838,9 @@
             { num: 11, nome: 'Novembro', abrev: 'NOV' },
             { num: 12, nome: 'Dezembro', abrev: 'DEZ' }
         ];
+        let numerosSorteados = new Set(); // Números do último sorteio
+        const quantidadeFixa = 6; // Dupla Sena sempre tem 6 números
+        const custoJogo = 2.50; // Dupla Sena custa R$ 2,50
 
         // Inicialização da aplicação
         document.addEventListener('DOMContentLoaded', async () => {
@@ -674,6 +853,10 @@
         async function carregarUltimoResultado() {
             try {
                 const response = await fetch('https://servicebus2.caixa.gov.br/portaldeloterias/api/diadesorte');
+        // Carregar último resultado da Dupla Sena
+        async function carregarUltimoResultado() {
+            try {
+                const response = await fetch('https://servicebus2.caixa.gov.br/portaldeloterias/api/duplasena');
                 const data = await response.json();
                 ultimoResultado = data;
                 exibirUltimoResultado(data);
@@ -688,6 +871,26 @@
                     mesSorte: "01", // Janeiro
                     acumulado: true,
                     valorEstimadoProximoConcurso: 800000.00
+
+                // Usar dados reais que você forneceu se a API falhar
+                const dadosExemplo = {
+                    numero: 2846,
+                    dataApuracao: "13/08/2025",
+                    dataProximoConcurso: "15/08/2025",
+                    listaDezenas: ["15", "31", "36", "37", "39", "49"],
+                    listaDezenasSegundoSorteio: ["12", "16", "30", "37", "39", "44"],
+                    acumulado: true,
+                    valorEstimadoProximoConcurso: 3400000.00,
+                    listaRateioPremio: [
+                        { descricaoFaixa: "6 acertos", faixa: 1, numeroDeGanhadores: 0, valorPremio: 0.0 },
+                        { descricaoFaixa: "5 acertos", faixa: 2, numeroDeGanhadores: 9, valorPremio: 7404.02 },
+                        { descricaoFaixa: "4 acertos", faixa: 3, numeroDeGanhadores: 507, valorPremio: 150.20 },
+                        { descricaoFaixa: "3 acertos", faixa: 4, numeroDeGanhadores: 10603, valorPremio: 3.59 },
+                        { descricaoFaixa: "6 acertos", faixa: 5, numeroDeGanhadores: 0, valorPremio: 0.0 },
+                        { descricaoFaixa: "5 acertos", faixa: 6, numeroDeGanhadores: 6, valorPremio: 9995.42 },
+                        { descricaoFaixa: "4 acertos", faixa: 7, numeroDeGanhadores: 563, valorPremio: 135.26 },
+                        { descricaoFaixa: "3 acertos", faixa: 8, numeroDeGanhadores: 10446, valorPremio: 3.64 }
+                    ]
                 };
                 exibirUltimoResultado(dadosExemplo);
             } finally {
@@ -700,6 +903,7 @@
         // Exibir último resultado
         function exibirUltimoResultado(data) {
             document.getElementById('tituloResultado').textContent = `Concurso ${data.numero}`;
+
             document.getElementById('dataResultado').textContent = `📅 ${data.dataApuracao} (Quinta)`;
 
             // Números sorteados
@@ -742,10 +946,110 @@
                 const numero = parseInt(num);
                 const numStr = numero.toString().padStart(2, '0');
                 
+
+            document.getElementById('dataResultado').textContent = `📅 ${data.dataApuracao} (Quarta)`;
+
+            // Números do 1º sorteio
+            const numerosDiv1 = document.getElementById('numerosResultado1');
+            numerosDiv1.innerHTML = '';
+            const primeiro = data.listaDezenas || [];
+            primeiro.forEach(num => {
+                const numeroEl = document.createElement('div');
+                numeroEl.className = 'numero-resultado';
+                numeroEl.textContent = num.toString().padStart(2, '0');
+                numerosDiv1.appendChild(numeroEl);
+            });
+
+            // Números do 2º sorteio
+            const numerosDiv2 = document.getElementById('numerosResultado2');
+            numerosDiv2.innerHTML = '';
+            const segundo = data.listaDezenasSegundoSorteio || [];
+            segundo.forEach(num => {
+                const numeroEl = document.createElement('div');
+                numeroEl.className = 'numero-resultado';
+                numeroEl.textContent = num.toString().padStart(2, '0');
+                numerosDiv2.appendChild(numeroEl);
+            });
+
+            // Status dos sorteios - verificar se houve ganhadores
+            const ganhador1 = data.listaRateioPremio?.find(p => p.faixa === 1 && p.numeroDeGanhadores > 0);
+            const ganhador2 = data.listaRateioPremio?.find(p => p.faixa === 5 && p.numeroDeGanhadores > 0);
+            
+            if (ganhador1) {
+                document.getElementById('statusResultado1').textContent = `${ganhador1.numeroDeGanhadores} GANHADOR${ganhador1.numeroDeGanhadores > 1 ? 'ES' : ''} - 6 ACERTOS`;
+                document.getElementById('statusResultado1').className = 'text-lg font-bold mb-2 text-green-600 text-center';
+            } else {
+                document.getElementById('statusResultado1').textContent = 'ACUMULOU!';
+                document.getElementById('statusResultado1').className = 'text-lg font-bold mb-2 text-red-600 text-center';
+            }
+
+            if (ganhador2) {
+                document.getElementById('statusResultado2').textContent = `${ganhador2.numeroDeGanhadores} GANHADOR${ganhador2.numeroDeGanhadores > 1 ? 'ES' : ''} - 6 ACERTOS`;
+                document.getElementById('statusResultado2').className = 'text-lg font-bold mb-2 text-green-600 text-center';
+            } else {
+                document.getElementById('statusResultado2').textContent = 'ACUMULOU!';
+                document.getElementById('statusResultado2').className = 'text-lg font-bold mb-2 text-red-600 text-center';
+            }
+
+            // Exibir prêmios dos sorteios
+            exibirPremiosSorteios(data.listaRateioPremio || []);
+
+            // Próximo concurso
+            document.querySelector('.text-2xl.font-bold.text-duplasena').textContent = 
+                `Prêmio Estimado: ${formatarMoeda(data.valorEstimadoProximoConcurso || 3400000)}`;
+
+            // Analisar dígitos dos últimos sorteios para sugestões
+            analisarDigitosUltimoSorteio([...primeiro, ...segundo]);
+            
+            // Identificar números sorteados
+            identificarNumerosSorteados([...primeiro, ...segundo]);
+        }
+
+        // Exibir prêmios dos sorteios dinamicamente
+        function exibirPremiosSorteios(rateios) {
+            const premios1Div = document.getElementById('premios1');
+            const premios2Div = document.getElementById('premios2');
+            
+            premios1Div.innerHTML = '';
+            premios2Div.innerHTML = '';
+            
+            // Faixas 1-4 são do 1º sorteio, faixas 5-8 são do 2º sorteio
+            const primeiro = rateios.filter(p => p.faixa >= 1 && p.faixa <= 4);
+            const segundo = rateios.filter(p => p.faixa >= 5 && p.faixa <= 8);
+            
+            // Exibir prêmios do 1º sorteio (pular 6 acertos se não houve ganhadores)
+            primeiro.slice(1, 3).forEach(premio => {
+                const premioEl = document.createElement('div');
+                premioEl.className = 'flex items-center justify-center';
+                premioEl.innerHTML = `
+                    <span class="text-duplasena mr-2">🏆</span>
+                    <span>${premio.descricaoFaixa}: ${premio.numeroDeGanhadores} apostas - ${formatarMoeda(premio.valorPremio)}</span>
+                `;
+                premios1Div.appendChild(premioEl);
+            });
+            
+            // Exibir prêmios do 2º sorteio (pular 6 acertos se não houve ganhadores)
+            segundo.slice(1, 3).forEach(premio => {
+                const premioEl = document.createElement('div');
+                premioEl.className = 'flex items-center justify-center';
+                premioEl.innerHTML = `
+                    <span class="text-duplasena mr-2">🏆</span>
+                    <span>${premio.descricaoFaixa}: ${premio.numeroDeGanhadores} apostas - ${formatarMoeda(premio.valorPremio)}</span>
+                `;
+                premios2Div.appendChild(premioEl);
+            });
+        }
+
+        // Analisar dígitos do último sorteio
+        function analisarDigitosUltimoSorteio(numeros) {
+            const digitos = new Set();
+            numeros.forEach(num => {
+                const numStr = num.toString().padStart(2, '0');
                 // Adicionar cada dígito individual
                 for (let digit of numStr) {
                     digitos.add(parseInt(digit));
                 }
+
                 
                 // Contar pares e ímpares
                 if (numero % 2 === 0) {
@@ -768,6 +1072,161 @@
             
             console.log(`Último sorteio: ${numeros.join(' ')} = ${digitos.size} dígitos: ${Array.from(digitos).sort().join(' ')} | Pares: ${paresUltimoSorteio}, Ímpares: ${imparesUltimoSorteio}`);
             atualizarContadorParesImpares();
+
+            });
+            
+            window.digitosUltimoSorteio = digitos.size;
+            console.log(`Últimos sorteios: ${numeros.join(' ')} = ${digitos.size} dígitos: ${Array.from(digitos).sort().join(' ')}`);
+            atualizarSugestaoDigitos();
+        }
+
+        // Inicializar interface
+        function inicializarInterface() {
+            criarGridNumeros();
+            atualizarAnaliseJogo();
+        }
+
+        // Criar grid de números 1-50
+        function criarGridNumeros() {
+            const grid = document.getElementById('gridNumeros');
+            grid.innerHTML = '';
+            
+            for (let i = 1; i <= 50; i++) {
+                const btn = document.createElement('button');
+                btn.className = 'numero-duplasena';
+                btn.textContent = i.toString().padStart(2, '0');
+                btn.onclick = () => toggleNumero(i);
+                grid.appendChild(btn);
+            }
+        }
+
+        // Toggle seleção de número
+        function toggleNumero(numero) {
+            const btn = document.querySelector(`.numero-duplasena:nth-child(${numero})`);
+            
+            if (numerosSelecionados.includes(numero)) {
+                // Remover número
+                numerosSelecionados = numerosSelecionados.filter(n => n !== numero);
+                btn.classList.remove('selecionado');
+            } else if (numerosSelecionados.length < quantidadeFixa) {
+                // Adicionar número
+                numerosSelecionados.push(numero);
+                btn.classList.add('selecionado');
+            }
+            
+            atualizarAnaliseJogo();
+            validarBotaoAdicionar();
+        }
+
+        // Atualizar análise do jogo atual
+        function atualizarAnaliseJogo() {
+            document.getElementById('numerosCount').textContent = `${numerosSelecionados.length}/${quantidadeFixa}`;
+            
+            // Calcular dígitos diferentes (todos os dígitos 0-9 que aparecem)
+            const digitos = new Set();
+            numerosSelecionados.forEach(num => {
+                const numStr = num.toString().padStart(2, '0');
+                // Adicionar cada dígito individual
+                for (let digit of numStr) {
+                    digitos.add(parseInt(digit));
+                }
+            });
+            
+            document.getElementById('digitosCount').textContent = digitos.size;
+            console.log(`Jogo atual: ${numerosSelecionados.map(n => n.toString().padStart(2, '0')).join(' ')} = ${digitos.size} dígitos: ${Array.from(digitos).sort().join(' ')}`);
+            atualizarSugestaoDigitos(digitos.size);
+        }
+
+        // Atualizar sugestão de dígitos
+        function atualizarSugestaoDigitos(digitosAtuais = 0) {
+            const ultimoDigitos = window.digitosUltimoSorteio || 7;
+            const sugestaoEl = document.getElementById('sugestaoDigitos');
+            
+            let sugestao = `Últimos 2 sorteios usaram ${ultimoDigitos} dígitos diferentes. `;
+            
+            if (digitosAtuais === 0) {
+                sugestao += `Sugerimos: ${ultimoDigitos - 1} (pequeno), ${ultimoDigitos} (médio) ou ${ultimoDigitos + 1} (alto).`;
+            } else {
+                if (digitosAtuais < ultimoDigitos - 1) {
+                    sugestao += `Atual: ${digitosAtuais} (muito pequeno) 📉`;
+                } else if (digitosAtuais === ultimoDigitos - 1) {
+                    sugestao += `Atual: ${digitosAtuais} (pequeno) ✅`;
+                } else if (digitosAtuais === ultimoDigitos) {
+                    sugestao += `Atual: ${digitosAtuais} (médio) ✅`;
+                } else if (digitosAtuais === ultimoDigitos + 1) {
+                    sugestao += `Atual: ${digitosAtuais} (alto) ✅`;
+                } else {
+                    sugestao += `Atual: ${digitosAtuais} (muito alto) 📈`;
+                }
+            }
+            
+            sugestaoEl.textContent = sugestao;
+        }
+
+        // Validar botão adicionar
+        function validarBotaoAdicionar() {
+            const btn = document.getElementById('adicionarJogo');
+            btn.disabled = numerosSelecionados.length !== quantidadeFixa;
+        }
+
+        // Configurar event listeners
+        function configurarEventListeners() {
+            // Botões de ação do jogo
+            document.getElementById('limparJogo').addEventListener('click', limparSelecao);
+            document.getElementById('randomizarJogo').addEventListener('click', randomizarJogo);
+            document.getElementById('adicionarJogo').addEventListener('click', adicionarJogo);
+            
+            // Controles dos jogos
+            document.getElementById('mostrarOrdemCrescente').addEventListener('change', atualizarVisualizacaoJogos);
+            document.getElementById('limparTodos').addEventListener('click', limparTodosJogos);
+            
+            // Controle de números sorteados
+            document.getElementById('permitirNumerosSorteados').addEventListener('change', toggleNumerosSorteados);
+            
+            // Downloads
+            document.getElementById('downloadHTML').addEventListener('click', () => downloadJogos('html'));
+            document.getElementById('downloadTXT').addEventListener('click', () => downloadJogos('txt'));
+            document.getElementById('downloadXLSX').addEventListener('click', () => downloadJogos('xlsx'));
+            
+            // Modal
+            document.getElementById('comoFuncionaBtn').addEventListener('click', () => {
+                document.getElementById('modalComoFunciona').classList.remove('hidden');
+            });
+            document.getElementById('fecharModal').addEventListener('click', () => {
+                document.getElementById('modalComoFunciona').classList.add('hidden');
+            });
+        }
+
+        // Limpar seleção atual
+        function limparSelecao() {
+            numerosSelecionados = [];
+            document.querySelectorAll('.numero-duplasena').forEach(btn => {
+                btn.classList.remove('selecionado');
+            });
+            atualizarAnaliseJogo();
+            validarBotaoAdicionar();
+        }
+
+        // Randomizar jogo
+        function randomizarJogo() {
+            limparSelecao();
+            const permiteSorteados = document.getElementById('permitirNumerosSorteados').checked;
+            const numerosDisponiveis = Array.from({length: 50}, (_, i) => i + 1).filter(num => {
+                return permiteSorteados || !numerosSorteados.has(num);
+            });
+            
+            while (numerosSelecionados.length < quantidadeFixa && numerosDisponiveis.length > 0) {
+                const index = Math.floor(Math.random() * numerosDisponiveis.length);
+                const numero = numerosDisponiveis.splice(index, 1)[0];
+                numerosSelecionados.push(numero);
+                
+                const btn = document.querySelector(`.numero-duplasena:nth-child(${numero})`);
+                btn.classList.add('selecionado');
+            }
+            
+            atualizarAnaliseJogo();
+            validarBotaoAdicionar();
+ 
         }
 
         // Identificar números sorteados
@@ -806,16 +1265,31 @@
             const permitir = document.getElementById('permitirNumerosSorteados').checked;
             
             numerosSorteados.forEach(numero => {
+
                 const btn = document.querySelector(`.numero-diasorte:nth-child(${numero})`);
+
+                const btn = document.querySelector(`.numero-duplasena:nth-child(${numero})`);
+ 
                 if (btn) {
                     btn.classList.add('sorteado');
                     
                     if (permitir) {
+
                         btn.classList.remove('disabled');
                         btn.onclick = () => toggleNumero(numero);
                     } else {
                         btn.classList.add('disabled');
                         btn.onclick = () => {
+
+                        // Checkbox MARCADO: HABILITAR números sorteados
+                        btn.classList.remove('disabled');
+                        btn.onclick = () => toggleNumero(numero);
+                    } else {
+                        // Checkbox DESMARCADO (padrão): DESABILITAR números sorteados
+                        btn.classList.add('disabled');
+                        btn.onclick = () => {
+                            // Modal explicativo ao invés de alert()
+ 
                             const modal = document.createElement('div');
                             modal.className = 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50';
                             modal.innerHTML = `
@@ -833,6 +1307,7 @@
                 }
             });
         }
+
 
         // Inicializar interface
         function inicializarInterface() {
@@ -1599,11 +2074,19 @@
         // Adicionar jogo à lista
         function adicionarJogo() {
             if (numerosSelecionados.length !== quantidadeFixa || !mesSelecionado) return;
+
+        // Adicionar jogo à lista
+        function adicionarJogo() {
+            if (numerosSelecionados.length !== quantidadeFixa) return;
+ 
             
             const jogo = {
                 id: Date.now(),
                 numeros: [...numerosSelecionados].sort((a, b) => a - b),
+
                 mes: mesSelecionado,
+
+ 
                 custo: custoJogo,
                 digitosDiferentes: (() => {
                     const digitos = new Set();
@@ -1614,9 +2097,13 @@
                         }
                     });
                     return digitos.size;
+
                 })(),
                 pares: numerosSelecionados.filter(n => n % 2 === 0).length,
                 impares: numerosSelecionados.filter(n => n % 2 !== 0).length
+
+                })()
+ 
             };
             
             jogosAdicionados.push(jogo);
@@ -1646,6 +2133,7 @@
                 
                 jogoDiv.innerHTML = `
                     <div class="flex justify-between items-center mb-2">
+
                         <span class="font-bold text-diasorte">Jogo ${index + 1}</span>
                         <div class="flex gap-2">
                             <span class="digito-badge">${jogo.digitosDiferentes} dígitos</span>
@@ -1655,6 +2143,12 @@
                                 ✏️
                             </button>
                             <button onclick="removerJogo(${jogo.id})" class="bg-red-500 hover:bg-red-600 text-white px-2 py-1 rounded text-xs" title="Excluir este jogo">
+
+                        <span class="font-bold text-duplasena">Jogo ${index + 1}</span>
+                        <div class="flex gap-2">
+                            <span class="digito-badge">${jogo.digitosDiferentes} dígitos</span>
+                            <button onclick="removerJogo(${jogo.id})" class="bg-red-500 hover:bg-red-600 text-white px-2 py-1 rounded text-xs">
+ 
                                 🗑️
                             </button>
                         </div>
@@ -1664,17 +2158,23 @@
                             `<div class="numero-jogo">${num.toString().padStart(2, '0')}</div>`
                         ).join('')}
                     </div>
+
                     <div class="text-sm text-gray-600 mb-1">
                         7 números - ${formatarMoeda(jogo.custo)}
                     </div>
                     <div class="mes-sorte text-xs">
                         📅 Mês da Sorte: ${obterNomeMes(jogo.mes)}
+
+                    <div class="text-sm text-gray-600">
+                        6 números - ${formatarMoeda(jogo.custo)} - <span class="text-duplasena font-medium">Dupla chance!</span>
+ 
                     </div>
                 `;
                 
                 lista.appendChild(jogoDiv);
             });
         }
+
 
         // Editar jogo específico
         function editarJogo(id) {
@@ -1774,12 +2274,23 @@
                 document.body.removeChild(modal);
                 mostrarAlerta('Jogo excluído com sucesso!', 'success');
             };
+
+        // Remover jogo específico
+        function removerJogo(id) {
+            jogosAdicionados = jogosAdicionados.filter(jogo => jogo.id !== id);
+            atualizarVisualizacaoJogos();
+            atualizarCustoTotal();
+ 
         }
 
         // Limpar todos os jogos
         function limparTodosJogos() {
             if (jogosAdicionados.length === 0) return;
             
+
+
+            // Modal customizado ao invés de confirm()
+ 
             const modal = document.createElement('div');
             modal.className = 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50';
             modal.innerHTML = `
@@ -1822,6 +2333,10 @@
         // Downloads
         function downloadJogos(formato) {
             if (jogosAdicionados.length === 0) {
+
+
+                // Modal customizado ao invés de alert()
+ 
                 const modal = document.createElement('div');
                 modal.className = 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50';
                 modal.innerHTML = `
@@ -1863,6 +2378,7 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
+
     <title>Dia de Sorte - Meus Jogos</title>
     <style>
         body { font-family: Arial, sans-serif; margin: 20px; }
@@ -1873,18 +2389,36 @@
         .mes-sorte { background: #f59e0b; color: #92400e; padding: 8px 16px; border-radius: 20px; font-weight: bold; display: inline-block; margin: 5px 0; }
         .total { text-align: center; margin-top: 20px; font-size: 18px; font-weight: bold; color: #FF6B35; }
         .pares-impares { font-size: 12px; color: #666; margin-top: 5px; }
+
+    <title>Dupla Sena - Meus Jogos</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .header { text-align: center; margin-bottom: 30px; color: white; background: #BA184A; padding: 20px; border-radius: 10px; }
+        .jogo { margin: 10px 0; padding: 15px; border: 2px solid #BA184A; border-radius: 8px; }
+        .numero { display: inline-block; width: 35px; height: 35px; background: #BA184A; color: white; 
+                 border-radius: 50%; text-align: center; line-height: 35px; margin: 2px; font-weight: bold; font-size: 14px; }
+        .total { text-align: center; margin-top: 20px; font-size: 18px; font-weight: bold; color: #BA184A; }
+        .dupla-info { background: #fbbf24; color: #92400e; padding: 8px 16px; border-radius: 8px; display: inline-block; margin: 10px 0; }
+ 
     </style>
 </head>
 <body>
     <div class="header">
+
         <h1>🌞 DIA DE SORTE - MEUS JOGOS</h1>
         <p>Gerado em: ${data}</p>
         <div class="mes-sorte">🍀 7 números + 1 mês da sorte! 🍀</div>
+
+        <h1>🎲 DUPLA SENA - MEUS JOGOS</h1>
+        <p>Gerado em: ${data}</p>
+        <div class="dupla-info">✨ Cada jogo concorre em 2 sorteios! ✨</div>
+ 
     </div>`;
             
             jogos.forEach((jogo, index) => {
                 html += `
     <div class="jogo">
+
         <h3>Jogo ${index + 1} - 7 números - ${formatarMoeda(jogo.custo)}</h3>
         <div>
             ${jogo.numeros.map(num => `<span class="numero">${num.toString().padStart(2, '0')}</span>`).join('')}
@@ -1893,61 +2427,106 @@
         <div class="pares-impares">
             ${jogo.digitosDiferentes} dígitos diferentes | ${jogo.pares || 0} pares, ${jogo.impares || 0} ímpares
         </div>
+
+        <h3>Jogo ${index + 1} - 6 números - ${formatarMoeda(jogo.custo)} - Dupla chance!</h3>
+        <div>
+            ${jogo.numeros.map(num => `<span class="numero">${num.toString().padStart(2, '0')}</span>`).join('')}
+        </div>
+        <p><small>${jogo.digitosDiferentes} dígitos diferentes - Vale para 1º e 2º sorteios</small></p>
+ 
     </div>`;
             });
             
             html += `
     <div class="total">
         Total: ${jogos.length} jogo(s) - ${formatarMoeda(total)}<br>
+
         <small>🌞 Cada jogo: 7 números + 1 mês da sorte!</small>
+
+        <small>🎲 Cada jogo participa de 2 sorteios independentes!</small>
+ 
     </div>
 </body>
 </html>`;
             
+
             baixarArquivo(html, 'dia-de-sorte-jogos.html', 'text/html');
         }
 
         // Download TXT - Somente números e mês
+
+            baixarArquivo(html, 'dupla-sena-jogos.html', 'text/html');
+        }
+
+        // Download TXT - Somente números
+ 
         function downloadTXT(jogos) {
             let txt = '';
             
             jogos.forEach((jogo, index) => {
+
                 const numerosTexto = jogo.numeros.map(n => n.toString().padStart(2, '0')).join(' ');
                 const mesTexto = meses.find(m => m.num === jogo.mes)?.abrev || 'JAN';
                 txt += `${numerosTexto} ${mesTexto}`;
+
+                txt += jogo.numeros.map(n => n.toString().padStart(2, '0')).join(' ');
+ 
                 if (index < jogos.length - 1) {
                     txt += '\n';
                 }
             });
             
+
             baixarArquivo(txt, 'dia-de-sorte-jogos.txt', 'text/plain');
+
+            baixarArquivo(txt, 'dupla-sena-jogos.txt', 'text/plain');
+ 
         }
 
         // Download XLSX
         function downloadXLSX(jogos) {
             const dados = [
+
                 ['Jogo', 'Números', 'Mês da Sorte', 'Dígitos Diferentes', 'Pares', 'Ímpares', 'Custo']
+
+                ['Jogo', 'Números', 'Dígitos Diferentes', 'Custo', 'Observação']
+ 
             ];
             
             jogos.forEach((jogo, index) => {
                 dados.push([
                     `Jogo ${index + 1}`,
                     jogo.numeros.map(n => n.toString().padStart(2, '0')).join(' - '),
+
                     obterNomeMes(jogo.mes),
                     jogo.digitosDiferentes,
                     jogo.pares || 0,
                     jogo.impares || 0,
                     jogo.custo
+
+                    jogo.digitosDiferentes,
+                    jogo.custo,
+                    'Vale para 2 sorteios'
+ 
                 ]);
             });
             
             const total = jogos.length * custoJogo;
+
             dados.push(['', '', 'TOTAL:', '', '', '', total]);
             
             const ws = XLSX.utils.aoa_to_sheet(dados);
             const wb = XLSX.utils.book_new();
             XLSX.utils.book_append_sheet(wb, ws, 'DiadeSorte');
             XLSX.writeFile(wb, 'dia-de-sorte-jogos.xlsx');
+
+            dados.push(['', 'TOTAL:', '', total, `${jogos.length} jogo(s)`]);
+            
+            const ws = XLSX.utils.aoa_to_sheet(dados);
+            const wb = XLSX.utils.book_new();
+            XLSX.utils.book_append_sheet(wb, ws, 'DuplaSena');
+            XLSX.writeFile(wb, 'dupla-sena-jogos.xlsx');
+ 
         }
 
         // Função auxiliar para baixar arquivo
