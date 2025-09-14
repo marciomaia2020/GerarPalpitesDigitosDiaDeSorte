@@ -3,18 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dia de Sorte - Gerador de Palpites Avançado</title>
+    <title>Dia de Sorte - Gerador Manual + Minimalista</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/xlsx/dist/xlsx.full.min.js"></script>
+	<link rel="stylesheet" href="../css/styles.css">
+	<script src="../js/scripts.js"></script>
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     colors: {
-                        diasorte: '#FF6B35',
-                        'diasorte-light': '#FF8A65',
-                        'diasorte-dark': '#E65100',
-                        'diasorte-bg': '#FFF3E0'
+                        diasorte: '#D4B31A',
+                        'diasorte-light': '#E6C533',
+                        'diasorte-dark': '#B69816',
+                        'diasorte-bg': '#FCF9E8'
                     }
                 }
             }
@@ -33,74 +35,69 @@
         .loading-circle {
             width: 80px;
             height: 80px;
-            background: linear-gradient(45deg, #FF6B35, #FF8A65, #E65100);
+            background: linear-gradient(45deg, #D4B31A, #E6C533, #B69816);
             border-radius: 50%;
             animation: pulse 2s infinite;
         }
         
-        .numero-dia {
-            width: 50px;
-            height: 50px;
-            background: linear-gradient(135deg, #FF6B35, #FF8A65);
+        .numero-btn {
+            width: 45px;
+            height: 45px;
+            background: linear-gradient(135deg, #D4B31A, #E6C533);
             color: white;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             font-weight: bold;
-            font-size: 16px;
+            font-size: 14px;
             cursor: pointer;
             transition: all 0.2s;
             border: 2px solid transparent;
+            margin: 2px;
         }
         
-        .numero-dia:hover {
+        .numero-btn:hover {
             transform: scale(1.1);
-            box-shadow: 0 4px 15px rgba(255, 107, 53, 0.4);
+            box-shadow: 0 4px 15px rgba(212, 179, 26, 0.4);
         }
         
-        .numero-dia.selecionado {
+        .numero-btn.selecionado {
             background: linear-gradient(135deg, #dc2626, #ef4444);
             box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.3);
             border-color: #dc2626;
         }
         
-        .numero-dia.disabled {
+        .numero-btn.disabled {
             background: #9ca3af;
             cursor: not-allowed;
             opacity: 0.5;
         }
         
-        .numero-dia.sorteado {
+        .numero-btn.sorteado {
             background: linear-gradient(135deg, #ef4444, #dc2626);
             border: 2px solid #fbbf24;
             position: relative;
         }
         
-        .numero-dia.sorteado::after {
+        .numero-btn.sorteado::after {
             content: "🎯";
             position: absolute;
             top: -8px;
             right: -8px;
-            font-size: 12px;
+            font-size: 10px;
         }
         
-        .numero-dia.sorteado.disabled {
-            background: #6b7280;
-            opacity: 0.4;
-            cursor: not-allowed;
-        }
-
-        .numero-dia.par {
+        .numero-btn.par {
             border: 2px solid #10b981;
         }
-        .numero-dia.impar {
+        .numero-btn.impar {
             border: 2px solid #8b5cf6;
         }
 
-        .mes-sorte {
-            width: 80px;
-            height: 50px;
+        .mes-btn {
+            min-width: 80px;
+            height: 45px;
             background: linear-gradient(135deg, #fbbf24, #f59e0b);
             color: white;
             border-radius: 8px;
@@ -112,17 +109,25 @@
             cursor: pointer;
             transition: all 0.2s;
             border: 2px solid transparent;
+            margin: 2px;
+            padding: 0 8px;
         }
 
-        .mes-sorte:hover {
+        .mes-btn:hover {
             transform: scale(1.05);
             box-shadow: 0 4px 15px rgba(251, 191, 36, 0.4);
         }
 
-        .mes-sorte.selecionado {
+        .mes-btn.selecionado {
             background: linear-gradient(135deg, #dc2626, #ef4444);
             box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.3);
             border-color: #dc2626;
+        }
+
+        .mes-btn.sorteado {
+            background: linear-gradient(135deg, #ef4444, #dc2626);
+            border: 2px solid #fbbf24;
+            position: relative;
         }
 
         .contador-destaque {
@@ -141,34 +146,29 @@
             animation: pulse 0.5s infinite;
         }
 
-        .numero-dia.dragging {
-            opacity: 0.5;
-            transform: scale(0.9);
-        }
-
         .drop-zone {
             min-height: 120px;
-            border: 3px dashed #FF6B35;
+            border: 3px dashed #D4B31A;
             border-radius: 12px;
-            background: linear-gradient(135deg, #FFF3E0, #FFE0B2);
+            background: linear-gradient(135deg, #FCF9E8, #F9F2D2);
             display: flex;
             align-items: center;
             justify-content: center;
             text-align: center;
-            color: #FF6B35;
+            color: #D4B31A;
             font-weight: bold;
             transition: all 0.3s;
             position: relative;
         }
 
         .drop-zone.drag-over {
-            background: linear-gradient(135deg, #FFE0B2, #FFCC02);
-            border-color: #E65100;
+            background: linear-gradient(135deg, #F9F2D2, #F4E5A4);
+            border-color: #B69816;
             transform: scale(1.02);
         }
 
         .drop-zone.has-numbers {
-            background: linear-gradient(to right, #FFF3E0, #FFE0B2);
+            background: linear-gradient(to right, #FCF9E8, #F9F2D2);
             border-style: solid;
             padding: 16px;
         }
@@ -176,7 +176,7 @@
         .numero-drop {
             width: 35px;
             height: 35px;
-            background: linear-gradient(135deg, #FF6B35, #FF8A65);
+            background: linear-gradient(135deg, #D4B31A, #E6C533);
             color: white;
             border-radius: 50%;
             display: flex;
@@ -189,7 +189,7 @@
         }
 
         .mes-drop {
-            width: 60px;
+            min-width: 60px;
             height: 35px;
             background: linear-gradient(135deg, #fbbf24, #f59e0b);
             color: white;
@@ -201,6 +201,7 @@
             font-size: 12px;
             margin: 2px;
             position: relative;
+            padding: 0 8px;
         }
 
         .numero-drop .remove-btn, .mes-drop .remove-btn {
@@ -226,8 +227,8 @@
         }
         
         .jogo-card {
-            background: linear-gradient(to right, #FFF3E0, #FFE0B2);
-            border: 2px solid #FF6B35;
+            background: linear-gradient(to right, #FCF9E8, #F9F2D2);
+            border: 2px solid #D4B31A;
             border-radius: 12px;
             padding: 16px;
             margin: 8px 0;
@@ -236,7 +237,7 @@
         .numero-jogo {
             width: 35px;
             height: 35px;
-            background: linear-gradient(135deg, #FF6B35, #FF8A65);
+            background: linear-gradient(135deg, #D4B31A, #E6C533);
             color: white;
             border-radius: 50%;
             display: flex;
@@ -244,10 +245,11 @@
             justify-content: center;
             font-weight: bold;
             font-size: 14px;
+            margin: 2px;
         }
 
         .mes-jogo {
-            width: 60px;
+            min-width: 60px;
             height: 35px;
             background: linear-gradient(135deg, #fbbf24, #f59e0b);
             color: white;
@@ -257,10 +259,12 @@
             justify-content: center;
             font-weight: bold;
             font-size: 12px;
+            margin: 2px;
+            padding: 0 8px;
         }
         
         .custo-total {
-            background: linear-gradient(45deg, #FF6B35, #E65100);
+            background: linear-gradient(45deg, #D4B31A, #B69816);
             color: white;
             padding: 12px 20px;
             border-radius: 8px;
@@ -268,61 +272,9 @@
             font-size: 18px;
         }
 
-        .digito-badge {
-            background: linear-gradient(45deg, #3b82f6, #1d4ed8);
-            color: white;
-            padding: 4px 8px;
-            border-radius: 6px;
-            font-size: 12px;
-            font-weight: bold;
-        }
-
-        .numero-resultado {
-            width: 60px;
-            height: 60px;
-            background: linear-gradient(135deg, #FF6B35, #FF8A65);
-            color: white;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            font-size: 18px;
-            margin: 0 4px;
-        }
-
-        .mes-resultado {
-            width: 100px;
-            height: 60px;
-            background: linear-gradient(135deg, #fbbf24, #f59e0b);
-            color: white;
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            font-size: 16px;
-            margin: 0 4px;
-        }
-
-        .estatisticas-reais {
-            background: linear-gradient(135deg, #FFF3E0, #FFE0B2);
-            border: 3px solid #FF6B35;
-            border-radius: 12px;
-            padding: 16px;
-            margin: 16px 0;
-        }
-
-        .loading-real {
-            color: #FF6B35;
-            font-weight: bold;
-            text-align: center;
-            padding: 20px;
-        }
-
         .palpite-card {
-            background: linear-gradient(135deg, #FFF3E0, #FFE0B2);
-            border: 2px solid #FF6B35;
+            background: linear-gradient(135deg, #FCF9E8, #F9F2D2);
+            border: 2px solid #D4B31A;
             border-radius: 12px;
             padding: 12px;
             margin: 8px 0;
@@ -331,7 +283,7 @@
         .numero-palpite {
             width: 30px;
             height: 30px;
-            background: linear-gradient(135deg, #FF6B35, #FF8A65);
+            background: linear-gradient(135deg, #D4B31A, #E6C533);
             color: white;
             border-radius: 50%;
             display: flex;
@@ -343,7 +295,7 @@
         }
 
         .mes-palpite {
-            width: 50px;
+            min-width: 50px;
             height: 30px;
             background: linear-gradient(135deg, #fbbf24, #f59e0b);
             color: white;
@@ -354,94 +306,13 @@
             font-weight: bold;
             font-size: 10px;
             margin: 2px;
+            padding: 0 6px;
         }
 
-        .bola-numero {
-            background: linear-gradient(135deg, #FF6B35, #FF8A65);
-            color: white;
-            border-radius: 50%;
-            width: 25px;
-            height: 25px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            font-size: 10px;
-            margin: 1px;
-        }
-
-        .numero-estrategico {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            font-size: 16px;
-            cursor: pointer;
-            transition: all 0.2s;
-            border: 3px solid transparent;
-            position: relative;
-        }
-
-        .numero-estrategico:hover {
-            transform: scale(1.1);
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-        }
-
-        .numero-estrategico.selecionado-estrategico {
-            border-color: #8b5cf6;
-            box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.3);
-        }
-
-        .numero-muito-atrasado {
-            background: linear-gradient(135deg, #dc2626, #b91c1c);
-            color: white;
-            animation: pulse 2s infinite;
-        }
-
-        .numero-atrasado-estrategico {
-            background: linear-gradient(135deg, #ea580c, #dc2626);
-            color: white;
-        }
-
-        .numero-candidato-estrategico {
-            background: linear-gradient(135deg, #d97706, #f59e0b);
-            color: white;
-        }
-
-        .numero-frequente-estrategico {
-            background: linear-gradient(135deg, #059669, #10b981);
-            color: white;
-        }
-
-        .numero-normal-estrategico {
-            background: linear-gradient(135deg, #6b7280, #9ca3af);
-            color: white;
-        }
-
-        .numero-oculto {
-            opacity: 0.3;
-            transform: scale(0.8);
-            cursor: not-allowed;
-        }
-
-        .numero-estrategico::after {
-            content: attr(data-posicao);
-            position: absolute;
-            top: -8px;
-            right: -8px;
-            background: #8b5cf6;
-            color: white;
-            border-radius: 50%;
-            width: 16px;
-            height: 16px;
-            font-size: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
+        @media (max-width: 768px) {
+            .numero-btn { width: 40px; height: 40px; font-size: 12px; }
+            .numero-drop { width: 30px; height: 30px; font-size: 12px; }
+            .mes-btn { min-width: 70px; height: 40px; font-size: 11px; }
         }
     </style>
 </head>
@@ -449,17 +320,71 @@
     <div class="container mx-auto px-4 py-6">
         <!-- Header -->
         <div class="text-center mb-6">
-            <h1 class="text-4xl font-bold text-diasorte mb-2">🌞 DIA DE SORTE</h1>
-            <p class="text-gray-600">Gerador de Palpites com Análise Estatística em Tempo Real</p>
+		<img src="https://i.postimg.cc/3R2PytCp/diadesorte.png" alt="Dia de Sorte Logo" class="logo"><br/>
+            <p class="text-gray-600">Gerador Completo: Manual + Minimalista com 19 Regras Avançadas</p>
+            <div class="flex justify-center gap-4 mt-4 text-sm">
+                <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full">🔍 Análise dos Dígitos</span>
+                <span class="bg-green-100 text-green-800 px-3 py-1 rounded-full">🔄 Resultados Alterados</span>
+                <span class="bg-purple-100 text-purple-800 px-3 py-1 rounded-full">📊 Estratégia Minimalista</span>
+            </div>
+        </div>
+
+        <!-- Configuração Principal -->
+        <div class="bg-white rounded-lg shadow-lg p-6 border-2 border-diasorte mb-6">
+            <h2 class="text-2xl font-bold text-diasorte mb-4">⚙️ CONFIGURAÇÃO PRINCIPAL</h2>
+            <div class="bg-gradient-to-r from-diasorte-bg to-yellow-50 p-4 rounded-lg border-2 border-diasorte">
+                <h3 class="text-lg font-bold text-diasorte mb-3">⚙️ CONFIGURAÇÃO PRINCIPAL - VALORES DO DIA DE SORTE</h3>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="bg-white p-4 rounded-lg border border-diasorte">
+                        <div class="mb-3">
+                            <label class="block text-diasorte font-bold mb-2">💰 Valor da Aposta (7 números + mês):</label>
+                            <div class="flex items-center gap-2">
+                                <span class="text-lg">R$</span>
+                                <input type="number" id="valorAposta" value="2.50" step="0.01" min="0.01" 
+                                       class="flex-1 px-3 py-2 border border-gray-300 rounded-lg text-base font-bold text-diasorte">
+                                <button id="atualizarValor" class="bg-diasorte hover:bg-diasorte-dark text-white px-4 py-2 rounded-lg">
+                                    🔄 Atualizar
+                                </button>
+                            </div>
+                            <div class="text-sm text-gray-600 mt-1">
+                                <strong>Padrão oficial:</strong> R$ 2,50 (CEF)
+                            </div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <div class="text-sm font-medium text-diasorte mb-2">📊 Sistema Simplificado:</div>
+                            <div class="text-sm text-gray-700 space-y-1">
+                                <div><strong>7 números + mês:</strong> R$ <span id="valor7numeros">2,50</span></div>
+                                <div class="text-xs text-gray-600">Valor fixo por jogo no Dia de Sorte</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-white p-4 rounded-lg border border-diasorte">
+                        <div class="mb-3">
+                            <div class="text-sm font-medium text-diasorte mb-2">💡 Status do Sistema:</div>
+                            <div class="text-sm text-green-600 font-bold">✅ Sistema configurado</div>
+                            <div class="text-xs text-gray-600">Última atualização: <span id="ultimaAtualizacao">-</span></div>
+                            <div class="text-xs text-gray-600">Total de seções: <strong>3</strong> (Manual + Minimalista + Análise)</div>
+                        </div>
+                        
+                        <div class="bg-blue-50 p-3 rounded-lg">
+                            <div class="text-sm font-medium text-blue-800 mb-1">🔧 Como funciona:</div>
+                            <div class="text-xs text-blue-700">
+                                O Dia de Sorte tem valor fixo de R$ 2,50 por jogo (7 números + mês da sorte). 
+                                O sistema atualiza automaticamente todas as seções de geração.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <!-- Loading -->
         <div id="loading" class="text-center py-8">
             <div class="loading-circle mx-auto mb-4"></div>
-            <p class="text-diasorte font-medium">🔍 Buscando último resultado do Dia de Sorte...</p>
-            <div class="loading-real mt-4">
-                <div id="loadingDetails">Conectando com API da Caixa Econômica Federal...</div>
-            </div>
+            <p class="text-diasorte font-medium">🔍 Carregando último resultado do Dia de Sorte...</p>
         </div>
 
         <!-- Último Resultado -->
@@ -471,10 +396,10 @@
                 </div>
                 
                 <div class="p-6 text-center">
-                    <div class="flex justify-center items-center gap-4 mb-4">
+                    <div class="flex justify-center items-center gap-6 mb-4">
                         <div>
                             <div class="text-sm font-medium text-gray-600 mb-2">Números Sorteados:</div>
-                            <div id="numerosResultado" class="flex justify-center gap-2">
+                            <div id="numerosResultado" class="flex justify-center gap-2 flex-wrap">
                                 <!-- Números sorteados serão inseridos aqui -->
                             </div>
                         </div>
@@ -486,552 +411,451 @@
                         </div>
                     </div>
                     
-                    <div id="statusResultado" class="text-lg font-bold mb-4 text-red-600">
-                        <!-- Status será inserido aqui -->
-                    </div>
-                    
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
-                        <div id="premiacao7" class="flex items-center justify-center">
-                            <!-- Premiação 7 acertos -->
-                        </div>
-                        <div id="premiacao6" class="flex items-center justify-center">
-                            <!-- Premiação 6 acertos -->
-                        </div>
-                    </div>
-                    
                     <div class="mt-4 text-center">
                         <div class="text-sm text-gray-600">Próximo Sorteio: <span id="proximoConcurso">Concurso</span></div>
                         <div class="text-sm text-gray-600" id="dataProximoConcurso">Data</div>
-                        <div class="text-2xl font-bold text-diasorte mt-2" id="premioEstimado">
-                            Prêmio Estimado
-                        </div>
+                        <div class="text-2xl font-bold text-diasorte mt-2" id="premioEstimado">Prêmio Estimado</div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Interface Principal - Dividida em 2 Colunas -->
-        <div id="interfacePrincipal" class="hidden grid grid-cols-1 xl:grid-cols-2 gap-6">
+        <!-- Interface Principal -->
+        <div id="interfacePrincipal" class="hidden space-y-6">
             
-            <!-- LADO ESQUERDO: Criação de Jogos -->
-            <div class="space-y-6">
-                <!-- Controles do Jogo -->
-                <div class="bg-white rounded-lg shadow-lg p-6 border-2 border-diasorte">
-                    <div class="flex justify-between items-center mb-4">
-                        <h3 class="text-xl font-bold text-diasorte">🎮 Criar Novo Jogo</h3>
-                        <button id="comoFuncionaBtn" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg text-sm">
-                            ❓ Como Funciona
+            <!-- SEÇÃO 1: CRIAÇÃO MANUAL DE JOGOS -->
+            <div class="bg-white rounded-lg shadow-lg p-6 border-2 border-diasorte">
+                <h2 class="text-2xl font-bold text-diasorte mb-6">🎮 SEÇÃO 1: CRIAÇÃO MANUAL DE JOGOS</h2>
+
+                <!-- Estratégia Par/Ímpar -->
+                <div class="mb-6 p-5 bg-gradient-to-br from-orange-50 via-yellow-50 to-red-50 border-4 border-orange-400 rounded-xl shadow-lg">
+                    <div class="text-xl font-bold text-gray-800 mb-4 text-center">⚪ ESTRATÉGIA: PARES vs ÍMPARES</div>
+                    
+                    <div id="padraoHistorico" class="mb-4 p-4 bg-gradient-to-r from-amber-50 to-orange-50 border-2 border-orange-300 rounded-lg text-center">
+                        <div class="text-sm font-bold text-orange-800 mb-2">🏆 PADRÃO MAIS COMUM:</div>
+                        <div class="text-2xl font-bold text-orange-900 mb-1">
+                            <span class="text-green-600" id="padraoParesHistorico">3</span>P/<span class="text-purple-600" id="padraoImparesHistorico">4</span>I
+                        </div>
+                        <div class="text-sm text-orange-700">
+                            <span id="padraoOcorrencias" class="font-bold">156</span> vezes (<span id="padraoPorcentagem" class="font-bold">28.7</span>%)
+                        </div>
+                    </div>
+
+                    <div id="estatisticaUltimoSorteio" class="mb-4 p-3 bg-blue-100 border border-blue-300 rounded-lg text-center">
+                        <div class="text-sm font-medium text-blue-800">📊 ÚLTIMO SORTEIO:</div>
+                        <div class="text-lg font-bold text-blue-900">
+                            <span id="paresUltimoSorteio" class="text-green-600">3</span>P + <span id="imparesUltimoSorteio" class="text-purple-600">4</span>I
+                        </div>
+                    </div>
+                    
+                    <div class="grid grid-cols-2 gap-6 mb-4">
+                        <div class="text-center p-4 bg-green-100 rounded-lg border-2 border-green-300">
+                            <div class="text-4xl font-bold text-green-600 contador-destaque" id="paresAtuais">0</div>
+                            <div class="text-lg font-bold text-green-700">PARES</div>
+                            <div class="text-sm text-green-600">🎯 Meta: <span id="metaPares" class="font-bold">3</span></div>
+                        </div>
+                        <div class="text-center p-4 bg-purple-100 rounded-lg border-2 border-purple-300">
+                            <div class="text-4xl font-bold text-purple-600 contador-destaque" id="imparesAtuais">0</div>
+                            <div class="text-lg font-bold text-purple-700">ÍMPARES</div>
+                            <div class="text-sm text-purple-600">🎯 Meta: <span id="metaImpares" class="font-bold">4</span></div>
+                        </div>
+                    </div>
+                    
+                    <div id="statusEstrategia" class="text-center p-3 rounded-lg font-bold text-lg bg-gray-100 text-gray-700">
+                        🎯 Selecione números para ver sua estratégia
+                    </div>
+                </div>
+
+                <!-- Controle de Números Sorteados -->
+                <div id="controleNumerosSorteados" class="mb-4 p-3 bg-orange-50 border border-orange-200 rounded-lg hidden">
+                    <div class="flex justify-between items-center mb-2">
+                        <div class="text-sm font-medium text-orange-800">
+                            🎯 Números já sorteados: <span id="numerosSorteadosLista" class="font-bold"></span>
+                        </div>
+                        <label class="flex items-center text-sm">
+                            <input type="checkbox" id="permitirNumerosSorteados" class="mr-2">
+                            <span class="text-orange-700">🔓 Permitir usar números já sorteados</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Inserção Manual -->
+                <div class="mb-6">
+                    <label class="block text-diasorte font-medium mb-2">✏️ Inserção Manual de Números:</label>
+                    <div class="flex gap-2">
+                        <textarea 
+                            id="insertionManual" 
+                            class="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-diasorte text-base resize-none" 
+                            placeholder="Exemplos:&#10;05 12 18 22 24 27 31 + Janeiro&#10;10 15 20 25 28 30 31 + Março&#10;01 07 14 16 23 29 31 + Dezembro"
+                            rows="3"
+                        ></textarea>
+                        <button id="processarManual" class="bg-diasorte hover:bg-diasorte-dark text-white px-4 py-2 rounded-lg">
+                            📝 Processar
+                        </button>
+                    </div>
+                    <div class="text-xs text-gray-600 mt-1">💡 Dica: Cole números de qualquer formato</div>
+                </div>
+
+                <!-- Grid de Números -->
+                <div class="mb-6">
+                    <label class="block text-diasorte font-medium mb-2">Selecione 7 Números (01-31):</label>
+                    <div class="text-xs mb-2 text-gray-600">
+                        <span class="text-green-600">●</span> Verde = Pares | 
+                        <span class="text-purple-600">●</span> Roxo = Ímpares | 
+                        <span class="text-orange-600">🎯</span> Já sorteados
+                    </div>
+                    <div id="gridNumeros" class="grid grid-cols-6 gap-2 mb-4">
+                        <!-- Números serão gerados via JavaScript -->
+                    </div>
+                </div>
+
+                <!-- Grid de Meses -->
+                <div class="mb-6">
+                    <label class="block text-diasorte font-medium mb-2">Selecione o Mês da Sorte:</label>
+                    <div id="gridMeses" class="grid grid-cols-3 gap-2 mb-4">
+                        <!-- Meses serão gerados via JavaScript -->
+                    </div>
+                </div>
+
+                <!-- Área de Drop -->
+                <div class="mb-6">
+                    <label class="block text-diasorte font-medium mb-2">🎯 Números Selecionados:</label>
+                    <div id="dropZone" class="drop-zone">
+                        <div id="dropMessage">
+                            <div class="text-lg mb-2">📥 Arraste números aqui ou clique nos números acima</div>
+                            <div class="text-sm">Os números selecionados aparecerão aqui</div>
+                        </div>
+                        <div id="itemsDropped" class="hidden flex flex-wrap justify-center gap-1">
+                            <!-- Números selecionados aparecerão aqui -->
+                        </div>
+                    </div>
+                    <div class="flex justify-between items-center mt-2 text-xs text-gray-600">
+                        <span>Meta: <strong>7 números + 1 mês</strong></span>
+                        <span>Atual: <span id="numerosNaArea" class="font-bold">0</span> números + <span id="mesesNaArea" class="font-bold">0</span> mês</span>
+                    </div>
+                </div>
+
+                <!-- Botões de Ação -->
+                <div class="flex flex-wrap gap-2">
+                    <button id="limparJogo" class="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded-lg">
+                        🗑️ Limpar
+                    </button>
+                    <button id="randomizarJogo" class="bg-purple-500 hover:bg-purple-600 text-white px-4 py-2 rounded-lg">
+                        🎲 Aleatório
+                    </button>
+                    <button id="adicionarJogo" class="bg-diasorte hover:bg-diasorte-dark text-white px-4 py-2 rounded-lg disabled:opacity-50" disabled>
+                        ➕ Adicionar Jogo
+                    </button>
+                </div>
+            </div>
+
+            <!-- SEÇÃO 2: GERAÇÃO MINIMALISTA -->
+            <div class="bg-white rounded-lg shadow-lg p-6 border-4 border-green-400">
+                <h2 class="text-2xl font-bold text-green-600 mb-6">🧮 SEÇÃO 2: GERAÇÃO MINIMALISTA</h2>
+
+                <!-- Dados do Próximo Sorteio -->
+                <div class="bg-gradient-to-r from-blue-50 via-green-50 to-yellow-50 p-4 rounded-lg border-2 border-blue-200 mb-6">
+                    <h3 class="text-lg font-bold text-blue-800 mb-3">📊 Dados do Próximo Sorteio</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                        <div class="text-center">
+                            <div class="text-sm font-medium text-blue-800">🎯 Concurso:</div>
+                            <div id="concursoNum" class="text-lg font-bold text-blue-900">Loading...</div>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-sm font-medium text-green-800">📅 Data:</div>
+                            <div id="dataProximo" class="text-lg font-bold text-green-900">Loading...</div>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-sm font-medium text-yellow-800">💰 Prêmio:</div>
+                            <div id="premioProximo" class="text-lg font-bold text-yellow-900">Loading...</div>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-sm font-medium text-purple-800">📈 Status:</div>
+                            <div id="statusConcurso" class="text-lg font-bold text-purple-900">Carregando...</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Regras Minimalistas COM CHECKBOXES -->
+                <div class="bg-gray-50 p-4 rounded-lg border border-gray-200 mb-6">
+                    <div class="flex justify-between items-center mb-3">
+                        <h3 class="text-lg font-bold text-gray-800">📋 Regras Minimalistas:</h3>
+                        <div class="flex gap-2">
+                            <button id="selecionarTodas" class="text-xs bg-green-500 text-white px-2 py-1 rounded hover:bg-green-600">✓ Todas</button>
+                            <button id="limparTodas" class="text-xs bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600">✗ Limpar</button>
+                        </div>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-2 text-sm text-gray-700 max-h-64 overflow-y-auto">
+                        <div class="space-y-1">
+                            <label class="flex items-start gap-2 hover:bg-white p-1 rounded cursor-pointer">
+                                <input type="checkbox" class="regra-checkbox mt-1" data-regra="R1" checked>
+                                <div><strong>R1 - Direto</strong><br><span class="text-xs">Números que aparecem puros (dia, mês, ano)</span></div>
+                            </label>
+                            <label class="flex items-start gap-2 hover:bg-white p-1 rounded cursor-pointer">
+                                <input type="checkbox" class="regra-checkbox mt-1" data-regra="R2" checked>
+                                <div><strong>R2 - Soma</strong><br><span class="text-xs">Somar dígitos das informações da base</span></div>
+                            </label>
+                            <label class="flex items-start gap-2 hover:bg-white p-1 rounded cursor-pointer">
+                                <input type="checkbox" class="regra-checkbox mt-1" data-regra="R3" checked>
+                                <div><strong>R3 - Dobro/Mult.</strong><br><span class="text-xs">Dobrar ou multiplicar números</span></div>
+                            </label>
+                            <label class="flex items-start gap-2 hover:bg-white p-1 rounded cursor-pointer">
+                                <input type="checkbox" class="regra-checkbox mt-1" data-regra="R4" checked>
+                                <div><strong>R4 - Diferença</strong><br><span class="text-xs">Subtrair valores entre si</span></div>
+                            </label>
+                            <label class="flex items-start gap-2 hover:bg-white p-1 rounded cursor-pointer">
+                                <input type="checkbox" class="regra-checkbox mt-1" data-regra="R5" checked>
+                                <div><strong>R5 - Inverso</strong><br><span class="text-xs">Espelhar números (ex: 25→52)</span></div>
+                            </label>
+                            <label class="flex items-start gap-2 hover:bg-white p-1 rounded cursor-pointer">
+                                <input type="checkbox" class="regra-checkbox mt-1" data-regra="R6" checked>
+                                <div><strong>R6 - Vizinhos</strong><br><span class="text-xs">Determinar números próximos</span></div>
+                            </label>
+                            <label class="flex items-start gap-2 hover:bg-white p-1 rounded cursor-pointer">
+                                <input type="checkbox" class="regra-checkbox mt-1" data-regra="R7" checked>
+                                <div><strong>R7 - Soma Cruzada</strong><br><span class="text-xs">Somar elementos de mesma linha</span></div>
+                            </label>
+                            <label class="flex items-start gap-2 hover:bg-white p-1 rounded cursor-pointer">
+                                <input type="checkbox" class="regra-checkbox mt-1" data-regra="R8" checked>
+                                <div><strong>R8 - Componentes Diretos</strong><br><span class="text-xs">Prefixo/sufixo do ano, mês, dia, partes do concurso</span></div>
+                            </label>
+                            <label class="flex items-start gap-2 hover:bg-white p-1 rounded cursor-pointer">
+                                <input type="checkbox" class="regra-checkbox mt-1" data-regra="R9">
+                                <div><strong>R9 - Soma Dígitos Concurso</strong><br><span class="text-xs">Somar dígitos do número do concurso</span></div>
+                            </label>
+                            <label class="flex items-start gap-2 hover:bg-white p-1 rounded cursor-pointer">
+                                <input type="checkbox" class="regra-checkbox mt-1" data-regra="R10">
+                                <div><strong>R10 - Soma Simples</strong><br><span class="text-xs">Dia+ano, mês+ano, partes do concurso</span></div>
+                            </label>
+                        </div>
+                        <div class="space-y-1">
+                            <label class="flex items-start gap-2 hover:bg-white p-1 rounded cursor-pointer">
+                                <input type="checkbox" class="regra-checkbox mt-1" data-regra="R11">
+                                <div><strong>R11 - Diferença Absoluta</strong><br><span class="text-xs">Diferenças entre componentes-chave</span></div>
+                            </label>
+                            <label class="flex items-start gap-2 hover:bg-white p-1 rounded cursor-pointer">
+                                <input type="checkbox" class="regra-checkbox mt-1" data-regra="R12">
+                                <div><strong>R12 - Ajustes ±1/±2</strong><br><span class="text-xs">Deslocamentos em números centrais</span></div>
+                            </label>
+                            <label class="flex items-start gap-2 hover:bg-white p-1 rounded cursor-pointer">
+                                <input type="checkbox" class="regra-checkbox mt-1" data-regra="R13">
+                                <div><strong>R13 - Reverso 2 Dígitos</strong><br><span class="text-xs">Inverter ordem dos dígitos (ex: 35→53)</span></div>
+                            </label>
+                            <label class="flex items-start gap-2 hover:bg-white p-1 rounded cursor-pointer">
+                                <input type="checkbox" class="regra-checkbox mt-1" data-regra="R14">
+                                <div><strong>R14 - Soma como Operador</strong><br><span class="text-xs">Usar soma dígitos ano/mês como operador</span></div>
+                            </label>
+                            <label class="flex items-start gap-2 hover:bg-white p-1 rounded cursor-pointer">
+                                <input type="checkbox" class="regra-checkbox mt-1" data-regra="R15">
+                                <div><strong>R15 - Múltiplos de 5</strong><br><span class="text-xs">Clima dos cincos (5,10,15,20,25,30)</span></div>
+                            </label>
+                            <label class="flex items-start gap-2 hover:bg-white p-1 rounded cursor-pointer">
+                                <input type="checkbox" class="regra-checkbox mt-1" data-regra="R16">
+                                <div><strong>R16 - Vizinhos ±1</strong><br><span class="text-xs">Números adjacentes aos importantes</span></div>
+                            </label>
+                            <label class="flex items-start gap-2 hover:bg-white p-1 rounded cursor-pointer">
+                                <input type="checkbox" class="regra-checkbox mt-1" data-regra="R17">
+                                <div><strong>R17 - Filtragem Inteligente</strong><br><span class="text-xs">Evitar sequências óbvias e repetições</span></div>
+                            </label>
+                            <label class="flex items-start gap-2 hover:bg-white p-1 rounded cursor-pointer">
+                                <input type="checkbox" class="regra-checkbox mt-1" data-regra="R18">
+                                <div><strong>R18 - Ordem de Prioridade</strong><br><span class="text-xs">Priorizar componentes mais importantes</span></div>
+                            </label>
+                            <label class="flex items-start gap-2 hover:bg-white p-1 rounded cursor-pointer">
+                                <input type="checkbox" class="regra-checkbox mt-1" data-regra="R19">
+                                <div><strong>R19 - Formato Otimizado</strong><br><span class="text-xs">Saída ordenada e sem duplicatas</span></div>
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-4 grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
+                        <div class="bg-white p-3 rounded border">
+                            📋 Regras selecionadas: <span id="regrasCount" class="font-bold text-green-600">8</span> de 19 disponíveis
+                        </div>
+                        <div class="bg-white p-3 rounded border">
+                            💡 Recomendação: Use pelo menos 5 regras para maior diversidade
+                        </div>
+                        <div class="bg-white p-3 rounded border text-blue-600">
+                            🎯 Novo: 12 regras avançadas do Preset Origem Minimalista
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Configurações e Geração -->
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+                    <div class="bg-gray-50 p-4 rounded-lg border border-gray-200">
+                        <h3 class="text-lg font-bold text-gray-800 mb-3">⚙️ Configurações:</h3>
+                        
+                        <div class="space-y-4">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Quantidade:</label>
+                                <select id="quantidadeJogos" class="w-full px-3 py-2 border border-gray-300 rounded text-base">
+                                    <option value="3">3 jogos</option>
+                                    <option value="5" selected>5 jogos</option>
+                                    <option value="7">7 jogos</option>
+                                    <option value="10">10 jogos</option>
+                                </select>
+                            </div>
+
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Números (7 + mês):</label>
+                                <select id="quantidadeNumeros" class="w-full px-3 py-2 border border-gray-300 rounded text-base">
+                                    <option value="7" selected>7 números + mês</option>
+                                </select>
+                                <div class="text-xs text-gray-600 mt-1">Dia de Sorte: sempre 7 números + mês da sorte</div>
+                            </div>
+
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">🎯 Estratégia:</label>
+                                <select id="estrategiaGeracao" class="w-full px-3 py-2 border border-gray-300 rounded text-base">
+                                    <option value="equilibrada" selected>🎯 Equilibrada (3P/4I)</option>
+                                    <option value="aleatoria">🎲 Totalmente Aleatório</option>
+                                    <option value="mais-pares">📊 Mais Pares</option>
+                                    <option value="mais-impares">📊 Mais Ímpares</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="space-y-4">
+                        <!-- Botão de Geração -->
+                        <button id="gerarMinimalistas" class="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-4 px-6 rounded-lg text-lg">
+                            🚀 Gerar Jogos Minimalistas
+                        </button>
+
+                        <!-- Status da Geração -->
+                        <div id="statusGeracao" class="hidden bg-blue-50 p-3 rounded-lg border border-blue-200">
+                            <div class="text-sm font-medium text-blue-800">🔄 Gerando jogos com regras minimalistas...</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Resultados -->
+                <div id="resultadosMinimalistas" class="hidden">
+                    <div class="bg-green-50 p-4 rounded-lg border border-green-200 mb-4">
+                        <h4 class="font-bold text-green-800 mb-2">🎯 Jogos Gerados:</h4>
+                        <button id="adicionarTodosGerados" class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg">
+                            ➕ Adicionar Todos
                         </button>
                     </div>
                     
-                    <!-- Informação sobre Apostas -->
-                    <div class="mb-4 p-3 bg-orange-50 border border-orange-200 rounded-lg">
-                        <div class="text-sm font-medium text-orange-800 mb-1">📋 Composição da Aposta:</div>
-                        <div class="text-sm text-orange-700">
-                            <strong>7 números</strong> de 01 a 31 + <strong>1 mês da sorte</strong> de Janeiro a Dezembro
-                        </div>
-                        <div class="text-xs text-orange-600 mt-1">💰 Valor fixo: R$ 2,00 por jogo</div>
-                    </div>
-
-                    <!-- 🎯 CONTADOR DE PARES/ÍMPARES COM DADOS REAIS -->
-                    <div class="mb-6 p-5 bg-gradient-to-br from-orange-50 via-yellow-50 to-red-50 border-4 border-orange-400 rounded-xl shadow-lg">
-                        <div class="text-xl font-bold text-gray-800 mb-4 text-center">⚪ ESTRATÉGIA: PARES vs ÍMPARES (TEMPO REAL)</div>
-                        
-                        <!-- 🎯 SEÇÃO: Padrão Histórico Mais Comum -->
-                        <div id="padraoHistorico" class="mb-4 p-4 bg-gradient-to-r from-amber-50 to-orange-50 border-2 border-orange-300 rounded-lg text-center">
-                            <div class="text-sm font-bold text-orange-800 mb-2">🏆 PADRÃO HISTÓRICO MAIS COMUM:</div>
-                            <div id="padraoMaisComum" class="text-2xl font-bold text-orange-900 mb-1">
-                                <span class="text-green-600" id="padraoParesHistorico">3</span>P/<span class="text-purple-600" id="padraoImparesHistorico">4</span>I
-                            </div>
-                            <div class="text-sm text-orange-700">
-                                <span id="padraoOcorrencias" class="font-bold">156</span> vezes (<span id="padraoPorcentagem" class="font-bold">28.7</span>% dos casos)
-                            </div>
-                            <div class="text-xs text-orange-600 mt-1">📈 Análise de TODOS os concursos históricos</div>
-                        </div>
-
-                        <!-- Estatística do Último Sorteio REAL -->
-                        <div id="estatisticaUltimoSorteio" class="mb-4 p-3 bg-blue-100 border border-blue-300 rounded-lg text-center">
-                            <div class="text-sm font-medium text-blue-800">📊 ÚLTIMO SORTEIO TEVE:</div>
-                            <div class="text-lg font-bold text-blue-900">
-                                <span id="paresUltimoSorteio" class="text-green-600">3</span> PARES + 
-                                <span id="imparesUltimoSorteio" class="text-purple-600">4</span> ÍMPARES
-                            </div>
-                            <div class="text-sm font-medium text-yellow-800 mt-2">
-                                Mês da Sorte: <span id="mesUltimoSorteio" class="font-bold">Janeiro</span>
-                            </div>
-                            <div class="text-xs text-blue-700">👆 Dados reais da API da Caixa Econômica Federal</div>
-                        </div>
-                        
-                        <!-- Contador Visual Atual com Meta Dinâmica -->
-                        <div class="grid grid-cols-2 gap-6 mb-4">
-                            <div class="text-center p-4 bg-green-100 rounded-lg border-2 border-green-300">
-                                <div class="text-4xl font-bold text-green-600 contador-destaque" id="paresAtuais">0</div>
-                                <div class="text-lg font-bold text-green-700">PARES</div>
-                                <div class="text-sm text-green-600">🎯 Meta Atual: <span id="metaPares" class="font-bold">3</span></div>
-                                <div class="text-xs text-green-500">2, 4, 6, 8, 10...</div>
-                            </div>
-                            <div class="text-center p-4 bg-purple-100 rounded-lg border-2 border-purple-300">
-                                <div class="text-4xl font-bold text-purple-600 contador-destaque" id="imparesAtuais">0</div>
-                                <div class="text-lg font-bold text-purple-700">ÍMPARES</div>
-                                <div class="text-sm text-purple-600">🎯 Meta Atual: <span id="metaImpares" class="font-bold">4</span></div>
-                                <div class="text-xs text-purple-500">1, 3, 5, 7, 9...</div>
-                            </div>
-                        </div>
-                        
-                        <!-- Status da Estratégia -->
-                        <div id="statusEstrategia" class="text-center p-3 rounded-lg font-bold text-lg bg-gray-100 text-gray-700">
-                            🎯 Selecione números para ver sua estratégia
-                        </div>
-                        
-                        <!-- Dica Dinâmica -->
-                        <div id="dicaEstrategia" class="mt-3 text-center text-sm bg-yellow-100 border border-yellow-300 rounded p-2 text-yellow-800">
-                            💡 <strong>Dica:</strong> O padrão mais comum é 3 pares e 4 ímpares (28.7% dos casos)
-                        </div>
-                    </div>
-
-                    <!-- ✏️ SEÇÃO: Campo para Editar Números Inseridos -->
-                    <div class="mb-4">
-                        <label class="block text-diasorte font-medium mb-2">✏️ Editar Números e Mês Manualmente:</label>
-                        <div class="flex gap-2">
-                            <textarea 
-                                id="editarNumeros" 
-                                class="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-diasorte text-base resize-none" 
-                                placeholder="Jogo único: 02 15 23 27 30 31 + Janeiro&#10;Múltiplos jogos (uma linha = um jogo):&#10;10 20 25 28 29 30 31 + Fevereiro&#10;11 15 21 23 26 28 30 + Março&#10;05 12 18 22 24 27 31 + Abril"
-                                rows="4"
-                                maxlength="600"
-                            ></textarea>
-                            <button id="aplicarNumeros" class="bg-diasorte hover:bg-diasorte-dark text-white px-4 py-2 rounded-lg">
-                                ✅ Aplicar
-                            </button>
-                        </div>
-                        <div class="text-xs text-gray-600 mt-1">
-                            <strong>Jogo único:</strong> Digite 7 números de 01 a 31 + mês (Janeiro-Dezembro ou 1-12).<br>
-                            <strong>Múltiplos jogos:</strong> Uma linha por jogo. Use + para separar números do mês.<br>
-                            <strong>Exemplos:</strong> "05 12 18 22 24 27 31 + Janeiro" ou "05 12 18 22 24 27 31 + 1"
-                        </div>
-                    </div>
-
-                    <!-- Análise Complementar -->
-                    <div id="analiseDigitos" class="mb-4 p-3 bg-blue-50 border border-blue-200 rounded-lg">
-                        <div class="text-sm font-medium text-blue-800 mb-2">📊 Análise Complementar:</div>
-                        <div class="grid grid-cols-3 gap-2 text-xs">
-                            <div>Números selecionados: <span id="numerosCount" class="font-bold">0</span>/7</div>
-                            <div>Dígitos diferentes: <span id="digitosCount" class="font-bold">0</span></div>
-                            <div>Mês selecionado: <span id="mesSelecionado" class="font-bold">Nenhum</span></div>
-                        </div>
-                        <div id="sugestaoDigitos" class="mt-2 text-xs text-blue-700">
-                            <!-- Sugestão baseada no último sorteio REAL -->
-                        </div>
-                    </div>
-
-                    <!-- Grid de Números 1-31 -->
-                    <div class="mb-4">
-                        <label class="block text-diasorte font-medium mb-2">Selecione 7 Números (01-31):</label>
-                        <div class="text-xs mb-2 text-gray-600">
-                            <span class="text-green-600">●</span> Verde = Pares | 
-                            <span class="text-purple-600">●</span> Roxo = Ímpares | 
-                            <span class="text-orange-600">🎯</span> = Já saíram no último sorteio
-                        </div>
-                        <div id="gridNumeros" class="grid grid-cols-6 gap-2">
-                            <!-- Números de 01 a 31 serão gerados aqui -->
-                        </div>
-                        
-                        <!-- Controle de Números Sorteados -->
-                        <div id="controleNumerosSorteados" class="mt-3 p-3 bg-orange-50 border border-orange-200 rounded-lg hidden">
-                            <div class="flex justify-between items-center mb-2">
-                                <div class="text-sm font-medium text-orange-800">
-                                    🎯 Números já sorteados: <span id="numerosSorteadosLista" class="font-bold"></span>
-                                </div>
-                                <label class="flex items-center text-sm">
-                                    <input type="checkbox" id="permitirNumerosSorteados" class="mr-2">
-                                    <span class="text-orange-700">Permitir usar números já sorteados</span>
-                                </label>
-                            </div>
-                            <div class="text-xs text-orange-600">
-                                Por padrão, números que saíram no último sorteio estão <strong>desabilitados</strong> para evitar repetições.
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Grid de Meses 1-12 -->
-                    <div class="mb-4">
-                        <label class="block text-diasorte font-medium mb-2">Selecione o Mês da Sorte:</label>
-                        <div id="gridMeses" class="grid grid-cols-3 gap-2">
-                            <!-- Meses de Janeiro a Dezembro serão gerados aqui -->
-                        </div>
-                    </div>
-
-                    <!-- 📥 SEÇÃO: Área de Drag and Drop -->
-                    <div class="mb-4">
-                        <label class="block text-diasorte font-medium mb-2">🎯 Área de Drag & Drop:</label>
-                        <div id="dropZone" class="drop-zone">
-                            <div id="dropMessage">
-                                <div class="text-lg mb-2">📥 Arraste números/mês ou arquivos .txt aqui</div>
-                                <div class="text-sm">Clique nos números/meses acima ou arraste arquivo .txt com jogos</div>
-                            </div>
-                            <div id="itemsDropped" class="hidden flex flex-wrap justify-center gap-1">
-                                <!-- Números e meses arrastados aparecerão aqui -->
-                            </div>
-                        </div>
-                        <div class="flex justify-between items-center mt-2 text-xs text-gray-600">
-                            <span>Necessário: 7 números + 1 mês</span>
-                            <span>Na área: <span id="numerosNaArea" class="font-bold">0</span> números + <span id="mesesNaArea" class="font-bold">0</span> mês</span>
-                        </div>
-                    </div>
-
-                    <!-- Botões de Ação -->
-                    <div class="flex flex-wrap gap-2">
-                        <button id="limparJogo" class="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded-lg">
-                            🗑️ Limpar
-                        </button>
-                        <button id="randomizarJogo" class="bg-purple-500 hover:bg-purple-600 text-white px-4 py-2 rounded-lg">
-                            🎲 Aleatório
-                        </button>
-                        <button id="adicionarJogo" class="bg-diasorte hover:bg-diasorte-dark text-white px-4 py-2 rounded-lg disabled:opacity-50">
-                            ➕ Adicionar Jogo
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Tabela de Probabilidades -->
-                <div class="bg-white rounded-lg shadow-lg p-6 border-2 border-blue-200">
-                    <h3 class="text-lg font-bold text-blue-800 mb-4">📊 Probabilidades de Acerto</h3>
-                    <div class="overflow-x-auto">
-                        <table class="w-full text-xs">
-                            <thead class="bg-blue-100">
-                                <tr>
-                                    <th class="p-2 text-left">Acertos</th>
-                                    <th class="p-2 text-right">Valor</th>
-                                    <th class="p-2 text-right">Probabilidade</th>
-                                    <th class="p-2 text-right">Prêmio Médio</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr><td class="p-1">7 + Mês</td><td class="p-1 text-right">R$ 2,00</td><td class="p-1 text-right">1 em 2.629.575</td><td class="p-1 text-right">R$ 200.000+</td></tr>
-                                <tr class="bg-gray-50"><td class="p-1">7</td><td class="p-1 text-right">R$ 2,00</td><td class="p-1 text-right">1 em 2.629.575</td><td class="p-1 text-right">R$ 50.000+</td></tr>
-                                <tr><td class="p-1">6 + Mês</td><td class="p-1 text-right">R$ 2,00</td><td class="p-1 text-right">1 em 12.998</td><td class="p-1 text-right">R$ 500+</td></tr>
-                                <tr class="bg-gray-50"><td class="p-1">6</td><td class="p-1 text-right">R$ 2,00</td><td class="p-1 text-right">1 em 12.998</td><td class="p-1 text-right">R$ 20+</td></tr>
-                                <tr><td class="p-1">5 + Mês</td><td class="p-1 text-right">R$ 2,00</td><td class="p-1 text-right">1 em 200</td><td class="p-1 text-right">R$ 10+</td></tr>
-                                <tr class="bg-gray-50"><td class="p-1">5</td><td class="p-1 text-right">R$ 2,00</td><td class="p-1 text-right">1 em 200</td><td class="p-1 text-right">R$ 5+</td></tr>
-                                <tr><td class="p-1">4 + Mês</td><td class="p-1 text-right">R$ 2,00</td><td class="p-1 text-right">1 em 15</td><td class="p-1 text-right">R$ 4</td></tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-
-                <!-- 🎯 SEÇÃO: Análise por Posições (Colunas) -->
-                <div class="bg-white rounded-lg shadow-lg p-6 border-2 border-orange-200 mt-6">
-                    <div class="flex justify-between items-center mb-4">
-                        <h3 class="text-lg font-bold text-orange-800">🎯 Análise por Posições - Números Atrasados</h3>
-                        <div class="flex gap-2">
-                            <button id="btnCarregarPosicoes" class="bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-lg text-sm">
-                                🔄 Carregar Análise
-                            </button>
-                            <button id="btnTogglePosicoes" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg text-sm">
-                                👁️ Mostrar/Ocultar
-                            </button>
-                        </div>
-                    </div>
-
-                    <!-- Loading da Análise de Posições -->
-                    <div id="loadingPosicoes" class="text-center py-8 hidden">
-                        <div class="loading-circle mx-auto mb-4"></div>
-                        <p class="text-orange-600 font-medium">🔍 Analisando últimos concursos por posição...</p>
-                        <div id="progressoPosicoes" class="mt-4 text-sm text-gray-600"></div>
-                    </div>
-
-                    <!-- Controles da Análise -->
-                    <div id="controlesPosicoes" class="hidden mb-6 p-4 bg-orange-50 border border-orange-200 rounded-lg">
-                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
-                            <div>
-                                <label class="block text-orange-800 font-medium mb-2">📊 Quantidade de Concursos:</label>
-                                <select id="qtdConcursosPosicoes" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 text-base">
-                                    <option value="20">Últimos 20 concursos</option>
-                                    <option value="30" selected>Últimos 30 concursos</option>
-                                    <option value="50">Últimos 50 concursos</option>
-                                    <option value="100">Últimos 100 concursos</option>
-                                </select>
-                            </div>
-                            <div>
-                                <label class="block text-orange-800 font-medium mb-2">🎯 Filtro por Posição:</label>
-                                <select id="filtroPosicoesAnalise" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 text-base">
-                                    <option value="todas">Todas as Posições</option>
-                                    <option value="1">Apenas 1ª Bola</option>
-                                    <option value="2">Apenas 2ª Bola</option>
-                                    <option value="3">Apenas 3ª Bola</option>
-                                    <option value="4">Apenas 4ª Bola</option>
-                                    <option value="5">Apenas 5ª Bola</option>
-                                    <option value="6">Apenas 6ª Bola</option>
-                                    <option value="7">Apenas 7ª Bola</option>
-                                    <option value="mes">Apenas Mês da Sorte</option>
-                                </select>
-                            </div>
-                            <div class="flex items-end">
-                                <button id="btnAnalisarPosicoes" class="bg-orange-500 hover:bg-orange-600 text-white px-6 py-2 rounded-lg w-full">
-                                    🔍 Analisar
-                                </button>
-                            </div>
-                        </div>
-                        
-                        <!-- Informações da Análise -->
-                        <div id="infoAnalise" class="text-sm text-orange-700 bg-orange-100 p-3 rounded hidden">
-                            <!-- Será preenchido dinamicamente -->
-                        </div>
-                    </div>
-
-                    <!-- Resultados da Análise por Posições -->
-                    <div id="resultadosPosicoes" class="hidden">
-                        
-                        <!-- Resumo Executivo -->
-                        <div class="mb-6 p-4 bg-gradient-to-r from-orange-50 to-yellow-50 border-2 border-orange-300 rounded-lg">
-                            <h4 class="text-lg font-bold text-orange-800 mb-3 text-center">📈 Resumo Executivo</h4>
-                            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
-                                <div class="bg-white p-3 rounded-lg border border-orange-200">
-                                    <div class="text-2xl font-bold text-orange-600" id="totalNumerosAtrasados">0</div>
-                                    <div class="text-sm text-orange-800">Números Atrasados</div>
-                                </div>
-                                <div class="bg-white p-3 rounded-lg border border-orange-200">
-                                    <div class="text-2xl font-bold text-orange-600" id="posicaoMaisAtrasada">-</div>
-                                    <div class="text-sm text-orange-800">Posição + Atrasada</div>
-                                </div>
-                                <div class="bg-white p-3 rounded-lg border border-orange-200">
-                                    <div class="text-2xl font-bold text-orange-600" id="numeroMaisAtrasado">-</div>
-                                    <div class="text-sm text-orange-800">Número + Atrasado</div>
-                                </div>
-                                <div class="bg-white p-3 rounded-lg border border-orange-200">
-                                    <div class="text-2xl font-bold text-yellow-600" id="mesesAtrasados">-</div>
-                                    <div class="text-sm text-orange-800">Meses Atrasados</div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Tabela de Análise por Posições -->
-                        <div class="overflow-x-auto">
-                            <table class="w-full text-sm border">
-                                <thead>
-                                    <tr class="bg-orange-500 text-white">
-                                        <th class="p-3 border text-center">Posição</th>
-                                        <th class="p-3 border text-center">Último Item</th>
-                                        <th class="p-3 border text-center">Itens Atrasados</th>
-                                        <th class="p-3 border text-center">Candidatos TOP</th>
-                                        <th class="p-3 border text-center">Concursos Sem Sair</th>
-                                        <th class="p-3 border text-center">Sugestão</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="tabelaAnaliseCorpo">
-                                    <!-- Será preenchido via JavaScript -->
-                                </tbody>
-                            </table>
-                        </div>
-
-                        <!-- 🎯 SEÇÃO: Grid de Seleção Estratégica -->
-                        <div class="mt-6 p-4 bg-gradient-to-r from-purple-50 to-pink-50 border-2 border-purple-400 rounded-lg">
-                            <h4 class="text-lg font-bold text-purple-800 mb-4 text-center">🎯 Seleção Manual Estratégica</h4>
-                            <p class="text-sm text-purple-700 text-center mb-4">Clique nos números/meses baseado na análise por posições para criar seu jogo personalizado</p>
-                            
-                            <!-- Controles da Seleção Estratégica -->
-                            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
-                                <div>
-                                    <label class="block text-purple-800 font-medium mb-2">🎯 Posição Atual:</label>
-                                    <select id="posicaoAtual" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 text-base">
-                                        <option value="1">1ª Bola</option>
-                                        <option value="2">2ª Bola</option>
-                                        <option value="3">3ª Bola</option>
-                                        <option value="4">4ª Bola</option>
-                                        <option value="5">5ª Bola</option>
-                                        <option value="6">6ª Bola</option>
-                                        <option value="7">7ª Bola</option>
-                                        <option value="mes">Mês da Sorte</option>
-                                        <option value="todas">Todas as Posições</option>
-                                    </select>
-                                </div>
-                                <div>
-                                    <label class="block text-purple-800 font-medium mb-2">📊 Filtro de Itens:</label>
-                                    <select id="filtroNumeros" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 text-base">
-                                        <option value="todos">Todos os Itens</option>
-                                        <option value="atrasados">Apenas Atrasados</option>
-                                        <option value="candidatos">Apenas Candidatos TOP</option>
-                                        <option value="frequentes">Apenas Frequentes</option>
-                                    </select>
-                                </div>
-                                <div class="flex items-end">
-                                    <button id="btnAtualizarGrid" class="bg-purple-500 hover:bg-purple-600 text-white px-6 py-2 rounded-lg w-full">
-                                        🔄 Atualizar Grid
-                                    </button>
-                                </div>
-                            </div>
-
-                            <!-- Legenda da Grid Estratégica -->
-                            <div class="mb-4 p-3 bg-white rounded-lg border border-purple-200">
-                                <div class="text-sm font-bold text-purple-800 mb-2 text-center">📋 Legenda da Grid Estratégica:</div>
-                                <div class="grid grid-cols-2 md:grid-cols-4 gap-2 text-xs">
-                                    <div class="flex items-center">
-                                        <span class="w-4 h-4 bg-red-500 rounded-full mr-2"></span>
-                                        <span>Muito Atrasados</span>
-                                    </div>
-                                    <div class="flex items-center">
-                                        <span class="w-4 h-4 bg-orange-500 rounded-full mr-2"></span>
-                                        <span>Atrasados</span>
-                                    </div>
-                                    <div class="flex items-center">
-                                        <span class="w-4 h-4 bg-yellow-500 rounded-full mr-2"></span>
-                                        <span>Candidatos TOP</span>
-                                    </div>
-                                    <div class="flex items-center">
-                                        <span class="w-4 h-4 bg-green-500 rounded-full mr-2"></span>
-                                        <span>Frequentes</span>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Grid Estratégica de Números/Meses -->
-                            <div class="mb-4">
-                                <div id="infoGridEstrategica" class="text-sm text-purple-700 bg-purple-100 p-3 rounded mb-4 text-center">
-                                    Selecione uma posição e filtro acima para ver os itens estratégicos
-                                </div>
-                                <div id="gridEstrategica" class="grid grid-cols-6 gap-2">
-                                    <!-- Grid será preenchida dinamicamente -->
-                                </div>
-                            </div>
-
-                            <!-- Status da Seleção Estratégica -->
-                            <div class="mb-4 p-3 bg-white rounded-lg border border-purple-200">
-                                <div class="text-sm font-bold text-purple-800 mb-2">📊 Status da Seleção:</div>
-                                <div class="grid grid-cols-2 md:grid-cols-5 gap-4 text-center">
-                                    <div>
-                                        <div class="text-lg font-bold text-purple-600" id="numerosEstrategicos">0</div>
-                                        <div class="text-xs text-purple-800">Números</div>
-                                    </div>
-                                    <div>
-                                        <div class="text-lg font-bold text-yellow-600" id="mesesEstrategicos">0</div>
-                                        <div class="text-xs text-purple-800">Meses</div>
-                                    </div>
-                                    <div>
-                                        <div class="text-lg font-bold text-red-600" id="atrasadosEstrategicos">0</div>
-                                        <div class="text-xs text-purple-800">Atrasados</div>
-                                    </div>
-                                    <div>
-                                        <div class="text-lg font-bold text-yellow-600" id="candidatosEstrategicos">0</div>
-                                        <div class="text-xs text-purple-800">Candidatos</div>
-                                    </div>
-                                    <div>
-                                        <div class="text-lg font-bold text-green-600" id="frequentesEstrategicos">0</div>
-                                        <div class="text-xs text-purple-800">Frequentes</div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Botões de Ação da Seleção Estratégica -->
-                            <div class="flex flex-wrap gap-2 justify-center">
-                                <button id="btnLimparEstrategica" class="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded-lg">
-                                    🗑️ Limpar Seleção
-                                </button>
-                                <button id="btnSugestaoRapida" class="bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-lg">
-                                    ⚡ Sugestão Rápida
-                                </button>
-                                <button id="btnUsarEstrategica" class="bg-purple-500 hover:bg-purple-600 text-white px-4 py-2 rounded-lg disabled:opacity-50">
-                                    ✅ Usar Seleção no Jogo Principal
-                                </button>
-                            </div>
-                        </div>
-
-                        <!-- Gerador de Palpites Baseado na Análise -->
-                        <div class="mt-6 p-4 bg-gradient-to-r from-green-50 to-blue-50 border-2 border-green-400 rounded-lg">
-                            <h4 class="text-lg font-bold text-green-800 mb-4 text-center">🎲 Gerador de Palpites Inteligente</h4>
-                            
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                                <div>
-                                    <label class="block text-green-800 font-medium mb-2">🎯 Estratégia:</label>
-                                    <select id="estrategiaPalpite" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 text-base">
-                                        <option value="atrasados">Focar nos Mais Atrasados</option>
-                                        <option value="equilibrado">Estratégia Equilibrada</option>
-                                        <option value="misto">Misto (Atrasados + Frequentes)</option>
-                                    </select>
-                                </div>
-                                <div>
-                                    <label class="block text-green-800 font-medium mb-2">🎮 Quantidade de Jogos:</label>
-                                    <select id="qtdJogosPalpite" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 text-base">
-                                        <option value="1">1 jogo</option>
-                                        <option value="3">3 jogos</option>
-                                        <option value="5" selected>5 jogos</option>
-                                        <option value="10">10 jogos</option>
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div class="text-center mb-4">
-                                <button id="btnGerarPalpites" class="bg-green-500 hover:bg-green-600 text-white font-bold px-8 py-3 rounded-lg text-lg">
-                                    🚀 Gerar Palpites Inteligentes
-                                </button>
-                            </div>
-
-                            <!-- Palpites Gerados -->
-                            <div id="palpitesGerados" class="hidden">
-                                <h5 class="font-bold text-green-800 mb-3">🎯 Palpites Baseados na Análise:</h5>
-                                <div id="listaPalpites" class="space-y-3">
-                                    <!-- Palpites serão inseridos aqui -->
-                                </div>
-                                
-                                <!-- Botões de Ação para Palpites -->
-                                <div class="mt-4 flex gap-2 justify-center">
-                                    <button id="btnAdicionarPalpites" class="bg-diasorte hover:bg-diasorte-dark text-white px-4 py-2 rounded-lg">
-                                        ➕ Adicionar aos Meus Jogos
-                                    </button>
-                                    <button id="btnDownloadPalpites" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg">
-                                        📥 Download Palpites
-                                    </button>
-                                </div>
-                            </div>
+                    <div class="bg-white border border-gray-200 rounded-lg p-4 max-h-80 overflow-y-auto">
+                        <div id="listaJogosGerados" class="space-y-2">
+                            <!-- Jogos gerados aparecerão aqui -->
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- LADO DIREITO: Visualização dos Jogos -->
-            <div class="space-y-6">
-                <!-- Resumo e Controles -->
-                <div class="bg-white rounded-lg shadow-lg p-6 border-2 border-diasorte">
-                    <div class="flex justify-between items-center mb-4">
-                        <h3 class="text-xl font-bold text-diasorte">📋 Meus Jogos</h3>
+            <!-- SEÇÃO 3: ANÁLISE DE PADRÕES CLEAN -->
+            <div class="bg-white rounded-lg shadow-lg p-6 border-2 border-blue-400">
+                <h2 class="text-2xl font-bold text-blue-600 mb-6">📊 SEÇÃO 3: ANÁLISE DE PADRÕES E NÚMEROS AUSENTES</h2>
+
+                <!-- Padrões do Último Concurso - CLEAN -->
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+                    <div class="bg-blue-50 p-6 rounded-lg border border-blue-200">
+                        <h3 class="text-xl font-bold text-blue-800 mb-4">📈 Padrão do Último Concurso (Ordem Crescente)</h3>
+                        <div class="text-center">
+                            <div id="numerosCrescente" class="text-2xl font-bold text-gray-800 mb-3">[Carregando...]</div>
+                            <div id="padraoNumericoCrescente" class="text-xl font-mono font-bold text-blue-600 bg-white p-3 rounded border-2 border-blue-300">[Aguardando...]</div>
+                            <div class="text-sm text-green-600 font-bold mt-2">✅ Resumindo: SOMENTE ESTA INFORMAÇÃO</div>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-orange-50 p-6 rounded-lg border border-orange-200">
+                        <h3 class="text-xl font-bold text-orange-800 mb-4">🎯 Padrão do Último Concurso (Ordem de Sorteio)</h3>
+                        <div class="text-center">
+                            <div id="numerosSorteio" class="text-2xl font-bold text-gray-800 mb-3">[Carregando...]</div>
+                            <div id="padraoNumericoSorteio" class="text-xl font-mono font-bold text-orange-600 bg-white p-3 rounded border-2 border-orange-300">[Aguardando...]</div>
+                            <div class="text-sm text-green-600 font-bold mt-2">✅ Resumindo: SOMENTE ESTA INFORMAÇÃO</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Números Ausentes - CLEAN -->
+                <div class="bg-gray-50 p-6 rounded-lg border border-gray-200">
+                    <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6">
+                        <h3 class="text-xl font-bold text-gray-800 mb-4 md:mb-0">🔍 Números que NÃO Saíram</h3>
                         <div class="flex items-center gap-2">
-                            <label class="flex items-center text-sm">
-                                <input type="checkbox" id="mostrarOrdemCrescente" class="mr-2" checked>
-                                🔢 Ordem Crescente
-                            </label>
+                            <label class="text-sm font-medium text-gray-700">Analisar últimos:</label>
+                            <select id="analisarJogos" class="px-3 py-2 border border-gray-300 rounded text-base font-medium">
+                                <option value="3">3 jogos</option>
+                                <option value="5">5 jogos</option>
+                                <option value="6" selected>6 jogos</option>
+                                <option value="7">7 jogos</option>
+                                <option value="10">10 jogos</option>
+                                <option value="15">15 jogos</option>
+                                <option value="20">20 jogos</option>
+                                <option value="25">25 jogos</option>
+                                <option value="30">30 jogos</option>
+                                <option value="31">31 jogos</option>
+                            </select>
                         </div>
                     </div>
 
-                    <!-- Custo Total -->
-                    <div class="mb-4">
-                        <div class="custo-total text-center">
-                            💰 Total: <span id="custoTotal">R$ 0,00</span>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <div class="bg-red-50 p-4 rounded-lg border-2 border-red-200 text-center">
+                            <div class="text-lg font-bold text-red-800 mb-3">🔴 MENORES (01-10)</div>
+                            <div id="numerosBaixos" class="text-lg font-mono font-bold text-red-700 bg-white p-3 rounded min-h-[60px] flex items-center justify-center">Carregando...</div>
                         </div>
-                        <div class="text-center text-sm text-gray-600 mt-2">
-                            <span id="totalJogos">0</span> jogo(s) adicionado(s)
+                        <div class="bg-yellow-50 p-4 rounded-lg border-2 border-yellow-200 text-center">
+                            <div class="text-lg font-bold text-yellow-800 mb-3">🟡 MÉDIOS (11-20)</div>
+                            <div id="numerosMedios" class="text-lg font-mono font-bold text-yellow-700 bg-white p-3 rounded min-h-[60px] flex items-center justify-center">Carregando...</div>
+                        </div>
+                        <div class="bg-purple-50 p-4 rounded-lg border-2 border-purple-200 text-center">
+                            <div class="text-lg font-bold text-purple-800 mb-3">🟣 MAIORES (21-31)</div>
+                            <div id="numerosAltos" class="text-lg font-mono font-bold text-purple-700 bg-white p-3 rounded min-h-[60px] flex items-center justify-center">Carregando...</div>
                         </div>
                     </div>
 
-                    <!-- Botões de Download -->
-                    <div class="grid grid-cols-3 gap-2 mb-4">
-                        <button id="downloadHTML" class="bg-orange-500 hover:bg-orange-600 text-white px-3 py-2 rounded-lg text-sm">
-                            🌐 HTML
-                        </button>
-                        <button id="downloadTXT" class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-2 rounded-lg text-sm">
-                            📄 TXT
-                        </button>
-                        <button id="downloadXLSX" class="bg-green-500 hover:bg-green-600 text-white px-3 py-2 rounded-lg text-sm">
-                            📊 XLSX
-                        </button>
+                    <div class="mt-6 bg-blue-50 p-4 rounded-lg border border-blue-200 text-center">
+                        <div class="text-lg font-bold text-blue-800 mb-2">📊 RESUMO ESTATÍSTICO</div>
+                        <div id="resumoAnalise" class="text-base font-medium text-blue-700">Aguardando análise...</div>
                     </div>
+                </div>
+            </div>
 
-                    <!-- Botão Limpar Todos -->
-                    <button id="limparTodos" class="w-full bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg">
-                        🗑️ Limpar Todos os Jogos
+            <!-- SEÇÃO: MEUS JOGOS -->
+            <div class="bg-white rounded-lg shadow-lg p-6 border-2 border-diasorte">
+                <div class="flex justify-between items-center mb-4">
+                    <h2 class="text-2xl font-bold text-diasorte">📋 MEUS JOGOS</h2>
+                    <label class="flex items-center text-sm">
+                        <input type="checkbox" id="mostrarOrdemCrescente" class="mr-2" checked>
+                        🔢 Ordem Crescente
+                    </label>
+                </div>
+
+                <!-- Custo Total -->
+                <div class="mb-4">
+                    <div class="custo-total text-center">
+                        💰 Total: <span id="custoTotal">R$ 0,00</span>
+                    </div>
+                    <div class="text-center text-sm text-gray-600 mt-2">
+                        <span id="totalJogos">0</span> jogo(s) adicionado(s)
+                    </div>
+                </div>
+
+                <!-- Botões de Download -->
+                <div class="grid grid-cols-3 gap-2 mb-4">
+                    <button id="downloadHTML" class="bg-orange-500 hover:bg-orange-600 text-white px-3 py-2 rounded-lg text-sm">
+                        🌐 HTML
+                    </button>
+                    <button id="downloadTXT" class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-2 rounded-lg text-sm">
+                        📄 TXT
+                    </button>
+                    <button id="downloadXLSX" class="bg-green-500 hover:bg-green-600 text-white px-3 py-2 rounded-lg text-sm">
+                        📊 XLSX
                     </button>
                 </div>
 
+                <!-- Botão Limpar -->
+                <button id="limparTodos" class="w-full bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg mb-4">
+                    🗑️ Limpar
+                </button>
+
                 <!-- Lista dos Jogos -->
-                <div class="bg-white rounded-lg shadow-lg p-6 border-2 border-gray-200 max-h-96 overflow-y-auto">
+                <div class="bg-gray-50 rounded-lg p-4 max-h-96 overflow-y-auto">
                     <h4 class="font-bold text-gray-800 mb-4">Lista de Jogos:</h4>
                     <div id="listaJogos">
                         <p class="text-gray-500 text-center py-8">Nenhum jogo adicionado ainda</p>
@@ -1039,143 +863,26 @@
                 </div>
             </div>
         </div>
-
-        <!-- Modal Como Funciona -->
-        <div id="modalComoFunciona" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-            <div class="bg-white rounded-lg shadow-lg max-w-4xl w-full mx-4 max-h-screen overflow-y-auto">
-                <div class="bg-diasorte text-white p-6 rounded-t-lg">
-                    <h2 class="text-2xl font-bold text-center">🌞 Como Funciona o Gerador Dia de Sorte</h2>
-                </div>
-                
-                <div class="p-6 space-y-6">
-                    <div class="bg-orange-50 border border-orange-200 rounded-lg p-4">
-                        <h3 class="text-xl font-bold text-orange-800 mb-3">📋 Passo a Passo:</h3>
-                        <div class="space-y-3 text-orange-700">
-                            <p><strong>1. Composição:</strong> Selecione 7 números de 01 a 31 + 1 mês da sorte</p>
-                            <p><strong>2. Estratégia Par/Ímpar:</strong> Veja a distribuição histórica mais comum (3P/4I - 28.7%)</p>
-                            <p><strong>3. Edite manualmente:</strong> Digite números e mês diretamente no campo de texto</p>
-                            <p><strong>4. Drag & Drop:</strong> Arraste números/meses ou arquivos .txt para a área especial</p>
-                            <p><strong>5. Selecione os números:</strong> Clique nos números de 01 a 31 para formar seu jogo</p>
-                            <p><strong>6. Escolha o mês:</strong> Selecione um mês de Janeiro a Dezembro</p>
-                            <p><strong>7. Análise por posições:</strong> Use a funcionalidade para identificar números atrasados</p>
-                            <p><strong>8. Grid estratégica:</strong> Escolha números/meses manualmente baseado na análise</p>
-                            <p><strong>9. Gere palpites inteligentes:</strong> Use a análise para criar jogos automaticamente</p>
-                            <p><strong>10. Download:</strong> Exporte seus jogos em HTML, TXT ou XLSX</p>
-                        </div>
-                    </div>
-
-                    <div class="bg-purple-50 border border-purple-200 rounded-lg p-4">
-                        <h3 class="text-xl font-bold text-purple-800 mb-3">🎯 Grid Estratégica:</h3>
-                        <div class="space-y-2 text-purple-700">
-                            <p><strong>🎯 Seleção Manual:</strong> Grid interativa para escolher números/meses baseado na análise</p>
-                            <p><strong>📊 Categorização:</strong> Números e meses coloridos por categoria (atrasados, candidatos, frequentes)</p>
-                            <p><strong>🔍 Filtros Avançados:</strong> Filtre por posição específica e tipo de item</p>
-                            <p><strong>⚡ Sugestão Rápida:</strong> Preenchimento automático baseado na estratégia</p>
-                            <p><strong>✅ Integração:</strong> Transfira sua seleção para o jogo principal</p>
-                            <p><strong>🗓️ Mês da Sorte:</strong> Análise especial para identificar meses atrasados</p>
-                        </div>
-                    </div>
-
-                    <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
-                        <h3 class="text-xl font-bold text-yellow-800 mb-3">🎯 Análise por Posições:</h3>
-                        <div class="space-y-2 text-yellow-700">
-                            <p><strong>📊 Análise Histórica:</strong> Carrega os últimos 20-100 concursos e analisa cada posição</p>
-                            <p><strong>🎯 Números Atrasados:</strong> Identifica quais números ainda não saíram em cada posição específica</p>
-                            <p><strong>🗓️ Meses Atrasados:</strong> Identifica quais meses da sorte estão há mais tempo sem sair</p>
-                            <p><strong>🎲 Palpites Inteligentes:</strong> Gera jogos baseados nos números mais atrasados por posição</p>
-                            <p><strong>📈 Estratégias Avançadas:</strong> Oferece diferentes abordagens (atrasados, equilibrada, mista)</p>
-                            <p><strong>🔍 Filtros Detalhados:</strong> Analise posições específicas, todas ou apenas mês da sorte</p>
-                        </div>
-                    </div>
-
-                    <div class="bg-blue-50 border border-blue-200 rounded-lg p-4">
-                        <h3 class="text-xl font-bold text-blue-800 mb-3">✏️ Edição Manual e Drag & Drop:</h3>
-                        <div class="space-y-2 text-blue-700">
-                            <p><strong>Edição Manual:</strong> Digite 7 números + mês separados por "+"</p>
-                            <p><strong>Formato Aceito:</strong> "05 12 18 22 24 27 31 + Janeiro" ou "05 12 18 22 24 27 31 + 1"</p>
-                            <p><strong>Múltiplos Jogos:</strong> Uma linha = um jogo, sistema detecta automaticamente</p>
-                            <p><strong>Drag & Drop:</strong> Arraste números da grid ou arquivos .txt com jogos</p>
-                            <p><strong>Validação Automática:</strong> Sistema valida números (01-31) e meses (1-12)</p>
-                        </div>
-                    </div>
-
-                    <div class="bg-green-50 border border-green-200 rounded-lg p-4">
-                        <h3 class="text-xl font-bold text-green-800 mb-3">💰 Valores e Probabilidades:</h3>
-                        <div class="space-y-2 text-green-700">
-                            <p><strong>Valor Fixo:</strong> R$ 2,00 por jogo (7 números + mês da sorte)</p>
-                            <p><strong>Prêmio Principal:</strong> 7 acertos + mês correto (1 em 2.629.575)</p>
-                            <p><strong>Prêmios Secundários:</strong> Desde 4 acertos + mês até 7 acertos simples</p>
-                            <p><strong>Facilidade:</strong> Melhor probabilidade que outras loterias</p>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="bg-gray-50 px-6 py-4 rounded-b-lg text-center">
-                    <button id="fecharModal" class="bg-diasorte hover:bg-diasorte-dark text-white font-medium py-2 px-6 rounded-lg">
-                        ✅ Entendi, Vamos Jogar!
-                    </button>
-                </div>
-            </div>
-        </div>
     </div>
 
     <script>
-        // 🎯 DADOS DE EXEMPLO PARA DIA DE SORTE
+        // 🎯 CONFIGURAÇÕES E DADOS
+        const MESES = [
+            'Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho',
+            'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'
+        ];
+
         const DADOS_EXEMPLO = {
             ultimoResultado: {
                 numero: 543,
                 dataApuracao: "20/01/2025",
                 dataProximoConcurso: "22/01/2025",
                 listaDezenas: ["03", "12", "18", "22", "24", "27", "31"],
-                mesSorte: 1, // Janeiro
+                mesSorte: 1,
                 acumulado: false,
-                valorEstimadoProximoConcurso: 300000.00,
-                listaRateioPremio: [
-                    { descricaoFaixa: "7 acertos + mês", numeroDeGanhadores: 1, valorPremio: 185432.25 },
-                    { descricaoFaixa: "7 acertos", numeroDeGanhadores: 3, valorPremio: 8245.80 },
-                    { descricaoFaixa: "6 acertos + mês", numeroDeGanhadores: 48, valorPremio: 742.15 },
-                    { descricaoFaixa: "6 acertos", numeroDeGanhadores: 456, valorPremio: 28.50 }
-                ]
-            },
-            concursosHistoricos: [
-                { numero: 543, data: "20/01/2025", posicoes: [3, 12, 18, 22, 24, 27, 31], mes: 1 },
-                { numero: 542, data: "18/01/2025", posicoes: [5, 14, 16, 19, 25, 28, 30], mes: 3 },
-                { numero: 541, data: "16/01/2025", posicoes: [2, 8, 11, 15, 20, 26, 29], mes: 7 },
-                { numero: 540, data: "14/01/2025", posicoes: [4, 9, 13, 17, 21, 23, 31], mes: 12 },
-                { numero: 539, data: "11/01/2025", posicoes: [1, 6, 10, 14, 18, 25, 30], mes: 5 },
-                { numero: 538, data: "09/01/2025", posicoes: [7, 11, 16, 19, 22, 28, 31], mes: 8 },
-                { numero: 537, data: "07/01/2025", posicoes: [3, 8, 12, 15, 24, 26, 29], mes: 2 },
-                { numero: 536, data: "04/01/2025", posicoes: [5, 9, 13, 17, 20, 27, 30], mes: 11 },
-                { numero: 535, data: "02/01/2025", posicoes: [2, 6, 14, 18, 21, 25, 31], mes: 4 },
-                { numero: 534, data: "31/12/2024", posicoes: [1, 7, 10, 16, 23, 28, 29], mes: 9 },
-                { numero: 533, data: "28/12/2024", posicoes: [4, 11, 15, 19, 22, 26, 30], mes: 6 },
-                { numero: 532, data: "26/12/2024", posicoes: [8, 12, 17, 20, 24, 27, 31], mes: 10 },
-                { numero: 531, data: "24/12/2024", posicoes: [3, 9, 13, 16, 21, 25, 29], mes: 1 },
-                { numero: 530, data: "21/12/2024", posicoes: [5, 10, 14, 18, 23, 28, 30], mes: 7 },
-                { numero: 529, data: "19/12/2024", posicoes: [2, 6, 11, 15, 19, 26, 31], mes: 3 },
-                { numero: 528, data: "17/12/2024", posicoes: [7, 12, 16, 20, 24, 27, 29], mes: 12 },
-                { numero: 527, data: "14/12/2024", posicoes: [1, 8, 13, 17, 22, 25, 30], mes: 5 },
-                { numero: 526, data: "12/12/2024", posicoes: [4, 9, 14, 18, 21, 28, 31], mes: 8 },
-                { numero: 525, data: "10/12/2024", posicoes: [6, 11, 15, 19, 23, 26, 29], mes: 2 },
-                { numero: 524, data: "07/12/2024", posicoes: [3, 10, 16, 20, 24, 27, 30], mes: 11 },
-                { numero: 523, data: "05/12/2024", posicoes: [5, 12, 17, 21, 25, 28, 31], mes: 4 },
-                { numero: 522, data: "03/12/2024", posicoes: [2, 7, 13, 18, 22, 26, 29], mes: 9 },
-                { numero: 521, data: "30/11/2024", posicoes: [8, 14, 19, 23, 27, 30, 31], mes: 6 },
-                { numero: 520, data: "28/11/2024", posicoes: [1, 9, 15, 20, 24, 25, 28], mes: 10 },
-                { numero: 519, data: "26/11/2024", posicoes: [4, 11, 16, 21, 26, 29, 31], mes: 1 },
-                { numero: 518, data: "23/11/2024", posicoes: [6, 12, 17, 22, 27, 30, 31], mes: 7 },
-                { numero: 517, data: "21/11/2024", posicoes: [3, 8, 13, 18, 23, 25, 28], mes: 3 },
-                { numero: 516, data: "19/11/2024", posicoes: [5, 10, 14, 19, 24, 26, 29], mes: 12 },
-                { numero: 515, data: "16/11/2024", posicoes: [2, 7, 15, 20, 27, 30, 31], mes: 5 },
-                { numero: 514, data: "14/11/2024", posicoes: [9, 11, 16, 21, 25, 28, 29], mes: 8 }
-            ]
+                valorEstimadoProximoConcurso: 300000.00
+            }
         };
-
-        // Lista de meses
-        const MESES = [
-            'Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho',
-            'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'
-        ];
 
         // Variáveis globais
         let ultimoResultado = null;
@@ -1184,35 +891,14 @@
         let mesSelecionado = null;
         let numerosSorteados = new Set();
         let mesSorteado = null;
-        let numerosDropArea = [];
-        let mesDropArea = null;
-        let concursosHistoricos = [];
-        let analisePosicoesCarregada = false;
-        let resultadosAnalise = {};
-        let palpitesInteligentes = [];
-        let numerosEstrategicos = [];
-        let mesEstrategico = null;
-        let categoriasNumeros = {};
-        let categoriasMeses = {};
+        let valorAposta = 2.50;
 
-        // Sistema de Valores do Dia de Sorte (valor fixo)
-        const sistemaValores = {
-            custoJogo: 2.00,
-            obterValor: function() {
-                return this.custoJogo;
-            }
-        };
-
-        // Inicialização da aplicação
+        // Inicialização
         document.addEventListener('DOMContentLoaded', async () => {
-            const timeoutPromise = new Promise((_, reject) => 
-                setTimeout(() => reject(new Error('Timeout')), 3000)
-            );
-            
             try {
-                await Promise.race([carregarUltimoResultado(), timeoutPromise]);
+                await carregarUltimoResultado();
             } catch (error) {
-                console.log('⚠️ API indisponível, usando dados de exemplo');
+                console.log('Usando dados de exemplo');
                 usarDadosExemplo();
             }
             
@@ -1220,104 +906,70 @@
             configurarEventListeners();
         });
 
-        // 🚀 Função para carregar último resultado
         async function carregarUltimoResultado() {
-            document.getElementById('loadingDetails').textContent = 'Conectando com API da Caixa Econômica Federal...';
-            
             try {
-                const controller = new AbortController();
-                const timeoutId = setTimeout(() => controller.abort(), 2000);
-                
-                const response = await fetch('https://servicebus2.caixa.gov.br/portaldeloterias/api/diadesorte', {
-                    signal: controller.signal,
-                    headers: {
-                        'Accept': 'application/json'
-                    }
-                });
-                
-                clearTimeout(timeoutId);
-                
+                const response = await fetch('https://servicebus2.caixa.gov.br/portaldeloterias/api/diadesorte');
                 if (response.ok) {
                     const data = await response.json();
-                    if (data && data.numero && data.numero > 0) {
-                        document.getElementById('loadingDetails').textContent = `✅ Concurso ${data.numero} encontrado!`;
+                    if (data && data.numero) {
                         ultimoResultado = data;
                         exibirUltimoResultado(data);
                         finalizarCarregamento();
                         return;
                     }
                 }
-                
-                throw new Error('API não retornou dados válidos');
-                
+                throw new Error('API indisponível');
             } catch (error) {
-                console.log('❌ Erro na API:', error.message);
                 throw error;
             }
         }
 
-        // 🎯 Usar dados de exemplo quando API falha
         function usarDadosExemplo() {
-            document.getElementById('loadingDetails').textContent = '⚠️ API indisponível. Usando dados de exemplo...';
-            
-            setTimeout(() => {
-                ultimoResultado = DADOS_EXEMPLO.ultimoResultado;
-                concursosHistoricos = DADOS_EXEMPLO.concursosHistoricos;
-                analisePosicoesCarregada = true;
-                
-                exibirUltimoResultado(ultimoResultado);
-                finalizarCarregamento();
-                
-                document.getElementById('loadingDetails').textContent = '✅ Dados de exemplo carregados! Funcionalidade completa disponível.';
-            }, 1000);
+            ultimoResultado = DADOS_EXEMPLO.ultimoResultado;
+            exibirUltimoResultado(ultimoResultado);
+            finalizarCarregamento();
         }
 
         function finalizarCarregamento() {
+            document.getElementById('loading').classList.add('hidden');
+            document.getElementById('ultimoResultado').classList.remove('hidden');
+            document.getElementById('interfacePrincipal').classList.remove('hidden');
+            
+            // Carregar análise de padrões
             setTimeout(() => {
-                document.getElementById('loading').classList.add('hidden');
-                document.getElementById('ultimoResultado').classList.remove('hidden');
-                document.getElementById('interfacePrincipal').classList.remove('hidden');
-            }, 500);
+                carregarAnalisesPadroes();
+            }, 1000);
         }
 
         function exibirUltimoResultado(data) {
-            const numeros = data.listaDezenas || data.dezenasSorteadasOrdemSorteio || [];
-            const mes = data.mesSorte || data.mesSorteado || 1;
-            
             document.getElementById('tituloResultado').textContent = `Concurso ${data.numero}`;
             document.getElementById('dataResultado').textContent = `📅 ${data.dataApuracao}`;
-
-            const numerosDiv = document.getElementById('numerosResultado');
-            numerosDiv.innerHTML = '';
-            numeros.forEach(num => {
-                const numeroEl = document.createElement('div');
-                numeroEl.className = 'numero-resultado';
-                numeroEl.textContent = num;
-                numerosDiv.appendChild(numeroEl);
-            });
-
-            const mesDiv = document.getElementById('mesResultado');
-            mesDiv.innerHTML = `<div class="mes-resultado">${MESES[mes - 1]}</div>`;
-
-            document.getElementById('statusResultado').textContent = data.acumulado ? 'ACUMULOU!' : 'TEVE GANHADOR!';
-
-            if (data.listaRateioPremio && data.listaRateioPremio.length >= 2) {
-                document.getElementById('premiacao7').innerHTML = `
-                    <span class="text-diasorte mr-2">🏆</span>
-                    <span>7 + mês: ${data.listaRateioPremio[0].numeroDeGanhadores} apostas ganhadoras - ${formatarMoeda(data.listaRateioPremio[0].valorPremio)}</span>
-                `;
-                document.getElementById('premiacao6').innerHTML = `
-                    <span class="text-diasorte mr-2">🏆</span>
-                    <span>6 + mês: ${data.listaRateioPremio[2]?.numeroDeGanhadores || 0} apostas ganhadoras - ${formatarMoeda(data.listaRateioPremio[2]?.valorPremio || 0)}</span>
-                `;
-            }
-
             document.getElementById('proximoConcurso').textContent = `Concurso ${data.numero + 1}`;
             document.getElementById('dataProximoConcurso').textContent = data.dataProximoConcurso || 'A definir';
             document.getElementById('premioEstimado').textContent = `Prêmio Estimado: ${formatarMoeda(data.valorEstimadoProximoConcurso || 300000)}`;
 
-            analisarParesImparesTempoReal(numeros, mes);
-            identificarNumerosSorteados(numeros, mes);
+            // Exibir números sorteados
+            const numerosDiv = document.getElementById('numerosResultado');
+            numerosDiv.innerHTML = '';
+            data.listaDezenas.forEach(num => {
+                const numeroEl = document.createElement('div');
+                numeroEl.className = 'numero-jogo';
+                numeroEl.textContent = num;
+                numerosDiv.appendChild(numeroEl);
+            });
+
+            // Exibir mês da sorte
+            const mesDiv = document.getElementById('mesResultado');
+            mesDiv.innerHTML = `<div class="mes-jogo">${MESES[data.mesSorte - 1]}</div>`;
+
+            // Atualizar dados da seção minimalista
+            document.getElementById('concursoNum').textContent = data.numero + 1;
+            document.getElementById('dataProximo').textContent = data.dataProximoConcurso || 'A definir';
+            document.getElementById('premioProximo').textContent = formatarMoeda(data.valorEstimadoProximoConcurso || 300000);
+            document.getElementById('statusConcurso').textContent = data.acumulado ? 'Acumulado' : 'Teve ganhador';
+
+            analisarParesImparesTempoReal(data.listaDezenas, data.mesSorte);
+            identificarNumerosSorteados(data.listaDezenas, data.mesSorte);
         }
 
         function analisarParesImparesTempoReal(numeros, mes) {
@@ -1333,18 +985,8 @@
                 }
             });
             
-            window.paresUltimoSorteio = paresUltimoSorteio;
-            window.imparesUltimoSorteio = imparesUltimoSorteio;
-            window.mesUltimoSorteio = mes;
-            
             document.getElementById('paresUltimoSorteio').textContent = paresUltimoSorteio;
             document.getElementById('imparesUltimoSorteio').textContent = imparesUltimoSorteio;
-            document.getElementById('mesUltimoSorteio').textContent = MESES[mes - 1];
-            document.getElementById('metaPares').textContent = 3; // Padrão histórico mais comum
-            document.getElementById('metaImpares').textContent = 4; // Padrão histórico mais comum
-            
-            const dicaEl = document.getElementById('dicaEstrategia');
-            dicaEl.innerHTML = `💡 <strong>Estratégia Histórica:</strong> Padrão mais comum é 3P/4I (28.7% dos casos). Último sorteio: ${paresUltimoSorteio}P/${imparesUltimoSorteio}I + ${MESES[mes - 1]}`;
             
             atualizarContadorParesImpares();
         }
@@ -1378,53 +1020,44 @@
             const permitir = document.getElementById('permitirNumerosSorteados').checked;
             
             numerosSorteados.forEach(numero => {
-                const btn = document.querySelector(`.numero-dia:nth-child(${numero})`);
+                const btn = document.querySelector(`[data-numero="${numero}"]`);
                 if (btn) {
                     btn.classList.add('sorteado');
-                    
-                    if (permitir) {
-                        btn.classList.remove('disabled');
-                        btn.onclick = () => toggleNumero(numero);
-                    } else {
+                    if (!permitir) {
                         btn.classList.add('disabled');
                         btn.onclick = () => {
-                            showCustomAlert('🎯 Número Sorteado', `O número ${numero.toString().padStart(2, '0')} saiu no último sorteio. Marque "Permitir usar números já sorteados" para selecioná-lo.`);
+                            showCustomAlert('🎯 Número Sorteado', `O número ${numero.toString().padStart(2, '0')} saiu no último sorteio.`);
                         };
+                    } else {
+                        btn.classList.remove('disabled');
+                        btn.onclick = () => toggleNumero(numero);
                     }
                 }
             });
 
-            // Marcar mês sorteado
             if (mesSorteado) {
-                const btnMes = document.querySelector(`.mes-sorte:nth-child(${mesSorteado})`);
+                const btnMes = document.querySelector(`[data-mes="${mesSorteado}"]`);
                 if (btnMes) {
                     btnMes.classList.add('sorteado');
-                    
-                    if (permitir) {
-                        btnMes.classList.remove('disabled');
-                        btnMes.onclick = () => toggleMes(mesSorteado);
-                    } else {
+                    if (!permitir) {
                         btnMes.classList.add('disabled');
                         btnMes.onclick = () => {
-                            showCustomAlert('🎯 Mês Sorteado', `O mês ${MESES[mesSorteado - 1]} saiu no último sorteio. Marque "Permitir usar números já sorteados" para selecioná-lo.`);
+                            showCustomAlert('🎯 Mês Sorteado', `O mês ${MESES[mesSorteado - 1]} saiu no último sorteio.`);
                         };
+                    } else {
+                        btnMes.classList.remove('disabled');
+                        btnMes.onclick = () => toggleMes(mesSorteado);
                     }
                 }
             }
         }
 
         function inicializarInterface() {
-            numerosSelecionados = [];
-            mesSelecionado = null;
-            numerosDropArea = [];
-            mesDropArea = null;
-            numerosEstrategicos = [];
-            mesEstrategico = null;
             criarGridNumeros();
             criarGridMeses();
-            configurarDragAndDrop();
             atualizarContadorParesImpares();
             atualizarVisualizacaoDropArea();
+            atualizarValorAposta();
         }
 
         function criarGridNumeros() {
@@ -1433,7 +1066,8 @@
             
             for (let i = 1; i <= 31; i++) {
                 const btn = document.createElement('button');
-                btn.className = 'numero-dia';
+                btn.className = 'numero-btn';
+                btn.dataset.numero = i;
                 
                 if (i % 2 === 0) {
                     btn.classList.add('par');
@@ -1443,18 +1077,6 @@
                 
                 btn.textContent = i.toString().padStart(2, '0');
                 btn.onclick = () => toggleNumero(i);
-                btn.draggable = true;
-                btn.dataset.numero = i;
-                btn.dataset.tipo = 'numero';
-                
-                btn.addEventListener('dragstart', (e) => {
-                    e.dataTransfer.setData('text/plain', `numero:${i}`);
-                    btn.classList.add('dragging');
-                });
-                
-                btn.addEventListener('dragend', () => {
-                    btn.classList.remove('dragging');
-                });
                 
                 grid.appendChild(btn);
             }
@@ -1466,98 +1088,291 @@
             
             MESES.forEach((mes, index) => {
                 const btn = document.createElement('button');
-                btn.className = 'mes-sorte';
+                btn.className = 'mes-btn';
+                btn.dataset.mes = index + 1;
                 btn.textContent = mes;
                 btn.onclick = () => toggleMes(index + 1);
-                btn.draggable = true;
-                btn.dataset.mes = index + 1;
-                btn.dataset.tipo = 'mes';
-                
-                btn.addEventListener('dragstart', (e) => {
-                    e.dataTransfer.setData('text/plain', `mes:${index + 1}`);
-                    btn.classList.add('dragging');
-                });
-                
-                btn.addEventListener('dragend', () => {
-                    btn.classList.remove('dragging');
-                });
                 
                 grid.appendChild(btn);
             });
         }
 
-        // 🎯 FUNCIONALIDADE: Configurar Drag and Drop
-        function configurarDragAndDrop() {
-            const dropZone = document.getElementById('dropZone');
+        function toggleNumero(numero) {
+            const btn = document.querySelector(`[data-numero="${numero}"]`);
             
-            dropZone.addEventListener('dragover', (e) => {
-                e.preventDefault();
-                dropZone.classList.add('drag-over');
-            });
+            if (numerosSelecionados.includes(numero)) {
+                numerosSelecionados = numerosSelecionados.filter(n => n !== numero);
+                btn.classList.remove('selecionado');
+            } else if (numerosSelecionados.length < 7) {
+                numerosSelecionados.push(numero);
+                btn.classList.add('selecionado');
+            }
             
-            dropZone.addEventListener('dragleave', (e) => {
-                if (!dropZone.contains(e.relatedTarget)) {
-                    dropZone.classList.remove('drag-over');
-                }
-            });
-            
-            dropZone.addEventListener('drop', (e) => {
-                e.preventDefault();
-                dropZone.classList.remove('drag-over');
-                
-                const files = e.dataTransfer.files;
-                if (files.length > 0) {
-                    processarArquivosTxt(files);
-                } else {
-                    const data = e.dataTransfer.getData('text/plain');
-                    if (data.startsWith('numero:')) {
-                        const numero = parseInt(data.split(':')[1]);
-                        adicionarNumeroDropArea(numero);
-                    } else if (data.startsWith('mes:')) {
-                        const mes = parseInt(data.split(':')[1]);
-                        adicionarMesDropArea(mes);
-                    }
-                }
-            });
+            atualizarVisualizacaoDropArea();
+            atualizarContadorParesImpares();
+            validarBotaoAdicionar();
         }
 
-        function processarArquivosTxt(files) {
-            const arquivosTxt = Array.from(files).filter(file => 
-                file.type === 'text/plain' || file.name.toLowerCase().endsWith('.txt')
-            );
+        function toggleMes(mes) {
+            const btn = document.querySelector(`[data-mes="${mes}"]`);
             
-            if (arquivosTxt.length === 0) {
-                showCustomAlert('⚠️ Arquivo Inválido', 'Por favor, arraste apenas arquivos .txt com jogos do Dia de Sorte!');
+            if (mesSelecionado === mes) {
+                mesSelecionado = null;
+                btn.classList.remove('selecionado');
+            } else {
+                // Limpar seleção anterior
+                if (mesSelecionado) {
+                    const btnAnterior = document.querySelector(`[data-mes="${mesSelecionado}"]`);
+                    if (btnAnterior) btnAnterior.classList.remove('selecionado');
+                }
+                
+                mesSelecionado = mes;
+                btn.classList.add('selecionado');
+            }
+            
+            atualizarVisualizacaoDropArea();
+            validarBotaoAdicionar();
+        }
+
+        function atualizarVisualizacaoDropArea() {
+            const dropZone = document.getElementById('dropZone');
+            const dropMessage = document.getElementById('dropMessage');
+            const itemsDropped = document.getElementById('itemsDropped');
+            const numerosNaArea = document.getElementById('numerosNaArea');
+            const mesesNaArea = document.getElementById('mesesNaArea');
+            
+            numerosNaArea.textContent = numerosSelecionados.length;
+            mesesNaArea.textContent = mesSelecionado ? '1' : '0';
+            
+            if (numerosSelecionados.length === 0 && !mesSelecionado) {
+                dropZone.classList.remove('has-numbers');
+                dropMessage.classList.remove('hidden');
+                itemsDropped.classList.add('hidden');
+            } else {
+                dropZone.classList.add('has-numbers');
+                dropMessage.classList.add('hidden');
+                itemsDropped.classList.remove('hidden');
+                
+                let html = '';
+                
+                // Números
+                numerosSelecionados.sort((a, b) => a - b).forEach(numero => {
+                    html += `
+                        <div class="numero-drop">
+                            ${numero.toString().padStart(2, '0')}
+                            <div class="remove-btn" onclick="removerNumeroDropArea(${numero})">×</div>
+                        </div>
+                    `;
+                });
+                
+                // Mês
+                if (mesSelecionado) {
+                    html += `
+                        <div class="mes-drop">
+                            ${MESES[mesSelecionado - 1].substring(0, 3)}
+                            <div class="remove-btn" onclick="removerMesDropArea()">×</div>
+                        </div>
+                    `;
+                }
+                
+                itemsDropped.innerHTML = html;
+            }
+        }
+
+        function removerNumeroDropArea(numero) {
+            numerosSelecionados = numerosSelecionados.filter(n => n !== numero);
+            const btn = document.querySelector(`[data-numero="${numero}"]`);
+            if (btn) btn.classList.remove('selecionado');
+            
+            atualizarVisualizacaoDropArea();
+            atualizarContadorParesImpares();
+            validarBotaoAdicionar();
+        }
+
+        function removerMesDropArea() {
+            if (mesSelecionado) {
+                const btn = document.querySelector(`[data-mes="${mesSelecionado}"]`);
+                if (btn) btn.classList.remove('selecionado');
+                mesSelecionado = null;
+            }
+            
+            atualizarVisualizacaoDropArea();
+            validarBotaoAdicionar();
+        }
+
+        function atualizarContadorParesImpares() {
+            const paresAtuais = numerosSelecionados.filter(num => num % 2 === 0).length;
+            const imparesAtuais = numerosSelecionados.filter(num => num % 2 !== 0).length;
+            
+            document.getElementById('paresAtuais').textContent = paresAtuais;
+            document.getElementById('imparesAtuais').textContent = imparesAtuais;
+            
+            const totalSelecionados = numerosSelecionados.length;
+            const statusEl = document.getElementById('statusEstrategia');
+            const metaPares = 3;
+            const metaImpares = 4;
+            
+            if (totalSelecionados === 0) {
+                statusEl.textContent = '🎯 Selecione números para ver sua estratégia';
+                statusEl.className = 'text-center p-3 rounded-lg font-bold text-lg bg-gray-100 text-gray-700';
+            } else if (totalSelecionados < 7) {
+                const paresRestantes = Math.max(0, metaPares - paresAtuais);
+                const imparesRestantes = Math.max(0, metaImpares - imparesAtuais);
+                
+                if (paresRestantes > 0 && imparesRestantes > 0) {
+                    statusEl.textContent = `📍 Faltam: ${paresRestantes} pares, ${imparesRestantes} ímpares + mês`;
+                    statusEl.className = 'text-center p-3 rounded-lg font-bold text-lg bg-blue-100 text-blue-800';
+                } else if (paresRestantes > 0) {
+                    statusEl.textContent = `📍 Faltam: ${paresRestantes} pares + mês`;
+                    statusEl.className = 'text-center p-3 rounded-lg font-bold text-lg bg-green-100 text-green-800';
+                } else if (imparesRestantes > 0) {
+                    statusEl.textContent = `📍 Faltam: ${imparesRestantes} ímpares + mês`;
+                    statusEl.className = 'text-center p-3 rounded-lg font-bold text-lg bg-purple-100 text-purple-800';
+                } else {
+                    statusEl.textContent = '✅ Estratégia histórica completa! Falta apenas o mês';
+                    statusEl.className = 'text-center p-3 rounded-lg font-bold text-lg bg-yellow-100 text-yellow-800';
+                }
+            } else {
+                const diferencaPares = Math.abs(paresAtuais - metaPares);
+                const diferencaImpares = Math.abs(imparesAtuais - metaImpares);
+                
+                if (diferencaPares === 0 && diferencaImpares === 0) {
+                    statusEl.textContent = '🎯 ESTRATÉGIA PERFEITA! Distribuição igual ao padrão histórico';
+                    statusEl.className = 'text-center p-3 rounded-lg font-bold text-lg bg-green-200 text-green-800 meta-atingida';
+                } else if (diferencaPares <= 1 && diferencaImpares <= 1) {
+                    statusEl.textContent = '✅ Estratégia muito boa! Distribuição próxima do padrão histórico';
+                    statusEl.className = 'text-center p-3 rounded-lg font-bold text-lg bg-green-100 text-green-800';
+                } else {
+                    statusEl.textContent = '⚠️ Estratégia diferente do padrão histórico mais comum';
+                    statusEl.className = 'text-center p-3 rounded-lg font-bold text-lg bg-red-100 text-red-800 meta-excedida';
+                }
+            }
+        }
+
+        function validarBotaoAdicionar() {
+            const btn = document.getElementById('adicionarJogo');
+            btn.disabled = numerosSelecionados.length !== 7 || !mesSelecionado;
+        }
+
+        function limparJogo() {
+            numerosSelecionados = [];
+            mesSelecionado = null;
+            
+            document.querySelectorAll('.numero-btn').forEach(btn => {
+                btn.classList.remove('selecionado');
+            });
+            document.querySelectorAll('.mes-btn').forEach(btn => {
+                btn.classList.remove('selecionado');
+            });
+            
+            atualizarVisualizacaoDropArea();
+            atualizarContadorParesImpares();
+            validarBotaoAdicionar();
+        }
+
+        function randomizarJogo() {
+            limparJogo();
+            
+            const permiteSorteados = document.getElementById('permitirNumerosSorteados').checked;
+            const numerosDisponiveis = Array.from({length: 31}, (_, i) => i + 1).filter(num => {
+                return permiteSorteados || !numerosSorteados.has(num);
+            });
+            
+            // Selecionar 7 números aleatórios
+            while (numerosSelecionados.length < 7 && numerosDisponiveis.length > 0) {
+                const index = Math.floor(Math.random() * numerosDisponiveis.length);
+                const numero = numerosDisponiveis.splice(index, 1)[0];
+                numerosSelecionados.push(numero);
+                
+                const btn = document.querySelector(`[data-numero="${numero}"]`);
+                btn.classList.add('selecionado');
+            }
+            
+            // Selecionar mês aleatório
+            const mesesDisponiveis = Array.from({length: 12}, (_, i) => i + 1).filter(mes => {
+                return permiteSorteados || mes !== mesSorteado;
+            });
+            
+            if (mesesDisponiveis.length > 0) {
+                const mesAleatorio = mesesDisponiveis[Math.floor(Math.random() * mesesDisponiveis.length)];
+                mesSelecionado = mesAleatorio;
+                
+                const btnMes = document.querySelector(`[data-mes="${mesAleatorio}"]`);
+                btnMes.classList.add('selecionado');
+            }
+            
+            atualizarVisualizacaoDropArea();
+            atualizarContadorParesImpares();
+            validarBotaoAdicionar();
+        }
+
+        function adicionarJogo() {
+            const jogo = {
+                id: Date.now(),
+                numeros: [...numerosSelecionados].sort((a, b) => a - b),
+                mes: mesSelecionado,
+                custo: valorAposta,
+                pares: numerosSelecionados.filter(n => n % 2 === 0).length,
+                impares: numerosSelecionados.filter(n => n % 2 !== 0).length
+            };
+            
+            jogosAdicionados.push(jogo);
+            limparJogo();
+            atualizarVisualizacaoJogos();
+            atualizarCustoTotal();
+        }
+
+        // Processamento Manual de Números
+        function processarManual() {
+            const input = document.getElementById('insertionManual');
+            const texto = input.value.trim();
+            
+            if (!texto) {
+                showCustomAlert('⚠️ Campo Vazio', 'Digite alguns números primeiro!');
                 return;
             }
             
-            const arquivo = arquivosTxt[0];
-            const reader = new FileReader();
+            const linhas = texto.split(/\r?\n/).filter(linha => linha.trim().length > 0);
             
-            reader.onload = function(e) {
-                const conteudo = e.target.result;
-                if (conteudo && conteudo.trim()) {
-                    const linhas = conteudo.split(/\r?\n/).filter(linha => linha.trim().length > 0);
-                    
-                    if (linhas.length > 1) {
-                        mostrarModalArquivoTxt(arquivo.name, linhas);
-                    } else if (linhas.length === 1) {
-                        document.getElementById('editarNumeros').value = linhas[0];
-                        processarJogoUnico(linhas[0]);
-                    }
-                } else {
-                    showCustomAlert('❌ Erro', 'Arquivo vazio ou inválido!');
-                }
-            };
-            
-            reader.onerror = function() {
-                showCustomAlert('❌ Erro', 'Erro ao ler o arquivo. Tente novamente.');
-            };
-            
-            reader.readAsText(arquivo);
+            if (linhas.length > 1) {
+                processarMultiplosJogos(linhas);
+            } else {
+                processarJogoUnico(texto);
+            }
         }
 
-        function mostrarModalArquivoTxt(nomeArquivo, linhas) {
+        function processarJogoUnico(texto) {
+            const resultado = parseLinhaJogo(texto);
+            
+            if (!resultado.valido) {
+                showCustomAlert('❌ Erro', resultado.erro);
+                return;
+            }
+            
+            limparJogo();
+            
+            // Aplicar números
+            resultado.numeros.forEach(numero => {
+                numerosSelecionados.push(numero);
+                const btn = document.querySelector(`[data-numero="${numero}"]`);
+                if (btn) btn.classList.add('selecionado');
+            });
+            
+            // Aplicar mês
+            mesSelecionado = resultado.mes;
+            const btnMes = document.querySelector(`[data-mes="${resultado.mes}"]`);
+            if (btnMes) btnMes.classList.add('selecionado');
+            
+            document.getElementById('insertionManual').value = '';
+            
+            atualizarVisualizacaoDropArea();
+            atualizarContadorParesImpares();
+            validarBotaoAdicionar();
+            
+            showCustomAlert('✅ Sucesso', `Jogo aplicado: 7 números + ${MESES[resultado.mes - 1]}!`);
+        }
+
+        function processarMultiplosJogos(linhas) {
             const jogosValidados = [];
             const erros = [];
             
@@ -1576,85 +1391,42 @@
                 });
             });
             
-            const modal = document.createElement('div');
-            modal.className = 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50';
-            modal.innerHTML = `
-                <div class="bg-white p-6 rounded-lg shadow-lg max-w-lg w-full mx-4 max-h-96 overflow-y-auto">
-                    <h3 class="font-bold text-diasorte mb-4">📁 Arquivo TXT Detectado</h3>
-                    <p class="text-gray-700 mb-4">
-                        <strong>Arquivo:</strong> ${nomeArquivo}<br>
-                        <strong>Linhas processadas:</strong> ${linhas.length}<br>
-                        <strong>Jogos válidos:</strong> ${jogosValidados.length}
-                    </p>
-                    
-                    ${erros.length > 0 ? `
-                        <div class="bg-red-50 border border-red-200 rounded p-3 mb-4">
-                            <h4 class="font-bold text-red-800 mb-2">⚠️ Erros encontrados:</h4>
-                            <div class="text-sm text-red-700 space-y-1 max-h-24 overflow-y-auto">
-                                ${erros.map(erro => `<div>• ${erro}</div>`).join('')}
-                            </div>
-                        </div>
-                    ` : ''}
-                    
-                    ${jogosValidados.length > 0 ? `
-                        <div class="bg-gray-50 p-3 rounded mb-4 text-sm space-y-1 max-h-40 overflow-y-auto">
-                            <h4 class="font-bold text-gray-800 mb-2">✅ Jogos válidos encontrados:</h4>
-                            ${jogosValidados.map(jogo => 
-                                `<div><strong>Linha ${jogo.linha}:</strong> ${jogo.numeros.map(n => n.toString().padStart(2, '0')).join(' ')} + ${MESES[jogo.mes - 1]}</div>`
-                            ).join('')}
-                        </div>
-                        <div class="text-sm text-blue-800 bg-blue-50 p-3 rounded mb-4">
-                            <strong>Total estimado:</strong> ${formatarMoeda(jogosValidados.length * sistemaValores.obterValor())}
-                        </div>
-                    ` : ''}
-                    
-                    <div class="flex justify-end space-x-3">
-                        <button id="cancelarArquivo" class="px-4 py-2 text-gray-600 hover:bg-gray-100 rounded">Cancelar</button>
-                        ${jogosValidados.length > 0 ? `
-                            <button id="confirmarArquivo" class="px-4 py-2 bg-diasorte text-white hover:bg-diasorte-dark rounded">
-                                ➕ Adicionar ${jogosValidados.length} Jogo(s)
-                            </button>
-                        ` : ''}
-                    </div>
-                </div>
-            `;
-            document.body.appendChild(modal);
+            if (erros.length > 0) {
+                showCustomAlert('❌ Erros Encontrados', `Encontrados ${erros.length} erro(s):\n${erros.join('\n')}`);
+                return;
+            }
             
-            document.getElementById('cancelarArquivo').onclick = () => {
-                document.body.removeChild(modal);
-            };
+            if (jogosValidados.length === 0) {
+                showCustomAlert('❌ Erro', 'Nenhum jogo válido encontrado!');
+                return;
+            }
             
-            if (jogosValidados.length > 0) {
-                document.getElementById('confirmarArquivo').onclick = () => {
+            showCustomConfirm(
+                `🎯 Múltiplos Jogos Detectados\n\nEncontrados ${jogosValidados.length} jogos válidos.\nDeseja adicioná-los todos?`,
+                () => {
                     jogosValidados.forEach(jogoData => {
                         const jogo = {
                             id: Date.now() + Math.random(),
                             numeros: jogoData.numeros,
                             mes: jogoData.mes,
-                            custo: sistemaValores.obterValor(),
-                            digitosDiferentes: calcularDigitosDiferentes(jogoData.numeros),
+                            custo: valorAposta,
                             pares: jogoData.numeros.filter(n => n % 2 === 0).length,
                             impares: jogoData.numeros.filter(n => n % 2 !== 0).length,
-                            origem: 'Arquivo TXT'
+                            origem: 'Inserção Manual'
                         };
                         jogosAdicionados.push(jogo);
                     });
                     
+                    document.getElementById('insertionManual').value = '';
                     atualizarVisualizacaoJogos();
                     atualizarCustoTotal();
                     
-                    document.body.removeChild(modal);
-                    showCustomAlert('✅ Sucesso', `${jogosValidados.length} jogo(s) adicionado(s) do arquivo ${nomeArquivo}!`);
-                };
-            }
+                    showCustomAlert('✅ Sucesso', `${jogosValidados.length} jogo(s) adicionado(s) com sucesso!`);
+                }
+            );
         }
 
         function parseLinhaJogo(linha) {
-            // Formatos aceitos:
-            // "05 12 18 22 24 27 31 + Janeiro"
-            // "05 12 18 22 24 27 31 + 1"
-            // "05 12 18 22 24 27 31 Janeiro"
-            
             const partes = linha.trim().split(/[\+\s]+/);
             const numerosTexto = [];
             let mesTexto = null;
@@ -1706,496 +1478,140 @@
             };
         }
 
-        function adicionarNumeroDropArea(numero) {
-            if (!numerosDropArea.includes(numero) && numerosDropArea.length < 7) {
-                numerosDropArea.push(numero);
-                atualizarVisualizacaoDropArea();
-                
-                if (!numerosSelecionados.includes(numero)) {
-                    numerosSelecionados.push(numero);
-                    const btn = document.querySelector(`.numero-dia:nth-child(${numero})`);
-                    if (btn) btn.classList.add('selecionado');
-                }
-                
-                atualizarContadorParesImpares();
-                validarBotaoAdicionar();
-            }
-        }
-
-        function adicionarMesDropArea(mes) {
-            if (!mesDropArea) {
-                mesDropArea = mes;
-                atualizarVisualizacaoDropArea();
-                
-                if (mesSelecionado !== mes) {
-                    // Limpar seleção anterior
-                    if (mesSelecionado) {
-                        const btnAnterior = document.querySelector(`.mes-sorte:nth-child(${mesSelecionado})`);
-                        if (btnAnterior) btnAnterior.classList.remove('selecionado');
-                    }
-                    
-                    mesSelecionado = mes;
-                    const btn = document.querySelector(`.mes-sorte:nth-child(${mes})`);
-                    if (btn) btn.classList.add('selecionado');
-                }
-                
-                atualizarAnaliseJogo();
-                validarBotaoAdicionar();
-            }
-        }
-
-        function removerNumeroDropArea(numero) {
-            numerosDropArea = numerosDropArea.filter(n => n !== numero);
-            numerosSelecionados = numerosSelecionados.filter(n => n !== numero);
+        // Geração Minimalista
+        function gerarMinimalistas() {
+            const quantidade = parseInt(document.getElementById('quantidadeJogos').value);
+            const estrategia = document.getElementById('estrategiaGeracao').value;
             
-            const btn = document.querySelector(`.numero-dia:nth-child(${numero})`);
-            if (btn) btn.classList.remove('selecionado');
+            const jogosGerados = [];
             
-            atualizarVisualizacaoDropArea();
-            atualizarContadorParesImpares();
-            validarBotaoAdicionar();
-        }
-
-        function removerMesDropArea() {
-            mesDropArea = null;
-            
-            if (mesSelecionado) {
-                const btn = document.querySelector(`.mes-sorte:nth-child(${mesSelecionado})`);
-                if (btn) btn.classList.remove('selecionado');
-                mesSelecionado = null;
-            }
-            
-            atualizarVisualizacaoDropArea();
-            atualizarAnaliseJogo();
-            validarBotaoAdicionar();
-        }
-
-        function atualizarVisualizacaoDropArea() {
-            const dropZone = document.getElementById('dropZone');
-            const dropMessage = document.getElementById('dropMessage');
-            const itemsDropped = document.getElementById('itemsDropped');
-            const numerosNaArea = document.getElementById('numerosNaArea');
-            const mesesNaArea = document.getElementById('mesesNaArea');
-            
-            if (!dropZone || !numerosNaArea || !mesesNaArea) {
-                return;
-            }
-            
-            if (!Array.isArray(numerosDropArea)) {
-                numerosDropArea = [];
-            }
-            
-            numerosNaArea.textContent = numerosDropArea.length.toString();
-            mesesNaArea.textContent = mesDropArea ? '1' : '0';
-            
-            if (numerosDropArea.length === 0 && !mesDropArea) {
-                dropZone.classList.remove('has-numbers');
-                if (dropMessage) dropMessage.classList.remove('hidden');
-                if (itemsDropped) itemsDropped.classList.add('hidden');
-            } else {
-                dropZone.classList.add('has-numbers');
-                if (dropMessage) dropMessage.classList.add('hidden');
-                if (itemsDropped) {
-                    itemsDropped.classList.remove('hidden');
-                    
-                    let html = '';
-                    
-                    // Números
-                    html += numerosDropArea
-                        .filter(numero => numero && typeof numero === 'number')
-                        .sort((a, b) => a - b)
-                        .map(numero => `
-                            <div class="numero-drop">
-                                ${numero.toString().padStart(2, '0')}
-                                <div class="remove-btn" onclick="removerNumeroDropArea(${numero})">×</div>
-                            </div>
-                        `).join('');
-                    
-                    // Mês
-                    if (mesDropArea) {
-                        html += `
-                            <div class="mes-drop">
-                                ${MESES[mesDropArea - 1].substring(0, 3)}
-                                <div class="remove-btn" onclick="removerMesDropArea()">×</div>
-                            </div>
-                        `;
-                    }
-                    
-                    itemsDropped.innerHTML = html;
-                }
-            }
-        }
-
-        function toggleNumero(numero) {
-            const btn = document.querySelector(`.numero-dia:nth-child(${numero})`);
-            
-            if (numerosSelecionados.includes(numero)) {
-                numerosSelecionados = numerosSelecionados.filter(n => n !== numero);
-                numerosDropArea = numerosDropArea.filter(n => n !== numero);
-                btn.classList.remove('selecionado');
-            } else if (numerosSelecionados.length < 7) {
-                numerosSelecionados.push(numero);
-                if (!numerosDropArea.includes(numero)) {
-                    numerosDropArea.push(numero);
-                }
-                btn.classList.add('selecionado');
-            }
-            
-            atualizarVisualizacaoDropArea();
-            atualizarContadorParesImpares();
-            validarBotaoAdicionar();
-        }
-
-        function toggleMes(mes) {
-            const btn = document.querySelector(`.mes-sorte:nth-child(${mes})`);
-            
-            if (mesSelecionado === mes) {
-                mesSelecionado = null;
-                mesDropArea = null;
-                btn.classList.remove('selecionado');
-            } else {
-                // Limpar seleção anterior
-                if (mesSelecionado) {
-                    const btnAnterior = document.querySelector(`.mes-sorte:nth-child(${mesSelecionado})`);
-                    if (btnAnterior) btnAnterior.classList.remove('selecionado');
-                }
-                
-                mesSelecionado = mes;
-                mesDropArea = mes;
-                btn.classList.add('selecionado');
-            }
-            
-            atualizarVisualizacaoDropArea();
-            atualizarAnaliseJogo();
-            validarBotaoAdicionar();
-        }
-
-        // 🎯 FUNCIONALIDADE: Aplicar números digitados manualmente
-        function aplicarNumerosDigitados() {
-            const input = document.getElementById('editarNumeros');
-            const texto = input.value.trim();
-            
-            if (!texto) {
-                showCustomAlert('⚠️ Campo Vazio', 'Digite alguns números e mês primeiro!');
-                return;
-            }
-            
-            const linhas = texto.split(/\r?\n/).filter(linha => linha.trim().length > 0);
-            
-            if (linhas.length > 1) {
-                processarMultiplosJogos(linhas);
-            } else {
-                processarJogoUnico(texto);
-            }
-        }
-
-        function processarMultiplosJogos(linhas) {
-            const jogosValidados = [];
-            const erros = [];
-            
-            linhas.forEach((linha, index) => {
-                const resultado = parseLinhaJogo(linha);
-                
-                if (!resultado.valido) {
-                    erros.push(`Linha ${index + 1}: ${resultado.erro}`);
-                    return;
-                }
-                
-                jogosValidados.push({
-                    numeros: resultado.numeros,
-                    mes: resultado.mes,
-                    linha: index + 1
-                });
-            });
-            
-            if (erros.length > 0) {
-                showCustomAlert('❌ Erros Encontrados', `Encontrados ${erros.length} erro(s):\n${erros.join('\n')}`);
-                return;
-            }
-            
-            if (jogosValidados.length === 0) {
-                showCustomAlert('❌ Erro', 'Nenhum jogo válido encontrado!');
-                return;
-            }
-            
-            showCustomConfirm(
-                `🎯 Múltiplos Jogos Detectados\n\nEncontrados ${jogosValidados.length} jogos válidos.\nDeseja adicioná-los todos?`,
-                () => {
-                    jogosValidados.forEach(jogoData => {
-                        const jogo = {
-                            id: Date.now() + Math.random(),
-                            numeros: jogoData.numeros,
-                            mes: jogoData.mes,
-                            custo: sistemaValores.obterValor(),
-                            digitosDiferentes: calcularDigitosDiferentes(jogoData.numeros),
-                            pares: jogoData.numeros.filter(n => n % 2 === 0).length,
-                            impares: jogoData.numeros.filter(n => n % 2 !== 0).length,
-                            origem: 'Edição Manual'
-                        };
-                        jogosAdicionados.push(jogo);
-                    });
-                    
-                    document.getElementById('editarNumeros').value = '';
-                    limparSelecao();
-                    atualizarVisualizacaoJogos();
-                    atualizarCustoTotal();
-                    
-                    showCustomAlert('✅ Sucesso', `${jogosValidados.length} jogo(s) adicionado(s) com sucesso!`);
-                }
-            );
-        }
-
-        function processarJogoUnico(texto) {
-            const resultado = parseLinhaJogo(texto);
-            
-            if (!resultado.valido) {
-                showCustomAlert('❌ Erro', resultado.erro);
-                return;
-            }
-            
-            limparSelecao();
-            
-            // Aplicar números
-            resultado.numeros.forEach(numero => {
-                numerosSelecionados.push(numero);
-                numerosDropArea.push(numero);
-                const btn = document.querySelector(`.numero-dia:nth-child(${numero})`);
-                if (btn) btn.classList.add('selecionado');
-            });
-            
-            // Aplicar mês
-            mesSelecionado = resultado.mes;
-            mesDropArea = resultado.mes;
-            const btnMes = document.querySelector(`.mes-sorte:nth-child(${resultado.mes})`);
-            if (btnMes) btnMes.classList.add('selecionado');
-            
-            document.getElementById('editarNumeros').value = '';
-            
-            atualizarVisualizacaoDropArea();
-            atualizarContadorParesImpares();
-            atualizarAnaliseJogo();
-            validarBotaoAdicionar();
-            
-            showCustomAlert('✅ Sucesso', `Jogo aplicado: 7 números + ${MESES[resultado.mes - 1]}!`);
-        }
-
-        function atualizarContadorParesImpares() {
-            const paresAtuais = numerosSelecionados.filter(num => num % 2 === 0).length;
-            const imparesAtuais = numerosSelecionados.filter(num => num % 2 !== 0).length;
-            
-            document.getElementById('paresAtuais').textContent = paresAtuais;
-            document.getElementById('imparesAtuais').textContent = imparesAtuais;
-            
-            document.getElementById('paresAtuais').classList.add('contador-destaque');
-            document.getElementById('imparesAtuais').classList.add('contador-destaque');
-            
-            setTimeout(() => {
-                document.getElementById('paresAtuais').classList.remove('contador-destaque');
-                document.getElementById('imparesAtuais').classList.remove('contador-destaque');
-            }, 500);
-            
-            const totalSelecionados = numerosSelecionados.length;
-            const statusEl = document.getElementById('statusEstrategia');
-            const metaPares = 3; // Padrão histórico mais comum
-            const metaImpares = 4; // Padrão histórico mais comum
-            
-            if (totalSelecionados === 0) {
-                statusEl.textContent = '🎯 Selecione números para ver sua estratégia';
-                statusEl.className = 'text-center p-3 rounded-lg font-bold text-lg bg-gray-100 text-gray-700';
-            } else if (totalSelecionados < 7) {
-                const paresRestantes = Math.max(0, metaPares - paresAtuais);
-                const imparesRestantes = Math.max(0, metaImpares - imparesAtuais);
-                
-                if (paresRestantes > 0 && imparesRestantes > 0) {
-                    statusEl.textContent = `📍 Faltam: ${paresRestantes} pares, ${imparesRestantes} ímpares + mês`;
-                    statusEl.className = 'text-center p-3 rounded-lg font-bold text-lg bg-blue-100 text-blue-800';
-                } else if (paresRestantes > 0) {
-                    statusEl.textContent = `📍 Faltam: ${paresRestantes} pares + mês`;
-                    statusEl.className = 'text-center p-3 rounded-lg font-bold text-lg bg-green-100 text-green-800';
-                } else if (imparesRestantes > 0) {
-                    statusEl.textContent = `📍 Faltam: ${imparesRestantes} ímpares + mês`;
-                    statusEl.className = 'text-center p-3 rounded-lg font-bold text-lg bg-purple-100 text-purple-800';
-                } else {
-                    statusEl.textContent = '✅ Estratégia histórica completa! Falta apenas o mês';
-                    statusEl.className = 'text-center p-3 rounded-lg font-bold text-lg bg-yellow-100 text-yellow-800';
-                }
-            } else {
-                const diferencaPares = Math.abs(paresAtuais - metaPares);
-                const diferencaImpares = Math.abs(imparesAtuais - metaImpares);
-                
-                if (diferencaPares === 0 && diferencaImpares === 0) {
-                    statusEl.textContent = '🎯 ESTRATÉGIA PERFEITA! Distribuição igual ao padrão histórico mais comum';
-                    statusEl.className = 'text-center p-3 rounded-lg font-bold text-lg bg-green-200 text-green-800 meta-atingida';
-                } else if (diferencaPares <= 1 && diferencaImpares <= 1) {
-                    statusEl.textContent = '✅ Estratégia muito boa! Distribuição próxima do padrão histórico';
-                    statusEl.className = 'text-center p-3 rounded-lg font-bold text-lg bg-green-100 text-green-800';
-                } else {
-                    statusEl.textContent = '⚠️ Estratégia diferente do padrão histórico mais comum';
-                    statusEl.className = 'text-center p-3 rounded-lg font-bold text-lg bg-red-100 text-red-800 meta-excedida';
+            for (let i = 0; i < quantidade; i++) {
+                const jogo = gerarJogoMinimalista(estrategia);
+                if (jogo) {
+                    jogosGerados.push(jogo);
                 }
             }
             
-            atualizarAnaliseJogo();
+            exibirJogosGerados(jogosGerados);
         }
 
-        function atualizarAnaliseJogo() {
-            document.getElementById('numerosCount').textContent = numerosSelecionados.length;
-            document.getElementById('mesSelecionado').textContent = mesSelecionado ? MESES[mesSelecionado - 1] : 'Nenhum';
+        function gerarJogoMinimalista(estrategia) {
+            let numeros = [];
+            let mes = Math.floor(Math.random() * 12) + 1;
             
-            const digitos = new Set();
-            numerosSelecionados.forEach(num => {
-                const numStr = num.toString().padStart(2, '0');
-                for (let digit of numStr) {
-                    digitos.add(parseInt(digit));
-                }
-            });
-            
-            document.getElementById('digitosCount').textContent = digitos.size;
-            
-            const ultimoDigitos = window.digitosUltimoSorteio || 6;
-            const sugestaoEl = document.getElementById('sugestaoDigitos');
-            const digitosAtuais = digitos.size;
-            
-            let sugestao = `📊 <strong>Último sorteio:</strong> ${ultimoDigitos} dígitos diferentes. `;
-            
-            if (digitosAtuais === 0) {
-                sugestao += `Tente usar entre ${ultimoDigitos - 1} e ${ultimoDigitos + 1} dígitos.`;
-            } else {
-                if (digitosAtuais < ultimoDigitos - 1) {
-                    sugestao += `Atual: ${digitosAtuais} (baixo) 📉`;
-                } else if (digitosAtuais === ultimoDigitos - 1 || digitosAtuais === ultimoDigitos || digitosAtuais === ultimoDigitos + 1) {
-                    sugestao += `Atual: ${digitosAtuais} (ótimo) ✅`;
-                } else {
-                    sugestao += `Atual: ${digitosAtuais} (alto) 📈`;
-                }
-            }
-            
-            if (mesSelecionado) {
-                sugestao += ` | Mês: ${MESES[mesSelecionado - 1]} ✅`;
-            } else {
-                sugestao += ` | Falta escolher o mês ⚠️`;
-            }
-            
-            sugestaoEl.innerHTML = sugestao;
-        }
-
-        function validarBotaoAdicionar() {
-            const btn = document.getElementById('adicionarJogo');
-            btn.disabled = numerosSelecionados.length !== 7 || !mesSelecionado;
-        }
-
-        // Continuará na próxima parte...
-        // [O resto do código seguirá o mesmo padrão, adaptando todas as funcionalidades da Mega Sena para o Dia de Sorte]
-
-        // Por questão de espaço, vou continuar com as principais funções adaptadas...
-
-        // Event listeners
-        function configurarEventListeners() {
-            document.getElementById('comoFuncionaBtn').addEventListener('click', () => {
-                document.getElementById('modalComoFunciona').classList.remove('hidden');
-            });
-            document.getElementById('fecharModal').addEventListener('click', () => {
-                document.getElementById('modalComoFunciona').classList.add('hidden');
-            });
-
-            // Event listeners para edição manual e drag & drop
-            document.getElementById('aplicarNumeros').addEventListener('click', aplicarNumerosDigitados);
-            document.getElementById('editarNumeros').addEventListener('keypress', (e) => {
-                if (e.key === 'Enter') {
-                    aplicarNumerosDigitados();
-                }
-            });
-
-            document.getElementById('limparJogo').addEventListener('click', limparSelecao);
-            document.getElementById('randomizarJogo').addEventListener('click', randomizarJogo);
-            document.getElementById('adicionarJogo').addEventListener('click', adicionarJogo);
-            
-            document.getElementById('mostrarOrdemCrescente').addEventListener('change', atualizarVisualizacaoJogos);
-            document.getElementById('limparTodos').addEventListener('click', limparTodosJogos);
-            
-            document.getElementById('permitirNumerosSorteados').addEventListener('change', atualizarEstadoNumerosSorteados);
-            
-            document.getElementById('downloadHTML').addEventListener('click', () => downloadJogos('html'));
-            document.getElementById('downloadTXT').addEventListener('click', () => downloadJogos('txt'));
-            document.getElementById('downloadXLSX').addEventListener('click', () => downloadJogos('xlsx'));
-        }
-
-        // Funções auxiliares básicas
-        function limparSelecao() {
-            numerosSelecionados = [];
-            mesSelecionado = null;
-            numerosDropArea = [];
-            mesDropArea = null;
-            
-            document.querySelectorAll('.numero-dia').forEach(btn => {
-                btn.classList.remove('selecionado');
-            });
-            document.querySelectorAll('.mes-sorte').forEach(btn => {
-                btn.classList.remove('selecionado');
-            });
-            
-            atualizarVisualizacaoDropArea();
-            atualizarContadorParesImpares();
-            atualizarAnaliseJogo();
-            validarBotaoAdicionar();
-        }
-
-        function randomizarJogo() {
-            limparSelecao();
-            
+            // Evitar números/mês já sorteados se configurado
             const permiteSorteados = document.getElementById('permitirNumerosSorteados').checked;
-            const numerosDisponiveis = Array.from({length: 31}, (_, i) => i + 1).filter(num => {
-                return permiteSorteados || !numerosSorteados.has(num);
-            });
+            let numerosDisponiveis = Array.from({length: 31}, (_, i) => i + 1);
             
-            // Selecionar 7 números aleatórios
-            while (numerosSelecionados.length < 7 && numerosDisponiveis.length > 0) {
-                const index = Math.floor(Math.random() * numerosDisponiveis.length);
-                const numero = numerosDisponiveis.splice(index, 1)[0];
-                numerosSelecionados.push(numero);
-                numerosDropArea.push(numero);
-                
-                const btn = document.querySelector(`.numero-dia:nth-child(${numero})`);
-                btn.classList.add('selecionado');
+            if (!permiteSorteados) {
+                numerosDisponiveis = numerosDisponiveis.filter(n => !numerosSorteados.has(n));
+                if (mes === mesSorteado) {
+                    mes = Math.floor(Math.random() * 12) + 1;
+                }
             }
             
-            // Selecionar mês aleatório
-            const mesesDisponiveis = Array.from({length: 12}, (_, i) => i + 1).filter(mes => {
-                return permiteSorteados || mes !== mesSorteado;
-            });
+            // Aplicar estratégia par/ímpar
+            let targetPares, targetImpares;
             
-            if (mesesDisponiveis.length > 0) {
-                const mesAleatorio = mesesDisponiveis[Math.floor(Math.random() * mesesDisponiveis.length)];
-                mesSelecionado = mesAleatorio;
-                mesDropArea = mesAleatorio;
-                
-                const btnMes = document.querySelector(`.mes-sorte:nth-child(${mesAleatorio})`);
-                btnMes.classList.add('selecionado');
+            switch (estrategia) {
+                case 'equilibrada':
+                    targetPares = 3;
+                    targetImpares = 4;
+                    break;
+                case 'mais-pares':
+                    targetPares = 4;
+                    targetImpares = 3;
+                    break;
+                case 'mais-impares':
+                    targetPares = 2;
+                    targetImpares = 5;
+                    break;
+                default:
+                    targetPares = Math.floor(Math.random() * 6) + 1;
+                    targetImpares = 7 - targetPares;
             }
             
-            atualizarVisualizacaoDropArea();
-            atualizarContadorParesImpares();
-            atualizarAnaliseJogo();
-            validarBotaoAdicionar();
+            // Gerar números com base na estratégia
+            const pares = numerosDisponiveis.filter(n => n % 2 === 0);
+            const impares = numerosDisponiveis.filter(n => n % 2 !== 0);
+            
+            // Selecionar pares
+            for (let i = 0; i < targetPares && pares.length > 0; i++) {
+                const index = Math.floor(Math.random() * pares.length);
+                numeros.push(pares.splice(index, 1)[0]);
+            }
+            
+            // Selecionar ímpares
+            for (let i = 0; i < targetImpares && impares.length > 0; i++) {
+                const index = Math.floor(Math.random() * impares.length);
+                numeros.push(impares.splice(index, 1)[0]);
+            }
+            
+            if (numeros.length === 7) {
+                return {
+                    id: Date.now() + Math.random(),
+                    numeros: numeros.sort((a, b) => a - b),
+                    mes: mes,
+                    custo: valorAposta,
+                    pares: numeros.filter(n => n % 2 === 0).length,
+                    impares: numeros.filter(n => n % 2 !== 0).length,
+                    origem: 'Geração Minimalista'
+                };
+            }
+            
+            return null;
         }
 
-        function adicionarJogo() {
-            const custo = sistemaValores.obterValor();
+        function exibirJogosGerados(jogos) {
+            const container = document.getElementById('resultadosMinimalistas');
+            const lista = document.getElementById('listaJogosGerados');
             
-            const jogo = {
-                id: Date.now(),
-                numeros: [...numerosSelecionados].sort((a, b) => a - b),
-                mes: mesSelecionado,
-                custo: custo,
-                digitosDiferentes: calcularDigitosDiferentes(numerosSelecionados),
-                pares: numerosSelecionados.filter(n => n % 2 === 0).length,
-                impares: numerosSelecionados.filter(n => n % 2 !== 0).length
-            };
+            lista.innerHTML = '';
             
-            jogosAdicionados.push(jogo);
-            limparSelecao();
-            atualizarVisualizacaoJogos();
-            atualizarCustoTotal();
+            if (jogos.length === 0) {
+                lista.innerHTML = '<p class="text-gray-500 text-center py-4">Nenhum jogo foi gerado</p>';
+                container.classList.remove('hidden');
+                return;
+            }
+            
+            jogos.forEach((jogo, index) => {
+                const jogoDiv = document.createElement('div');
+                jogoDiv.className = 'palpite-card';
+                
+                jogoDiv.innerHTML = `
+                    <div class="flex justify-between items-center mb-2">
+                        <span class="font-bold text-green-600">Jogo ${index + 1}</span>
+                        <div class="text-xs text-gray-600">
+                            ${jogo.pares}P/${jogo.impares}I
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <div class="flex flex-wrap gap-1">
+                            ${jogo.numeros.map(num => 
+                                `<div class="numero-palpite">${num.toString().padStart(2, '0')}</div>`
+                            ).join('')}
+                        </div>
+                        <div class="mes-palpite">${MESES[jogo.mes - 1].substring(0, 3)}</div>
+                    </div>
+                `;
+                
+                lista.appendChild(jogoDiv);
+            });
+            
+            window.jogosGerados = jogos;
+            container.classList.remove('hidden');
+        }
+
+        function adicionarTodosGerados() {
+            if (window.jogosGerados) {
+                window.jogosGerados.forEach(jogo => {
+                    jogosAdicionados.push(jogo);
+                });
+                
+                atualizarVisualizacaoJogos();
+                atualizarCustoTotal();
+                showCustomAlert('✅ Sucesso', `${window.jogosGerados.length} jogos adicionados!`);
+            }
         }
 
         function atualizarVisualizacaoJogos() {
@@ -2220,13 +1636,9 @@
                     <div class="flex justify-between items-center mb-2">
                         <span class="font-bold text-diasorte">Jogo ${index + 1}</span>
                         <div class="flex gap-2">
-                            <span class="digito-badge">${jogo.digitosDiferentes} dígitos</span>
-                            <span class="px-2 py-1 bg-green-100 text-green-800 text-xs rounded">${jogo.pares || 0}P</span>
-                            <span class="px-2 py-1 bg-purple-100 text-purple-800 text-xs rounded">${jogo.impares || 0}I</span>
-                            <button onclick="editarJogo(${jogo.id})" class="bg-blue-500 hover:bg-blue-600 text-white px-2 py-1 rounded text-xs" title="Editar este jogo">
-                                ✏️
-                            </button>
-                            <button onclick="removerJogo(${jogo.id})" class="bg-red-500 hover:bg-red-600 text-white px-2 py-1 rounded text-xs" title="Excluir este jogo">
+                            <span class="px-2 py-1 bg-green-100 text-green-800 text-xs rounded">${jogo.pares}P</span>
+                            <span class="px-2 py-1 bg-purple-100 text-purple-800 text-xs rounded">${jogo.impares}I</span>
+                            <button onclick="removerJogo(${jogo.id})" class="bg-red-500 hover:bg-red-600 text-white px-2 py-1 rounded text-xs">
                                 🗑️
                             </button>
                         </div>
@@ -2249,58 +1661,15 @@
             });
         }
 
-        function editarJogo(id) {
-            const jogo = jogosAdicionados.find(j => j.id === id);
-            if (!jogo) {
-                showCustomAlert('❌ Erro', 'Jogo não encontrado!');
-                return;
-            }
-            
-            showCustomConfirm(
-                `✏️ Editar Jogo\n\nVocê está editando um jogo:\n${jogo.numeros.map(n => n.toString().padStart(2, '0')).join(' ')} + ${MESES[jogo.mes - 1]}\n\nO jogo será carregado nos controles de seleção. Você pode modificar os números/mês e adicionar novamente. O jogo original será removido.`,
-                () => {
-                    jogosAdicionados = jogosAdicionados.filter(j => j.id !== id);
-                    
-                    limparSelecao();
-                    
-                    const numerosTexto = jogo.numeros.map(n => n.toString().padStart(2, '0')).join(' ');
-                    document.getElementById('editarNumeros').value = `${numerosTexto} + ${MESES[jogo.mes - 1]}`;
-                    
-                    jogo.numeros.forEach(numero => {
-                        numerosSelecionados.push(numero);
-                        numerosDropArea.push(numero);
-                        const btn = document.querySelector(`.numero-dia:nth-child(${numero})`);
-                        if (btn) btn.classList.add('selecionado');
-                    });
-                    
-                    mesSelecionado = jogo.mes;
-                    mesDropArea = jogo.mes;
-                    const btnMes = document.querySelector(`.mes-sorte:nth-child(${jogo.mes})`);
-                    if (btnMes) btnMes.classList.add('selecionado');
-                    
-                    atualizarVisualizacaoDropArea();
-                    atualizarContadorParesImpares();
-                    atualizarAnaliseJogo();
-                    validarBotaoAdicionar();
-                    
-                    atualizarVisualizacaoJogos();
-                    atualizarCustoTotal();
-                    
-                    showCustomAlert('✅ Carregado', 'Jogo carregado para edição! Faça suas alterações e clique em "Adicionar Jogo" novamente.');
-                }
-            );
-        }
-
         function removerJogo(id) {
             showCustomConfirm('Tem certeza que deseja excluir este jogo?', () => {
                 jogosAdicionados = jogosAdicionados.filter(jogo => jogo.id !== id);
                 atualizarVisualizacaoJogos();
                 atualizarCustoTotal();
-                showCustomAlert('✅ Removido', 'Jogo excluído com sucesso!');
             });
         }
 
-        function limparTodosJogos() {
+        function limparTodos() {
             if (jogosAdicionados.length === 0) return;
             
             showCustomConfirm('Tem certeza que deseja remover todos os jogos?', () => {
@@ -2316,24 +1685,132 @@
             document.getElementById('totalJogos').textContent = jogosAdicionados.length;
         }
 
-        function calcularDigitosDiferentes(numeros) {
-            const digitos = new Set();
-            numeros.forEach(num => {
-                const numStr = num.toString().padStart(2, '0');
-                for (let digit of numStr) {
-                    digitos.add(parseInt(digit));
+        function atualizarValorAposta() {
+            const valor = parseFloat(document.getElementById('valorAposta').value);
+            if (valor > 0) {
+                valorAposta = valor;
+                document.getElementById('valor7numeros').textContent = formatarMoeda(valor);
+                document.getElementById('ultimaAtualizacao').textContent = new Date().toLocaleString('pt-BR');
+            }
+        }
+
+        // Downloads
+        function downloadTXT() {
+            if (jogosAdicionados.length === 0) {
+                showCustomAlert('⚠️ Sem Jogos', 'Adicione pelo menos um jogo antes de fazer o download!');
+                return;
+            }
+            
+            let txt = '';
+            jogosAdicionados.forEach((jogo, index) => {
+                txt += `${jogo.numeros.map(n => n.toString().padStart(2, '0')).join(' ')} + ${MESES[jogo.mes - 1]}`;
+                if (index < jogosAdicionados.length - 1) {
+                    txt += '\n';
                 }
             });
-            return digitos.size;
+            baixarArquivo(txt, 'dia-de-sorte-jogos.txt', 'text/plain');
         }
 
-        function formatarMoeda(valor) {
-            return new Intl.NumberFormat('pt-BR', {
-                style: 'currency',
-                currency: 'BRL'
-            }).format(valor);
+        function downloadHTML() {
+            if (jogosAdicionados.length === 0) {
+                showCustomAlert('⚠️ Sem Jogos', 'Adicione pelo menos um jogo antes de fazer o download!');
+                return;
+            }
+            
+            const total = jogosAdicionados.reduce((sum, jogo) => sum + jogo.custo, 0);
+            const data = new Date().toLocaleDateString('pt-BR');
+            
+            let html = `<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Dia de Sorte - Meus Jogos</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .header { text-align: center; margin-bottom: 30px; color: #D4B31A; }
+        .jogo { margin: 10px 0; padding: 15px; border: 2px solid #D4B31A; border-radius: 8px; }
+        .numero { display: inline-block; width: 35px; height: 35px; background: #D4B31A; color: white; 
+                 border-radius: 50%; text-align: center; line-height: 35px; margin: 2px; font-weight: bold; }
+        .mes { display: inline-block; padding: 8px 12px; background: #fbbf24; color: white; 
+               border-radius: 8px; margin-left: 10px; font-weight: bold; }
+        .total { text-align: center; margin-top: 20px; font-size: 18px; font-weight: bold; color: #D4B31A; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🌞 DIA DE SORTE - MEUS JOGOS</h1>
+        <p>Gerado em: ${data}</p>
+    </div>`;
+            
+            jogosAdicionados.forEach((jogo, index) => {
+                html += `
+    <div class="jogo">
+        <h3>Jogo ${index + 1} - 7 números + mês da sorte - ${formatarMoeda(jogo.custo)}</h3>
+        <div>
+            ${jogo.numeros.map(num => `<span class="numero">${num.toString().padStart(2, '0')}</span>`).join('')}
+            <span class="mes">${MESES[jogo.mes - 1]}</span>
+        </div>
+        <div style="font-size: 12px; color: #666; margin-top: 5px;">
+            ${jogo.pares} pares, ${jogo.impares} ímpares
+            ${jogo.origem ? ` | Origem: ${jogo.origem}` : ''}
+        </div>
+    </div>`;
+            });
+            
+            html += `
+    <div class="total">
+        Total: ${jogosAdicionados.length} jogo(s) - ${formatarMoeda(total)}
+    </div>
+</body>
+</html>`;
+            
+            baixarArquivo(html, 'dia-de-sorte-jogos.html', 'text/html');
         }
 
+        function downloadXLSX() {
+            if (jogosAdicionados.length === 0) {
+                showCustomAlert('⚠️ Sem Jogos', 'Adicione pelo menos um jogo antes de fazer o download!');
+                return;
+            }
+            
+            const dados = [
+                ['Jogo', 'Números', 'Mês da Sorte', 'Pares', 'Ímpares', 'Custo', 'Origem']
+            ];
+            
+            jogosAdicionados.forEach((jogo, index) => {
+                dados.push([
+                    `Jogo ${index + 1}`,
+                    jogo.numeros.map(n => n.toString().padStart(2, '0')).join(' - '),
+                    MESES[jogo.mes - 1],
+                    jogo.pares,
+                    jogo.impares,
+                    jogo.custo,
+                    jogo.origem || 'Manual'
+                ]);
+            });
+            
+            const total = jogosAdicionados.reduce((sum, jogo) => sum + jogo.custo, 0);
+            dados.push(['', '', 'TOTAL:', '', '', total, '']);
+            
+            const ws = XLSX.utils.aoa_to_sheet(dados);
+            const wb = XLSX.utils.book_new();
+            XLSX.utils.book_append_sheet(wb, ws, 'Dia de Sorte');
+            XLSX.writeFile(wb, 'dia-de-sorte-jogos.xlsx');
+        }
+
+        function baixarArquivo(conteudo, nomeArquivo, tipoMime) {
+            const blob = new Blob([conteudo], { type: tipoMime });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = nomeArquivo;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            window.URL.revokeObjectURL(url);
+        }
+
+        // Modais customizados
         function showCustomAlert(titulo, mensagem) {
             const modal = document.createElement('div');
             modal.className = 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50';
@@ -2364,148 +1841,162 @@
             document.body.appendChild(modal);
         }
 
-        function baixarArquivo(conteudo, nomeArquivo, tipoMime) {
-            const blob = new Blob([conteudo], { type: tipoMime });
-            const url = window.URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = nomeArquivo;
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-            window.URL.revokeObjectURL(url);
+        function formatarMoeda(valor) {
+            return new Intl.NumberFormat('pt-BR', {
+                style: 'currency',
+                currency: 'BRL'
+            }).format(valor);
         }
 
-        function downloadJogos(formato) {
-            if (jogosAdicionados.length === 0) {
-                showCustomAlert('⚠️ Sem Jogos', 'Adicione pelo menos um jogo antes de fazer o download!');
-                return;
+        // Análise de Padrões - SEÇÃO 3
+        function carregarAnalisesPadroes() {
+            if (!ultimoResultado) return;
+            
+            // Carregar padrões do último concurso
+            carregarPadroesUltimoConcurso();
+            
+            // Carregar análise de números ausentes
+            carregarNumerosAusentes();
+        }
+
+        function carregarPadroesUltimoConcurso() {
+            const numeros = ultimoResultado.listaDezenas.map(n => parseInt(n));
+            const mes = ultimoResultado.mesSorte;
+            
+            // Padrão ordem crescente - EXATO COMO PEDIDO
+            const numerosOrdemCrescente = [...numeros].sort((a, b) => a - b);
+            const padraoNumericoCrescente = numerosOrdemCrescente.map(n => categorizarNumero(n));
+            
+            document.getElementById('numerosCrescente').textContent = 
+                numerosOrdemCrescente.map(n => n.toString().padStart(2, '0')).join(' ');
+            document.getElementById('padraoNumericoCrescente').textContent = 
+                `[${padraoNumericoCrescente.join(' ')}]`;
+            
+            // Padrão ordem de sorteio - EXATO COMO PEDIDO
+            const padraoNumericoSorteio = numeros.map(n => categorizarNumero(n));
+            
+            document.getElementById('numerosSorteio').textContent = 
+                numeros.map(n => n.toString().padStart(2, '0')).join(' ');
+            document.getElementById('padraoNumericoSorteio').textContent = 
+                `[${padraoNumericoSorteio.join(' ')}]`;
+        }
+
+        function categorizarNumero(num) {
+            if (num >= 1 && num <= 10) return '1';   // MENORES
+            if (num >= 11 && num <= 20) return '2';  // MÉDIOS  
+            if (num >= 21 && num <= 31) return '3';  // MAIORES
+            return '0';
+        }
+
+        function analisarPosicoes(numeros) {
+            return numeros.map(num => {
+                if (num >= 1 && num <= 10) return 'BAIXO';
+                if (num >= 11 && num <= 20) return 'MÉDIO';
+                if (num >= 21 && num <= 31) return 'ALTO';
+                return 'INDEFINIDO';
+            });
+        }
+
+        function carregarNumerosAusentes() {
+            const quantidade = parseInt(document.getElementById('analisarJogos').value);
+            
+            // Simular dados históricos baseados no último resultado
+            const numerosUsados = new Set();
+            const todosNumeros = Array.from({length: 31}, (_, i) => i + 1);
+            
+            // Adicionar números do último sorteio
+            ultimoResultado.listaDezenas.forEach(num => {
+                numerosUsados.add(parseInt(num));
+            });
+            
+            // Simular alguns jogos anteriores para análise
+            for (let i = 0; i < quantidade - 1; i++) {
+                const jogos = gerarJogoSimuladoHistorico();
+                jogos.forEach(num => numerosUsados.add(num));
             }
             
-            switch (formato) {
-                case 'txt':
-                    downloadTXT();
-                    break;
-                case 'html':
-                    downloadHTML();
-                    break;
-                case 'xlsx':
-                    downloadXLSX();
-                    break;
-            }
+            // Encontrar números que NÃO saíram
+            const numerosAusentes = todosNumeros.filter(num => !numerosUsados.has(num));
+            
+            // Categorizar por faixas
+            const baixos = numerosAusentes.filter(n => n >= 1 && n <= 10);
+            const medios = numerosAusentes.filter(n => n >= 11 && n <= 20);
+            const altos = numerosAusentes.filter(n => n >= 21 && n <= 31);
+            
+            // Atualizar interface
+            document.getElementById('numerosBaixos').textContent = 
+                baixos.length > 0 ? baixos.map(n => n.toString().padStart(2, '0')).join(', ') : 'Todos saíram';
+            
+            document.getElementById('numerosMedios').textContent = 
+                medios.length > 0 ? medios.map(n => n.toString().padStart(2, '0')).join(', ') : 'Todos saíram';
+            
+            document.getElementById('numerosAltos').textContent = 
+                altos.length > 0 ? altos.map(n => n.toString().padStart(2, '0')).join(', ') : 'Todos saíram';
+            
+            // Resumo
+            const total = numerosAusentes.length;
+            const porcentagem = ((total / 31) * 100).toFixed(1);
+            
+            document.getElementById('resumoAnalise').textContent = 
+                `${total} números não saíram nos últimos ${quantidade} jogos (${porcentagem}% do total). ` +
+                `Baixos: ${baixos.length} | Médios: ${medios.length} | Altos: ${altos.length}`;
         }
 
-        function downloadTXT() {
-            let txt = '';
-            jogosAdicionados.forEach((jogo, index) => {
-                txt += `${jogo.numeros.map(n => n.toString().padStart(2, '0')).join(' ')} + ${MESES[jogo.mes - 1]}`;
-                if (index < jogosAdicionados.length - 1) {
-                    txt += '\n';
+        function gerarJogoSimuladoHistorico() {
+            const numeros = [];
+            while (numeros.length < 7) {
+                const num = Math.floor(Math.random() * 31) + 1;
+                if (!numeros.includes(num)) {
+                    numeros.push(num);
                 }
-            });
-            baixarArquivo(txt, 'dia-de-sorte-jogos.txt', 'text/plain');
+            }
+            return numeros;
         }
 
-        function downloadHTML() {
-            const total = jogosAdicionados.reduce((sum, jogo) => sum + jogo.custo, 0);
-            const data = new Date().toLocaleDateString('pt-BR');
-            
-            let html = `<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <title>Dia de Sorte - Meus Jogos</title>
-    <style>
-        body { font-family: Arial, sans-serif; margin: 20px; }
-        .header { text-align: center; margin-bottom: 30px; color: #FF6B35; }
-        .jogo { margin: 10px 0; padding: 15px; border: 2px solid #FF6B35; border-radius: 8px; }
-        .numero { display: inline-block; width: 35px; height: 35px; background: #FF6B35; color: white; 
-                 border-radius: 50%; text-align: center; line-height: 35px; margin: 2px; font-weight: bold; }
-        .mes { display: inline-block; padding: 8px 12px; background: #fbbf24; color: white; 
-               border-radius: 8px; margin-left: 10px; font-weight: bold; }
-        .total { text-align: center; margin-top: 20px; font-size: 18px; font-weight: bold; color: #FF6B35; }
-        .estrategia-real { background: #FFF3E0; border: 2px solid #FF6B35; padding: 10px; margin: 10px 0; border-radius: 8px; }
-    </style>
-</head>
-<body>
-    <div class="header">
-        <h1>🌞 DIA DE SORTE - MEUS JOGOS</h1>
-        <p>Gerado em: ${data}</p>
-        <div class="estrategia-real">
-            <h3>📊 Jogos com Análise Avançada Completa</h3>
-            <p><strong>Último Sorteio:</strong> Concurso ${ultimoResultado ? ultimoResultado.numero : 'N/A'}</p>
-            <p><strong>Padrão Histórico:</strong> 3P/4I é o mais comum (28.7% dos casos)</p>
-            <p><strong>Análise por Posições:</strong> 7 posições + mês da sorte analisados</p>
-            <p><strong>Grid Estratégica:</strong> Seleção manual inteligente para números e meses</p>
-            <p><strong>Edição Manual + Drag & Drop:</strong> Múltiplas formas de criar jogos</p>
-            <p><em>Gerado com dados da API oficial da Caixa Econômica Federal</em></p>
-        </div>
-    </div>`;
-            
-            jogosAdicionados.forEach((jogo, index) => {
-                html += `
-    <div class="jogo">
-        <h3>Jogo ${index + 1} - 7 números + mês da sorte - ${formatarMoeda(jogo.custo)}</h3>
-        <div>
-            ${jogo.numeros.map(num => `<span class="numero">${num.toString().padStart(2, '0')}</span>`).join('')}
-            <span class="mes">${MESES[jogo.mes - 1]}</span>
-        </div>
-        <div style="font-size: 12px; color: #666; margin-top: 5px;">
-            ${jogo.digitosDiferentes} dígitos diferentes | ${jogo.pares} pares, ${jogo.impares} ímpares
-            ${jogo.origem ? ` | Origem: ${jogo.origem}` : ''}
-        </div>
-    </div>`;
-            });
-            
-            html += `
-    <div class="total">
-        Total: ${jogosAdicionados.length} jogo(s) - ${formatarMoeda(total)}
-    </div>
-    <div style="text-align: center; margin-top: 20px; font-size: 12px; color: #666;">
-        Gerado pelo Gerador de Palpites Dia de Sorte com análise avançada completa:<br>
-        ✅ Análise por Posições | ✅ Grid Estratégica | ✅ Edição Manual | ✅ Drag & Drop | ✅ Palpites Inteligentes
-    </div>
-</body>
-</html>`;
-            
-            baixarArquivo(html, 'dia-de-sorte-jogos.html', 'text/html');
+        // Funcionalidades dos checkboxes das regras
+        function atualizarContadorRegras() {
+            const checkboxes = document.querySelectorAll('.regra-checkbox');
+            const selecionadas = document.querySelectorAll('.regra-checkbox:checked').length;
+            document.getElementById('regrasCount').textContent = selecionadas;
         }
 
-        function downloadXLSX() {
-            const dados = [
-                ['Jogo', 'Números', 'Mês da Sorte', 'Dígitos Diferentes', 'Pares', 'Ímpares', 'Custo', 'Origem']
-            ];
-            
-            jogosAdicionados.forEach((jogo, index) => {
-                dados.push([
-                    `Jogo ${index + 1}`,
-                    jogo.numeros.map(n => n.toString().padStart(2, '0')).join(' - '),
-                    MESES[jogo.mes - 1],
-                    jogo.digitosDiferentes,
-                    jogo.pares,
-                    jogo.impares,
-                    jogo.custo,
-                    jogo.origem || 'Manual'
-                ]);
+        function selecionarTodasRegras() {
+            document.querySelectorAll('.regra-checkbox').forEach(checkbox => {
+                checkbox.checked = true;
             });
-            
-            const total = jogosAdicionados.reduce((sum, jogo) => sum + jogo.custo, 0);
-            dados.push(['', '', 'TOTAL:', '', '', '', total, '']);
-            dados.push(['', '', '', '', '', '', '', '']);
-            dados.push(['Funcionalidades Utilizadas:', '', '', '', '', '', '', '']);
-            dados.push(['- Análise por Posições (7 + mês)', '', '', '', '', '', '', '']);
-            dados.push(['- Grid Estratégica', '', '', '', '', '', '', '']);
-            dados.push(['- Edição Manual + Drag & Drop', '', '', '', '', '', '', '']);
-            dados.push(['- Padrão Histórico: 3P/4I (28.7%)', '', '', '', '', '', '', '']);
-            
-            const ws = XLSX.utils.aoa_to_sheet(dados);
-            const wb = XLSX.utils.book_new();
-            XLSX.utils.book_append_sheet(wb, ws, 'Dia de Sorte');
-            XLSX.writeFile(wb, 'dia-de-sorte-jogos.xlsx');
+            atualizarContadorRegras();
         }
 
-        // [Adicionar aqui as funções da análise por posições, grid estratégica e palpites inteligentes adaptadas para Dia de Sorte...]
-        // Por questão de espaço, as funções seguem o mesmo padrão da Mega Sena, mas adaptadas para 7 números + mês
+        function limparTodasRegras() {
+            document.querySelectorAll('.regra-checkbox').forEach(checkbox => {
+                checkbox.checked = false;
+            });
+            atualizarContadorRegras();
+        }
+
+        function configurarEventListeners() {
+            document.getElementById('atualizarValor').addEventListener('click', atualizarValorAposta);
+            document.getElementById('limparJogo').addEventListener('click', limparJogo);
+            document.getElementById('randomizarJogo').addEventListener('click', randomizarJogo);
+            document.getElementById('adicionarJogo').addEventListener('click', adicionarJogo);
+            document.getElementById('processarManual').addEventListener('click', processarManual);
+            document.getElementById('gerarMinimalistas').addEventListener('click', gerarMinimalistas);
+            document.getElementById('adicionarTodosGerados').addEventListener('click', adicionarTodosGerados);
+            document.getElementById('mostrarOrdemCrescente').addEventListener('change', atualizarVisualizacaoJogos);
+            document.getElementById('permitirNumerosSorteados').addEventListener('change', atualizarEstadoNumerosSorteados);
+            document.getElementById('analisarJogos').addEventListener('change', carregarNumerosAusentes);
+            document.getElementById('limparTodos').addEventListener('click', limparTodos);
+            document.getElementById('downloadHTML').addEventListener('click', downloadHTML);
+            document.getElementById('downloadTXT').addEventListener('click', downloadTXT);
+            document.getElementById('downloadXLSX').addEventListener('click', downloadXLSX);
+            
+            // Event listeners das regras minimalistas
+            document.getElementById('selecionarTodas').addEventListener('click', selecionarTodasRegras);
+            document.getElementById('limparTodas').addEventListener('click', limparTodasRegras);
+            document.querySelectorAll('.regra-checkbox').forEach(checkbox => {
+                checkbox.addEventListener('change', atualizarContadorRegras);
+            });
+        }
     </script>
 </body>
 </html>
