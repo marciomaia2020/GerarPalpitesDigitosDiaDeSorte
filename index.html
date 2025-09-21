@@ -369,7 +369,7 @@
                             <div class="text-sm font-medium text-diasorte mb-2">💡 Status do Sistema:</div>
                             <div class="text-sm text-green-600 font-bold">✅ Sistema configurado</div>
                             <div class="text-xs text-gray-600">Última atualização: <span id="ultimaAtualizacao">-</span></div>
-                            <div class="text-xs text-gray-600">Total de seções: <strong>6</strong> (Manual + Minimalista + Análise + Inimagináveis + Meses + Dígitos)</div>
+                            <div class="text-xs text-gray-600">Total de seções: <strong>7</strong> (Manual + Minimalista + Análise + Inimagináveis + Meses + Dígitos + Modelos)</div>
                         </div>
                         
                         <div class="bg-blue-50 p-3 rounded-lg">
@@ -1663,6 +1663,224 @@
                 </div>
             </div>
 
+            <!-- SEÇÃO 7: MODELOS CONSOLIDADOS -->
+            <div class="bg-white rounded-lg shadow-lg p-6 border-4 border-orange-500">
+                <h2 class="text-2xl font-bold text-orange-600 mb-6">🎲 SEÇÃO 7: MODELOS CONSOLIDADOS (24 ESTRATÉGIAS ÚNICAS)</h2>
+
+                <!-- Introdução -->
+                <div class="bg-orange-50 p-4 rounded-lg border border-orange-200 mb-6">
+                    <h3 class="text-lg font-bold text-orange-800 mb-3">🎯 Modelos Estratégicos Consolidados</h3>
+                    <p class="text-orange-700 text-sm">
+                        24 modelos únicos para gerar jogos com estratégias específicas de distribuição de números.
+                        Cada modelo segue uma lógica diferente de seleção e agrupamento.
+                    </p>
+                </div>
+
+                <!-- Seleção de Modelos -->
+                <div class="bg-gray-50 p-4 rounded-lg border border-gray-200 mb-6">
+                    <div class="flex justify-between items-center mb-3">
+                        <h3 class="text-lg font-bold text-gray-800">📋 Selecione os Modelos:</h3>
+                        <div class="flex gap-2">
+                            <button id="selecionarTodosModelos" class="text-xs bg-orange-500 text-white px-2 py-1 rounded hover:bg-orange-600">✓ Todos</button>
+                            <button id="limparTodosModelos" class="text-xs bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600">✗ Limpar</button>
+                        </div>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 text-sm text-gray-700 max-h-96 overflow-y-auto">
+                        <!-- Primeira Coluna -->
+                        <div class="space-y-1">
+                            <label class="flex items-start gap-2 hover:bg-white p-2 rounded cursor-pointer border">
+                                <input type="checkbox" class="modelo-checkbox mt-1" data-modelo="A" checked>
+                                <div><strong>Modelo 1 - Baixos + Médios + Altos</strong><br><span class="text-xs">Mistura todas as faixas (01-10, 11-20, 21-31)</span></div>
+                            </label>
+                            <label class="flex items-start gap-2 hover:bg-white p-2 rounded cursor-pointer border">
+                                <input type="checkbox" class="modelo-checkbox mt-1" data-modelo="B" checked>
+                                <div><strong>Modelo 2 - Baixos + Altos</strong><br><span class="text-xs">Apenas 01-10 e 21-31</span></div>
+                            </label>
+                            <label class="flex items-start gap-2 hover:bg-white p-2 rounded cursor-pointer border">
+                                <input type="checkbox" class="modelo-checkbox mt-1" data-modelo="C" checked>
+                                <div><strong>Modelo 3 - Médios + Altos</strong><br><span class="text-xs">Apenas 11-20 e 21-31</span></div>
+                            </label>
+                            <label class="flex items-start gap-2 hover:bg-white p-2 rounded cursor-pointer border">
+                                <input type="checkbox" class="modelo-checkbox mt-1" data-modelo="D" checked>
+                                <div><strong>Modelo 4 - Baixos + Médios</strong><br><span class="text-xs">Apenas 01-20</span></div>
+                            </label>
+                            <label class="flex items-start gap-2 hover:bg-white p-2 rounded cursor-pointer border">
+                                <input type="checkbox" class="modelo-checkbox mt-1" data-modelo="E">
+                                <div><strong>Modelo 5 - Só Baixos</strong><br><span class="text-xs">Apenas 01-10</span></div>
+                            </label>
+                            <label class="flex items-start gap-2 hover:bg-white p-2 rounded cursor-pointer border">
+                                <input type="checkbox" class="modelo-checkbox mt-1" data-modelo="F">
+                                <div><strong>Modelo 6 - Só Médios</strong><br><span class="text-xs">Apenas 11-20</span></div>
+                            </label>
+                            <label class="flex items-start gap-2 hover:bg-white p-2 rounded cursor-pointer border">
+                                <input type="checkbox" class="modelo-checkbox mt-1" data-modelo="G">
+                                <div><strong>Modelo 7 - Só Altos</strong><br><span class="text-xs">Apenas 21-31</span></div>
+                            </label>
+                            <label class="flex items-start gap-2 hover:bg-white p-2 rounded cursor-pointer border">
+                                <input type="checkbox" class="modelo-checkbox mt-1" data-modelo="T" checked>
+                                <div><strong>Modelo 20 - Intervalos Iguais</strong><br><span class="text-xs">Progressão aritmética (diferença fixa)</span></div>
+                            </label>
+                        </div>
+                        
+                        <!-- Segunda Coluna -->
+                        <div class="space-y-1">
+                            <label class="flex items-start gap-2 hover:bg-white p-2 rounded cursor-pointer border">
+                                <input type="checkbox" class="modelo-checkbox mt-1" data-modelo="H" checked>
+                                <div><strong>Modelo 8 - Escadinha</strong><br><span class="text-xs">5 ou 6 números em sequência</span></div>
+                            </label>
+                            <label class="flex items-start gap-2 hover:bg-white p-2 rounded cursor-pointer border">
+                                <input type="checkbox" class="modelo-checkbox mt-1" data-modelo="I" checked>
+                                <div><strong>Modelo 9 - Espelhado</strong><br><span class="text-xs">Números em pares "espelho"</span></div>
+                            </label>
+                            <label class="flex items-start gap-2 hover:bg-white p-2 rounded cursor-pointer border">
+                                <input type="checkbox" class="modelo-checkbox mt-1" data-modelo="J" checked>
+                                <div><strong>Modelo 10 - Sequência + 2 pares finais</strong><br><span class="text-xs">Sequência + 2 pares de finais iguais</span></div>
+                            </label>
+                            <label class="flex items-start gap-2 hover:bg-white p-2 rounded cursor-pointer border">
+                                <input type="checkbox" class="modelo-checkbox mt-1" data-modelo="K" checked>
+                                <div><strong>Modelo 11 - Sequência + 1 par final</strong><br><span class="text-xs">Sequência + 2 dezenas mesmo final</span></div>
+                            </label>
+                            <label class="flex items-start gap-2 hover:bg-white p-2 rounded cursor-pointer border">
+                                <input type="checkbox" class="modelo-checkbox mt-1" data-modelo="L">
+                                <div><strong>Modelo 12 - Alternado Baixo/Alto</strong><br><span class="text-xs">Alterna baixo/alto até 7 dezenas</span></div>
+                            </label>
+                            <label class="flex items-start gap-2 hover:bg-white p-2 rounded cursor-pointer border">
+                                <input type="checkbox" class="modelo-checkbox mt-1" data-modelo="M">
+                                <div><strong>Modelo 13 - Centralizado</strong><br><span class="text-xs">Maioria 11-20, com 1-2 extremos</span></div>
+                            </label>
+                            <label class="flex items-start gap-2 hover:bg-white p-2 rounded cursor-pointer border">
+                                <input type="checkbox" class="modelo-checkbox mt-1" data-modelo="U" checked>
+                                <div><strong>Modelo 21 - Espalhado pelos Meses</strong><br><span class="text-xs">1 número de cada mês (representação mensal)</span></div>
+                            </label>
+                            <label class="flex items-start gap-2 hover:bg-white p-2 rounded cursor-pointer border">
+                                <input type="checkbox" class="modelo-checkbox mt-1" data-modelo="V" checked>
+                                <div><strong>Modelo 22 - Quadrante do Volante</strong><br><span class="text-xs">Apenas 01-16 ou apenas 17-31</span></div>
+                            </label>
+                        </div>
+                        
+                        <!-- Terceira Coluna -->
+                        <div class="space-y-1">
+                            <label class="flex items-start gap-2 hover:bg-white p-2 rounded cursor-pointer border">
+                                <input type="checkbox" class="modelo-checkbox mt-1" data-modelo="N">
+                                <div><strong>Modelo 14 - Dupla Sequência</strong><br><span class="text-xs">Duas sequências pequenas no jogo</span></div>
+                            </label>
+                            <label class="flex items-start gap-2 hover:bg-white p-2 rounded cursor-pointer border">
+                                <input type="checkbox" class="modelo-checkbox mt-1" data-modelo="O">
+                                <div><strong>Modelo 15 - Espelhado Avançado</strong><br><span class="text-xs">Cada número tem seu "espelho"</span></div>
+                            </label>
+                            <label class="flex items-start gap-2 hover:bg-white p-2 rounded cursor-pointer border">
+                                <input type="checkbox" class="modelo-checkbox mt-1" data-modelo="P">
+                                <div><strong>Modelo 16 - Final Repetido Extremo</strong><br><span class="text-xs">3+ números mesmo final, distribuídos</span></div>
+                            </label>
+                            <label class="flex items-start gap-2 hover:bg-white p-2 rounded cursor-pointer border">
+                                <input type="checkbox" class="modelo-checkbox mt-1" data-modelo="Q">
+                                <div><strong>Modelo 17 - Escadinha + Final Repetido</strong><br><span class="text-xs">Sequência 4-5 + 2 final repetido</span></div>
+                            </label>
+                            <label class="flex items-start gap-2 hover:bg-white p-2 rounded cursor-pointer border">
+                                <input type="checkbox" class="modelo-checkbox mt-1" data-modelo="R">
+                                <div><strong>Modelo 18 - Só Pares</strong><br><span class="text-xs">Apenas números pares 01-31</span></div>
+                            </label>
+                            <label class="flex items-start gap-2 hover:bg-white p-2 rounded cursor-pointer border">
+                                <input type="checkbox" class="modelo-checkbox mt-1" data-modelo="S">
+                                <div><strong>Modelo 19 - Só Ímpares</strong><br><span class="text-xs">Apenas números ímpares 01-31</span></div>
+                            </label>
+                            <label class="flex items-start gap-2 hover:bg-white p-2 rounded cursor-pointer border">
+                                <input type="checkbox" class="modelo-checkbox mt-1" data-modelo="W" checked>
+                                <div><strong>Modelo 23 - Mês + Complemento</strong><br><span class="text-xs">Dias de um mês real + extras</span></div>
+                            </label>
+                            <label class="flex items-start gap-2 hover:bg-white p-2 rounded cursor-pointer border">
+                                <input type="checkbox" class="modelo-checkbox mt-1" data-modelo="X" checked>
+                                <div><strong>Modelo 24 - Final Espelhado Crescente</strong><br><span class="text-xs">Finais iguais + escadinha curta</span></div>
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-4 grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
+                        <div class="bg-white p-3 rounded border">
+                            🎯 Modelos selecionados: <span id="modelosCount" class="font-bold text-orange-600">8</span> de 24 disponíveis
+                        </div>
+                        <div class="bg-white p-3 rounded border">
+                            💡 Recomendação: Use 3-5 modelos para maior diversidade
+                        </div>
+                        <div class="bg-white p-3 rounded border text-orange-600">
+                            🆕 Novo: 24 modelos consolidados únicos
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Configurações de Geração -->
+                <div class="bg-orange-50 p-4 rounded-lg border border-orange-200 mb-6">
+                    <h3 class="text-lg font-bold text-orange-800 mb-4">⚙️ Configurações de Geração</h3>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                        <div>
+                            <label class="block text-sm font-medium text-orange-700 mb-1">Quantidade de Jogos:</label>
+                            <select id="quantidadeJogosModelos" class="w-full px-3 py-2 border border-orange-300 rounded text-base">
+                                <option value="1">1 jogo</option>
+                                <option value="3" selected>3 jogos</option>
+                                <option value="5">5 jogos</option>
+                                <option value="7">7 jogos</option>
+                                <option value="10">10 jogos</option>
+                                <option value="15">15 jogos</option>
+                                <option value="20">20 jogos</option>
+                            </select>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-sm font-medium text-orange-700 mb-1">Estratégia de Seleção:</label>
+                            <select id="estrategiaModelos" class="w-full px-3 py-2 border border-orange-300 rounded text-base">
+                                <option value="aleatoria" selected>🎲 Aleatória (sortear modelos)</option>
+                                <option value="equilibrada">⚖️ Equilibrada (variar modelos)</option>
+                                <option value="favorita">⭐ Favoritar selecionados</option>
+                                <option value="sequencial">📊 Sequencial (ordem numérica)</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-medium text-orange-700 mb-1">Mês da Sorte:</label>
+                            <select id="mesModelos" class="w-full px-3 py-2 border border-orange-300 rounded text-base">
+                                <option value="aleatorio" selected>🎲 Aleatório</option>
+                                <option value="1">Janeiro</option>
+                                <option value="2">Fevereiro</option>
+                                <option value="3">Março</option>
+                                <option value="4">Abril</option>
+                                <option value="5">Maio</option>
+                                <option value="6">Junho</option>
+                                <option value="7">Julho</option>
+                                <option value="8">Agosto</option>
+                                <option value="9">Setembro</option>
+                                <option value="10">Outubro</option>
+                                <option value="11">Novembro</option>
+                                <option value="12">Dezembro</option>
+                            </select>
+                        </div>
+                        
+                        <div class="flex items-end">
+                            <button id="gerarJogosModelos" class="w-full bg-orange-600 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded-lg">
+                                🚀 Gerar por Modelos
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Resultados dos Jogos por Modelos -->
+                <div id="resultadosJogosModelos" class="hidden bg-orange-50 p-6 rounded-lg border border-orange-200 mb-6">
+                    <div class="flex justify-between items-center mb-4">
+                        <h4 class="font-bold text-orange-800">🎯 Jogos Gerados por Modelos Consolidados:</h4>
+                        <button id="adicionarTodosJogosModelos" class="bg-orange-600 hover:bg-orange-700 text-white px-4 py-2 rounded-lg">
+                            ➕ Adicionar Todos aos Meus Jogos
+                        </button>
+                    </div>
+                    
+                    <div class="bg-white border border-orange-200 rounded-lg p-4 max-h-80 overflow-y-auto">
+                        <div id="listaJogosModelos" class="space-y-2">
+                            <!-- Jogos por modelos aparecerão aqui -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <!-- SEÇÃO: MEUS JOGOS -->
             <div class="bg-white rounded-lg shadow-lg p-6 border-2 border-diasorte">
                 <div class="flex justify-between items-center mb-4">
@@ -2096,12 +2314,202 @@
                 document.getElementById('ultimoResultado').classList.remove('hidden');
                 document.getElementById('interfacePrincipal').classList.remove('hidden');
                 
-                // Mostrar modal explicativo das seções
+                // Mostrar modal explicativo das seções - COM MAIS TEMPO
                 setTimeout(() => {
-                    console.log('🎯 Tentando mostrar modal explicativo...');
+                    console.log('🎯 Criando e mostrando modal explicativo...');
                     try {
-                        mostrarModalExplicativo();
-                        console.log('✅ Modal chamado com sucesso');
+                        // Criar modal diretamente aqui para garantir que funcione
+                        const modal = document.createElement('div');
+                        modal.className = 'fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 p-4';
+                        modal.style.zIndex = '9999'; // Z-index alto para garantir que fique por cima
+                        modal.innerHTML = `
+                            <div class="bg-white rounded-xl shadow-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto">
+                                <!-- Cabeçalho -->
+                                <div class="bg-gradient-to-r from-orange-400 to-red-500 text-white p-6 rounded-t-xl">
+                                    <div class="flex items-center justify-between">
+                                        <div>
+                                            <h2 class="text-3xl font-bold mb-2">🎯 BEM-VINDO AO SISTEMA COMPLETO!</h2>
+                                            <p class="text-lg opacity-90">Sistema Avançado de Geração para o Dia de Sorte</p>
+                                        </div>
+                                        <button onclick="this.closest('.fixed').remove()" class="text-white hover:text-gray-300 text-4xl font-bold">×</button>
+                                    </div>
+                                </div>
+
+                                <!-- Conteúdo -->
+                                <div class="p-6">
+                                    <!-- Resumo Inicial -->
+                                    <div class="bg-blue-50 border-l-4 border-blue-400 p-4 mb-6 rounded">
+                                        <h3 class="text-xl font-bold text-blue-800 mb-2">📊 O Que Você Encontrará Aqui</h3>
+                                        <p class="text-blue-700">
+                                            Este sistema possui <strong>6 seções especializadas</strong> para gerar jogos do Dia de Sorte usando diferentes estratégias e análises. 
+                                            Todas as seções estão <strong>totalmente funcionais</strong> e prontas para uso!
+                                        </p>
+                                    </div>
+
+                                    <!-- Grid das 6 Seções -->
+                                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                                        <!-- Seção 1 -->
+                                        <div class="border-2 border-orange-400 rounded-lg p-4">
+                                            <div class="flex items-center mb-2">
+                                                <span class="text-2xl mr-2">🎮</span>
+                                                <h3 class="text-lg font-bold text-orange-600">SEÇÃO 1: CRIAÇÃO MANUAL</h3>
+                                            </div>
+                                            <p class="text-gray-700 text-sm mb-2">
+                                                Monte seus jogos manualmente ou cole números de qualquer fonte. 
+                                                Inclui estratégia automática de pares/ímpares baseada no histórico.
+                                            </p>
+                                            <div class="text-xs text-blue-600">
+                                                ✅ Inserção manual • ✅ Análise par/ímpar • ✅ Evitar números sorteados
+                                            </div>
+                                        </div>
+
+                                        <!-- Seção 2 -->
+                                        <div class="border-2 border-green-400 rounded-lg p-4">
+                                            <div class="flex items-center mb-2">
+                                                <span class="text-2xl mr-2">🧮</span>
+                                                <h3 class="text-lg font-bold text-green-600">SEÇÃO 2: GERAÇÃO MINIMALISTA</h3>
+                                            </div>
+                                            <p class="text-gray-700 text-sm mb-2">
+                                                Gera jogos usando 19 regras matemáticas avançadas baseadas na data e concurso do próximo sorteio.
+                                            </p>
+                                            <div class="text-xs text-blue-600">
+                                                ✅ 19 regras customizáveis • ✅ Estratégias par/ímpar • ✅ Geração em lote
+                                            </div>
+                                        </div>
+
+                                        <!-- Seção 3 -->
+                                        <div class="border-2 border-blue-400 rounded-lg p-4">
+                                            <div class="flex items-center mb-2">
+                                                <span class="text-2xl mr-2">📊</span>
+                                                <h3 class="text-lg font-bold text-blue-600">SEÇÃO 3: ANÁLISE DE PADRÕES</h3>
+                                            </div>
+                                            <p class="text-gray-700 text-sm mb-2">
+                                                Analisa padrões de dígitos por posição em ordem crescente e ordem de sorteio dos concursos reais.
+                                            </p>
+                                            <div class="text-xs text-blue-600">
+                                                ✅ Padrões por posição • ✅ Top 10 mais comuns • ✅ Números ausentes
+                                            </div>
+                                        </div>
+
+                                        <!-- Seção 4 -->
+                                        <div class="border-2 border-purple-400 rounded-lg p-4">
+                                            <div class="flex items-center mb-2">
+                                                <span class="text-2xl mr-2">🎨</span>
+                                                <h3 class="text-lg font-bold text-purple-600">SEÇÃO 4: JOGOS INIMAGINÁVEIS</h3>
+                                            </div>
+                                            <p class="text-gray-700 text-sm mb-2">
+                                                Cria jogos com estratégias anti-convencionais: sequências longas, blocos concentrados, espelhamentos.
+                                            </p>
+                                            <div class="text-xs text-blue-600">
+                                                ✅ 6 estratégias únicas • ✅ Quebra padrões tradicionais • ✅ Seleção customizada
+                                            </div>
+                                        </div>
+
+                                        <!-- Seção 5 -->
+                                        <div class="border-2 border-indigo-500 rounded-lg p-4">
+                                            <div class="flex items-center mb-2">
+                                                <span class="text-2xl mr-2">📅</span>
+                                                <h3 class="text-lg font-bold text-indigo-600">SEÇÃO 5: ANÁLISE DOS MESES</h3>
+                                            </div>
+                                            <p class="text-gray-700 text-sm mb-2">
+                                                Analisa completamente os meses da sorte: frequência, ranking, meses ausentes nos últimos sorteios.
+                                            </p>
+                                            <div class="text-xs text-blue-600">
+                                                ✅ Ranking de frequência • ✅ Meses ausentes • ✅ Visualização detalhada
+                                            </div>
+                                        </div>
+
+                                        <!-- Seção 6 -->
+                                        <div class="border-2 border-cyan-400 rounded-lg p-4">
+                                            <div class="flex items-center mb-2">
+                                                <span class="text-2xl mr-2">🔢</span>
+                                                <h3 class="text-lg font-bold text-cyan-600">SEÇÃO 6: ANÁLISE POR DÍGITOS</h3>
+                                            </div>
+                                            <p class="text-gray-700 text-sm mb-2">
+                                                Analisa quantos dígitos únicos (0-9) aparecem em cada sorteio e gera jogos baseados nesses padrões.
+                                            </p>
+                                            <div class="text-xs text-blue-600">
+                                                ✅ Dígitos únicos por jogo • ✅ Frequência individual • ✅ Geração por estratégia
+                                            </div>
+                                        </div>
+										<!-- Seção 7 -->
+										<div class="border-2 border-emerald-400 rounded-lg p-4">
+											<div class="flex items-center mb-2">
+												<span class="text-2xl mr-2">🎯</span>
+												<h3 class="text-lg font-bold text-emerald-600">SEÇÃO 7: MODELOS CONSOLIDADOS</h3>
+											</div>
+											<p class="text-gray-700 text-sm mb-2">
+												24 modelos únicos para gerar jogos com estratégias específicas de distribuição de números.
+												Cada modelo segue uma lógica diferente de seleção e agrupamento.
+											</p>
+											<div class="text-xs text-green-600">
+												✅ 24 estratégias consolidadas • ✅ Seleção múltipla de modelos • ✅ Recomendação: usar 3-5 modelos
+											</div>
+										</div>
+                                    </div>
+
+                                    <!-- Instruções Importantes -->
+                                    <div class="bg-orange-50 border-l-4 border-orange-400 p-4 mb-6 rounded">
+                                        <h3 class="text-xl font-bold text-orange-800 mb-3">⚠️ INSTRUÇÕES IMPORTANTES</h3>
+                                        <div class="space-y-2 text-orange-700">
+                                            <div class="flex items-start">
+                                                <span class="text-lg mr-2">📝</span>
+                                                <div>
+                                                    <strong>MEUS JOGOS:</strong> Para finalizar seus jogos, você precisa adicioná-los na seção <strong>"MEUS JOGOS"</strong> 
+                                                    (localizada no final da página). Cada seção tem o botão <strong>"➕ Adicionar"</strong> para isso.
+                                                </div>
+                                            </div>
+                                            <div class="flex items-start">
+                                                <span class="text-lg mr-2">🎯</span>
+                                                <div>
+                                                    <strong>Escolha as Seções:</strong> Você pode usar uma ou mais seções conforme sua estratégia. 
+                                                    Cada uma oferece abordagens diferentes para gerar jogos.
+                                                </div>
+                                            </div>
+                                            <div class="flex items-start">
+                                                <span class="text-lg mr-2">💰</span>
+                                                <div>
+                                                    <strong>Custo Total:</strong> O sistema calcula automaticamente o custo total dos seus jogos 
+                                                    (R$ 2,50 por jogo no Dia de Sorte).
+                                                </div>
+                                            </div>
+                                            <div class="flex items-start">
+                                                <span class="text-lg mr-2">📁</span>
+                                                <div>
+                                                    <strong>Downloads:</strong> Em "MEUS JOGOS" você pode baixar sua lista em HTML, TXT ou XLSX 
+                                                    para imprimir ou usar em outros programas.
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Status das Análises -->
+                                    <div class="bg-green-50 border-l-4 border-green-400 p-4 mb-6 rounded">
+                                        <h3 class="text-xl font-bold text-green-800 mb-3">✅ STATUS DAS ANÁLISES</h3>
+                                        <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-green-700">
+                                            <div>📊 <strong>Base de dados:</strong> ${todosResultados.length} concursos carregados</div>
+                                            <div>🎯 <strong>Último resultado:</strong> Concurso ${ultimoResultado?.numero || 'Carregando...'}</div>
+                                            <div>📈 <strong>Análise de padrões:</strong> Executada automaticamente</div>
+                                            <div>📅 <strong>Análise de meses:</strong> Executada automaticamente</div>
+                                            <div>🔢 <strong>Análise de dígitos:</strong> Executada automaticamente</div>
+                                            <div>⚡ <strong>Sistema:</strong> Totalmente funcional</div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Rodapé -->
+                                    <div class="text-center">
+                                        <button onclick="this.closest('.fixed').remove()" class="bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 text-white font-bold py-4 px-8 rounded-lg text-xl shadow-lg transform hover:scale-105 transition-all">
+                                            🚀 COMEÇAR A USAR O SISTEMA
+                                        </button>
+                                        <p class="text-sm text-gray-600 mt-3">
+                                            Todas as seções estão prontas para uso! Explore cada uma conforme sua estratégia de jogo.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                        document.body.appendChild(modal);
+                        console.log('✅ Modal criado e adicionado com sucesso!');
                     } catch (error) {
                         console.error('❌ Erro ao mostrar modal:', error);
                         // Fallback: mostrar alert simples
@@ -2114,7 +2522,7 @@
                             `💡 Lembre-se: Para finalizar seus jogos, adicione-os na seção "MEUS JOGOS" no final da página.`
                         );
                     }
-                }, 2000);
+                }, 1500);
             }, 1000);
             
             console.log('🎉 CARREGAMENTO AUTOMÁTICO COMPLETO FINALIZADO!');
@@ -4164,12 +4572,12 @@
                         <div class="bg-blue-50 border-l-4 border-blue-400 p-4 mb-6 rounded">
                             <h3 class="text-xl font-bold text-blue-800 mb-2">📊 O Que Você Encontrará Aqui</h3>
                             <p class="text-blue-700">
-                                Este sistema possui <strong>6 seções especializadas</strong> para gerar jogos do Dia de Sorte usando diferentes estratégias e análises. 
+                                Este sistema possui <strong>7 seções especializadas</strong> para gerar jogos do Dia de Sorte usando diferentes estratégias e análises. 
                                 Todas as seções estão <strong>totalmente funcionais</strong> e prontas para uso!
                             </p>
                         </div>
 
-                        <!-- Grid das 6 Seções -->
+                        <!-- Grid das 7 Seções -->
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
                             <!-- Seção 1 -->
                             <div class="border-2 border-diasorte rounded-lg p-4">
@@ -4253,6 +4661,20 @@
                                 </p>
                                 <div class="text-xs text-blue-600">
                                     ✅ Dígitos únicos por jogo • ✅ Frequência individual • ✅ Geração por estratégia
+                                </div>
+                            </div>
+
+                            <!-- Seção 7 -->
+                            <div class="border-2 border-orange-500 rounded-lg p-4">
+                                <div class="flex items-center mb-2">
+                                    <span class="text-2xl mr-2">🎲</span>
+                                    <h3 class="text-lg font-bold text-orange-600">SEÇÃO 7: MODELOS CONSOLIDADOS</h3>
+                                </div>
+                                <p class="text-gray-700 text-sm mb-2">
+                                    24 modelos únicos para gerar jogos com estratégias específicas de distribuição e agrupamento de números.
+                                </p>
+                                <div class="text-xs text-blue-600">
+                                    ✅ 24 modelos únicos • ✅ Estratégias consolidadas • ✅ Seleção customizada
                                 </div>
                             </div>
                         </div>
@@ -5123,6 +5545,1027 @@
             });
         }
 
+        // 🎲 FUNÇÕES DA SEÇÃO 7: MODELOS CONSOLIDADOS
+
+        // Atualizar contador de modelos selecionados
+        function atualizarContadorModelos() {
+            const checkboxes = document.querySelectorAll('.modelo-checkbox');
+            const selecionados = document.querySelectorAll('.modelo-checkbox:checked').length;
+            document.getElementById('modelosCount').textContent = selecionados;
+        }
+
+        function selecionarTodosModelos() {
+            document.querySelectorAll('.modelo-checkbox').forEach(checkbox => {
+                checkbox.checked = true;
+            });
+            atualizarContadorModelos();
+        }
+
+        function limparTodosModelos() {
+            document.querySelectorAll('.modelo-checkbox').forEach(checkbox => {
+                checkbox.checked = false;
+            });
+            atualizarContadorModelos();
+        }
+
+        // Gerar jogos por modelos consolidados
+        function gerarJogosPorModelos() {
+            const modelosSelecionados = Array.from(document.querySelectorAll('.modelo-checkbox:checked')).map(cb => cb.dataset.modelo);
+            
+            if (modelosSelecionados.length === 0) {
+                showCustomAlert('⚠️ Nenhum Modelo Selecionado', 'Selecione pelo menos um modelo para gerar jogos.');
+                return;
+            }
+
+            const quantidade = parseInt(document.getElementById('quantidadeJogosModelos').value);
+            const estrategia = document.getElementById('estrategiaModelos').value;
+            const mes = document.getElementById('mesModelos').value;
+
+            const jogosGerados = [];
+
+            for (let i = 0; i < quantidade; i++) {
+                let modeloEscolhido;
+                
+                switch (estrategia) {
+                    case 'aleatoria':
+                        modeloEscolhido = modelosSelecionados[Math.floor(Math.random() * modelosSelecionados.length)];
+                        break;
+                    case 'equilibrada':
+                        modeloEscolhido = modelosSelecionados[i % modelosSelecionados.length];
+                        break;
+                    case 'favorita':
+                        // Priorizar modelos A, B, C, D, H, I, J, K
+                        const favoritos = modelosSelecionados.filter(m => ['A', 'B', 'C', 'D', 'H', 'I', 'J', 'K'].includes(m));
+                        modeloEscolhido = favoritos.length > 0 ? 
+                            favoritos[Math.floor(Math.random() * favoritos.length)] :
+                            modelosSelecionados[Math.floor(Math.random() * modelosSelecionados.length)];
+                        break;
+                    case 'sequencial':
+                        modeloEscolhido = modelosSelecionados[i % modelosSelecionados.length];
+                        break;
+                }
+
+                const jogo = gerarJogoPorModelo(modeloEscolhido, mes);
+                if (jogo) {
+                    jogosGerados.push(jogo);
+                }
+            }
+
+            exibirJogosPorModelos(jogosGerados);
+        }
+
+        // Gerar jogo específico por modelo
+        function gerarJogoPorModelo(modelo, mesEscolhido) {
+            let numeros = [];
+            let nomeModelo = '';
+
+            switch (modelo) {
+                case 'A': // Baixos + Médios + Altos
+                    nomeModelo = 'Baixos + Médios + Altos';
+                    numeros = gerarModeloMisturado();
+                    break;
+                case 'B': // Baixos + Altos
+                    nomeModelo = 'Baixos + Altos';
+                    numeros = gerarModeloBaixosAltos();
+                    break;
+                case 'C': // Médios + Altos
+                    nomeModelo = 'Médios + Altos';
+                    numeros = gerarModeloMediosAltos();
+                    break;
+                case 'D': // Baixos + Médios
+                    nomeModelo = 'Baixos + Médios';
+                    numeros = gerarModeloBaixosMedios();
+                    break;
+                case 'E': // Só Baixos
+                    nomeModelo = 'Só Baixos';
+                    numeros = gerarModeloSoBaixos();
+                    break;
+                case 'F': // Só Médios
+                    nomeModelo = 'Só Médios';
+                    numeros = gerarModeloSoMedios();
+                    break;
+                case 'G': // Só Altos
+                    nomeModelo = 'Só Altos';
+                    numeros = gerarModeloSoAltos();
+                    break;
+                case 'H': // Escadinha
+                    nomeModelo = 'Escadinha';
+                    numeros = gerarModeloEscadinha();
+                    break;
+                case 'I': // Espelhado
+                    nomeModelo = 'Espelhado';
+                    numeros = gerarModeloEspelhado();
+                    break;
+                case 'J': // Sequência + 2 pares finais
+                    nomeModelo = 'Sequência + 2 pares finais';
+                    numeros = gerarModeloSequencia2Pares();
+                    break;
+                case 'K': // Sequência + 1 par final
+                    nomeModelo = 'Sequência + 1 par final';
+                    numeros = gerarModeloSequencia1Par();
+                    break;
+                case 'L': // Alternado Baixo/Alto
+                    nomeModelo = 'Alternado Baixo/Alto';
+                    numeros = gerarModeloAlternado();
+                    break;
+                case 'M': // Centralizado
+                    nomeModelo = 'Centralizado';
+                    numeros = gerarModeloCentralizado();
+                    break;
+                case 'N': // Dupla Sequência
+                    nomeModelo = 'Dupla Sequência';
+                    numeros = gerarModeloDuplaSequencia();
+                    break;
+                case 'O': // Espelhado Avançado
+                    nomeModelo = 'Espelhado Avançado';
+                    numeros = gerarModeloEspelhadoAvancado();
+                    break;
+                case 'P': // Final Repetido Extremo
+                    nomeModelo = 'Final Repetido Extremo';
+                    numeros = gerarModeloFinalRepetidoExtremo();
+                    break;
+                case 'Q': // Escadinha + Final Repetido
+                    nomeModelo = 'Escadinha + Final Repetido';
+                    numeros = gerarModeloEscadinhaFinalRepetido();
+                    break;
+                case 'R': // Só Pares
+                    nomeModelo = 'Só Pares';
+                    numeros = gerarModeloSoPares();
+                    break;
+                case 'S': // Só Ímpares
+                    nomeModelo = 'Só Ímpares';
+                    numeros = gerarModeloSoImpares();
+                    break;
+                case 'T': // Intervalos Iguais
+                    nomeModelo = 'Intervalos Iguais';
+                    numeros = gerarModeloIntervalosIguais();
+                    break;
+                case 'U': // Espalhado pelos Meses
+                    nomeModelo = 'Espalhado pelos Meses';
+                    numeros = gerarModeloEspalhadoPorMeses();
+                    break;
+                case 'V': // Quadrante do Volante
+                    nomeModelo = 'Quadrante do Volante';
+                    numeros = gerarModeloQuadranteVolante();
+                    break;
+                case 'W': // Mês + Complemento
+                    nomeModelo = 'Mês + Complemento';
+                    numeros = gerarModeloMesComplemento();
+                    break;
+                case 'X': // Final Espelhado Crescente
+                    nomeModelo = 'Final Espelhado Crescente';
+                    numeros = gerarModeloFinalEspelhadoCrescente();
+                    break;
+            }
+
+            if (numeros.length !== 7) {
+                // Fallback: completar com números aleatórios
+                while (numeros.length < 7) {
+                    let num;
+                    do {
+                        num = Math.floor(Math.random() * 31) + 1;
+                    } while (numeros.includes(num));
+                    numeros.push(num);
+                }
+                numeros = numeros.slice(0, 7);
+            }
+
+            // Determinar mês
+            let mesJogo;
+            if (mesEscolhido === 'aleatorio') {
+                mesJogo = Math.floor(Math.random() * 12) + 1;
+            } else {
+                mesJogo = parseInt(mesEscolhido);
+            }
+
+            return {
+                id: Date.now() + Math.random(),
+                numeros: [...new Set(numeros)].sort((a, b) => a - b).slice(0, 7),
+                mes: mesJogo,
+                custo: valorAposta,
+                pares: numeros.filter(n => n % 2 === 0).length,
+                impares: numeros.filter(n => n % 2 !== 0).length,
+                origem: `Modelo ${modelo}: ${nomeModelo}`,
+                modelo: modelo,
+                nomeModelo: nomeModelo
+            };
+        }
+
+        // Modelos 20-24: Novas Estratégias
+        function gerarModeloIntervalosIguais() {
+            const numeros = [];
+            const diferenca = Math.floor(Math.random() * 3) + 3; // Diferença de 3, 4 ou 5
+            let inicio = Math.floor(Math.random() * 10) + 1; // Começar entre 1-10
+            
+            for (let i = 0; i < 7; i++) {
+                const numero = inicio + (i * diferenca);
+                if (numero <= 31) {
+                    numeros.push(numero);
+                } else {
+                    break;
+                }
+            }
+            
+            // Completar se necessário
+            while (numeros.length < 7) {
+                let num;
+                do {
+                    num = Math.floor(Math.random() * 31) + 1;
+                } while (numeros.includes(num));
+                numeros.push(num);
+            }
+            
+            return numeros.slice(0, 7);
+        }
+
+        function gerarModeloEspalhadoPorMeses() {
+            const numeros = [];
+            // Representar os primeiros 7 meses do ano
+            const representacaoMensal = [3, 7, 12, 15, 20, 24, 30]; // Janeiro a Julho aproximadamente
+            
+            // Adicionar variação aleatória
+            representacaoMensal.forEach(base => {
+                const variacao = Math.floor(Math.random() * 3) - 1; // -1, 0, ou +1
+                const numero = Math.max(1, Math.min(31, base + variacao));
+                if (!numeros.includes(numero)) {
+                    numeros.push(numero);
+                }
+            });
+            
+            // Completar se necessário
+            while (numeros.length < 7) {
+                let num;
+                do {
+                    num = Math.floor(Math.random() * 31) + 1;
+                } while (numeros.includes(num));
+                numeros.push(num);
+            }
+            
+            return numeros.slice(0, 7);
+        }
+
+        function gerarModeloQuadranteVolante() {
+            const numeros = [];
+            // Escolher uma metade do volante: 01-16 ou 17-31
+            const usarPrimeiraMetade = Math.random() < 0.5;
+            
+            if (usarPrimeiraMetade) {
+                // Primeira metade: 01-16
+                const disponiveis = Array.from({length: 16}, (_, i) => i + 1);
+                while (numeros.length < 7 && disponiveis.length > 0) {
+                    const index = Math.floor(Math.random() * disponiveis.length);
+                    numeros.push(disponiveis.splice(index, 1)[0]);
+                }
+            } else {
+                // Segunda metade: 17-31
+                const disponiveis = Array.from({length: 15}, (_, i) => i + 17);
+                while (numeros.length < 7 && disponiveis.length > 0) {
+                    const index = Math.floor(Math.random() * disponiveis.length);
+                    numeros.push(disponiveis.splice(index, 1)[0]);
+                }
+            }
+            
+            return numeros.slice(0, 7);
+        }
+
+        function gerarModeloMesComplemento() {
+            const numeros = [];
+            // Escolher um mês (máximo de dias)
+            const diasDoMes = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+            const mesEscolhido = Math.floor(Math.random() * 12);
+            const maxDias = diasDoMes[mesEscolhido];
+            
+            // Gerar números baseados nos dias válidos do mês
+            const diasValidos = Array.from({length: Math.min(maxDias, 31)}, (_, i) => i + 1);
+            
+            // Selecionar 5-6 números dos dias válidos
+            for (let i = 0; i < 6; i++) {
+                if (diasValidos.length > 0) {
+                    const index = Math.floor(Math.random() * diasValidos.length);
+                    numeros.push(diasValidos.splice(index, 1)[0]);
+                }
+            }
+            
+            // Complementar com 1-2 números extras
+            while (numeros.length < 7) {
+                let num;
+                do {
+                    num = Math.floor(Math.random() * 31) + 1;
+                } while (numeros.includes(num));
+                numeros.push(num);
+            }
+            
+            return numeros.slice(0, 7);
+        }
+
+        function gerarModeloFinalEspelhadoCrescente() {
+            const numeros = [];
+            
+            // Finais iguais: 3 números com o mesmo final
+            const finalEscolhido = Math.floor(Math.random() * 10).toString();
+            const candidatosFinais = [];
+            for (let i = 1; i <= 31; i++) {
+                if (i.toString().endsWith(finalEscolhido)) {
+                    candidatosFinais.push(i);
+                }
+            }
+            
+            // Selecionar 3 números com final igual
+            for (let i = 0; i < 3 && candidatosFinais.length > 0; i++) {
+                const index = Math.floor(Math.random() * candidatosFinais.length);
+                numeros.push(candidatosFinais.splice(index, 1)[0]);
+            }
+            
+            // Escadinha curta: 4 números consecutivos
+            const inicioEscada = Math.floor(Math.random() * 28) + 1; // 1-28 para ter espaço
+            for (let i = 0; i < 4; i++) {
+                const numero = inicioEscada + i;
+                if (numero <= 31 && !numeros.includes(numero)) {
+                    numeros.push(numero);
+                }
+            }
+            
+            // Completar se necessário
+            while (numeros.length < 7) {
+                let num;
+                do {
+                    num = Math.floor(Math.random() * 31) + 1;
+                } while (numeros.includes(num));
+                numeros.push(num);
+            }
+            
+            return numeros.slice(0, 7);
+        }
+
+        // Funções específicas para cada modelo
+        function gerarModeloMisturado() {
+            const numeros = [];
+            // 2-3 baixos, 2-3 médios, 2-3 altos
+            const baixos = Array.from({length: 10}, (_, i) => i + 1);
+            const medios = Array.from({length: 10}, (_, i) => i + 11);
+            const altos = Array.from({length: 11}, (_, i) => i + 21);
+            
+            // 2 de cada faixa + 1 aleatório
+            for (let i = 0; i < 2; i++) {
+                numeros.push(baixos[Math.floor(Math.random() * baixos.length)]);
+                numeros.push(medios[Math.floor(Math.random() * medios.length)]);
+                numeros.push(altos[Math.floor(Math.random() * altos.length)]);
+            }
+            numeros.push([...baixos, ...medios, ...altos][Math.floor(Math.random() * 31)]);
+            
+            return [...new Set(numeros)].slice(0, 7);
+        }
+
+        function gerarModeloBaixosAltos() {
+            const numeros = [];
+            const baixos = Array.from({length: 10}, (_, i) => i + 1);
+            const altos = Array.from({length: 11}, (_, i) => i + 21);
+            
+            // 3-4 baixos, 3-4 altos
+            for (let i = 0; i < 4; i++) {
+                if (numeros.length < 7) numeros.push(baixos[Math.floor(Math.random() * baixos.length)]);
+                if (numeros.length < 7) numeros.push(altos[Math.floor(Math.random() * altos.length)]);
+            }
+            
+            return [...new Set(numeros)].slice(0, 7);
+        }
+
+        function gerarModeloMediosAltos() {
+            const numeros = [];
+            const medios = Array.from({length: 10}, (_, i) => i + 11);
+            const altos = Array.from({length: 11}, (_, i) => i + 21);
+            
+            for (let i = 0; i < 4; i++) {
+                if (numeros.length < 7) numeros.push(medios[Math.floor(Math.random() * medios.length)]);
+                if (numeros.length < 7) numeros.push(altos[Math.floor(Math.random() * altos.length)]);
+            }
+            
+            return [...new Set(numeros)].slice(0, 7);
+        }
+
+        function gerarModeloBaixosMedios() {
+            const numeros = [];
+            const baixosMedios = Array.from({length: 20}, (_, i) => i + 1);
+            
+            while (numeros.length < 7) {
+                const num = baixosMedios[Math.floor(Math.random() * baixosMedios.length)];
+                if (!numeros.includes(num)) numeros.push(num);
+            }
+            
+            return numeros;
+        }
+
+        function gerarModeloSoBaixos() {
+            const numeros = [];
+            const baixos = Array.from({length: 10}, (_, i) => i + 1);
+            
+            while (numeros.length < 7) {
+                const num = baixos[Math.floor(Math.random() * baixos.length)];
+                if (!numeros.includes(num)) numeros.push(num);
+            }
+            
+            return numeros;
+        }
+
+        function gerarModeloSoMedios() {
+            const numeros = [];
+            const medios = Array.from({length: 10}, (_, i) => i + 11);
+            
+            while (numeros.length < 7) {
+                const num = medios[Math.floor(Math.random() * medios.length)];
+                if (!numeros.includes(num)) numeros.push(num);
+            }
+            
+            return numeros;
+        }
+
+        function gerarModeloSoAltos() {
+            const numeros = [];
+            const altos = Array.from({length: 11}, (_, i) => i + 21);
+            
+            while (numeros.length < 7) {
+                const num = altos[Math.floor(Math.random() * altos.length)];
+                if (!numeros.includes(num)) numeros.push(num);
+            }
+            
+            return numeros;
+        }
+
+        function gerarModeloEscadinha() {
+            const inicio = Math.floor(Math.random() * 26) + 1; // 1-26
+            const numeros = [];
+            
+            // 5-6 consecutivos
+            const tamanho = Math.random() < 0.5 ? 5 : 6;
+            for (let i = 0; i < tamanho; i++) {
+                if (inicio + i <= 31) {
+                    numeros.push(inicio + i);
+                }
+            }
+            
+            // Completar com números não consecutivos
+            while (numeros.length < 7) {
+                let num;
+                do {
+                    num = Math.floor(Math.random() * 31) + 1;
+                } while (numeros.includes(num) || (numeros.some(n => Math.abs(n - num) === 1)));
+                numeros.push(num);
+            }
+            
+            return numeros.slice(0, 7);
+        }
+
+        function gerarModeloEspelhado() {
+            const pares = [[1,31], [2,30], [3,29], [4,28], [5,27], [6,26], [7,25], [8,24], [9,23], [10,22]];
+            const numeros = [];
+            
+            // 3 pares espelhados
+            for (let i = 0; i < 3; i++) {
+                const par = pares[Math.floor(Math.random() * pares.length)];
+                numeros.push(par[0], par[1]);
+                pares.splice(pares.indexOf(par), 1);
+            }
+            
+            // 1 número central
+            const centrais = [15, 16];
+            numeros.push(centrais[Math.floor(Math.random() * centrais.length)]);
+            
+            return numeros.slice(0, 7);
+        }
+
+        function gerarModeloSequencia2Pares() {
+            const numeros = [];
+            
+            // Sequência de 2-3 números
+            const inicio = Math.floor(Math.random() * 29) + 1;
+            for (let i = 0; i < 3; i++) {
+                if (inicio + i <= 31) numeros.push(inicio + i);
+            }
+            
+            // 2 pares de finais iguais
+            const finais = ['1', '7', '2'];
+            finais.forEach(final => {
+                const candidatos = [];
+                for (let i = 1; i <= 31; i++) {
+                    if (i.toString().endsWith(final) && !numeros.includes(i)) {
+                        candidatos.push(i);
+                    }
+                }
+                if (candidatos.length >= 2) {
+                    numeros.push(candidatos[0], candidatos[1]);
+                }
+            });
+            
+            return [...new Set(numeros)].slice(0, 7);
+        }
+
+        function gerarModeloSequencia1Par() {
+            const numeros = [];
+            
+            // Sequência de 3-4 números
+            const inicio = Math.floor(Math.random() * 28) + 1;
+            for (let i = 0; i < 4; i++) {
+                if (inicio + i <= 31) numeros.push(inicio + i);
+            }
+            
+            // 1 par de final igual
+            const final = Math.floor(Math.random() * 10).toString();
+            const candidatos = [];
+            for (let i = 1; i <= 31; i++) {
+                if (i.toString().endsWith(final) && !numeros.includes(i)) {
+                    candidatos.push(i);
+                }
+            }
+            if (candidatos.length >= 2) {
+                numeros.push(candidatos[0], candidatos[1]);
+            }
+            
+            // Completar
+            while (numeros.length < 7) {
+                let num;
+                do {
+                    num = Math.floor(Math.random() * 31) + 1;
+                } while (numeros.includes(num));
+                numeros.push(num);
+            }
+            
+            return [...new Set(numeros)].slice(0, 7);
+        }
+
+        function gerarModeloAlternado() {
+            const numeros = [];
+            const baixos = Array.from({length: 10}, (_, i) => i + 1);
+            const altos = Array.from({length: 11}, (_, i) => i + 21);
+            
+            for (let i = 0; i < 7; i++) {
+                if (i % 2 === 0) {
+                    // Baixo
+                    let num;
+                    do {
+                        num = baixos[Math.floor(Math.random() * baixos.length)];
+                    } while (numeros.includes(num));
+                    numeros.push(num);
+                } else {
+                    // Alto
+                    let num;
+                    do {
+                        num = altos[Math.floor(Math.random() * altos.length)];
+                    } while (numeros.includes(num));
+                    numeros.push(num);
+                }
+            }
+            
+            return numeros;
+        }
+
+        function gerarModeloCentralizado() {
+            const numeros = [];
+            const medios = Array.from({length: 10}, (_, i) => i + 11);
+            
+            // 4-5 médios
+            for (let i = 0; i < 5; i++) {
+                let num;
+                do {
+                    num = medios[Math.floor(Math.random() * medios.length)];
+                } while (numeros.includes(num));
+                numeros.push(num);
+            }
+            
+            // 1-2 extremos
+            const extremos = [1, 2, 3, 29, 30, 31];
+            for (let i = 0; i < 2; i++) {
+                let num;
+                do {
+                    num = extremos[Math.floor(Math.random() * extremos.length)];
+                } while (numeros.includes(num));
+                numeros.push(num);
+            }
+            
+            return numeros.slice(0, 7);
+        }
+
+        function gerarModeloDuplaSequencia() {
+            const numeros = [];
+            
+            // Primeira sequência (2-3 números)
+            const inicio1 = Math.floor(Math.random() * 8) + 1; // 1-8
+            for (let i = 0; i < 2; i++) {
+                numeros.push(inicio1 + i);
+            }
+            
+            // Segunda sequência (2-3 números)
+            const inicio2 = Math.floor(Math.random() * 8) + 12; // 12-19
+            for (let i = 0; i < 2; i++) {
+                numeros.push(inicio2 + i);
+            }
+            
+            // Completar com números esparsos
+            const dispersos = [22, 27, 30];
+            dispersos.forEach(num => {
+                if (numeros.length < 7 && !numeros.includes(num)) {
+                    numeros.push(num);
+                }
+            });
+            
+            // Completar se necessário
+            while (numeros.length < 7) {
+                let num;
+                do {
+                    num = Math.floor(Math.random() * 31) + 1;
+                } while (numeros.includes(num));
+                numeros.push(num);
+            }
+            
+            return numeros.slice(0, 7);
+        }
+
+        function gerarModeloEspelhadoAvancado() {
+            const numeros = [];
+            const pares = [[1,31], [2,30], [3,29], [4,28], [5,27], [6,26]];
+            
+            // 3 pares completos + 1 número central
+            for (let i = 0; i < 3; i++) {
+                const par = pares[Math.floor(Math.random() * pares.length)];
+                numeros.push(par[0], par[1]);
+                pares.splice(pares.indexOf(par), 1);
+            }
+            
+            // 1 número do meio
+            numeros.push(16);
+            
+            return numeros.slice(0, 7);
+        }
+
+        function gerarModeloFinalRepetidoExtremo() {
+            const numeros = [];
+            const finais = ['1', '7', '2'];
+            
+            finais.forEach(final => {
+                const candidatos = [];
+                for (let i = 1; i <= 31; i++) {
+                    if (i.toString().endsWith(final)) {
+                        candidatos.push(i);
+                    }
+                }
+                
+                // Pegar pelo menos 2 de cada final
+                if (candidatos.length >= 2) {
+                    for (let j = 0; j < 2 && numeros.length < 7; j++) {
+                        const num = candidatos[Math.floor(Math.random() * candidatos.length)];
+                        if (!numeros.includes(num)) {
+                            numeros.push(num);
+                        }
+                    }
+                }
+            });
+            
+            // Completar se necessário
+            while (numeros.length < 7) {
+                let num;
+                do {
+                    num = Math.floor(Math.random() * 31) + 1;
+                } while (numeros.includes(num));
+                numeros.push(num);
+            }
+            
+            return numeros.slice(0, 7);
+        }
+
+        function gerarModeloEscadinhaFinalRepetido() {
+            const numeros = [];
+            
+            // Escadinha de 4-5 números
+            const inicio = Math.floor(Math.random() * 27) + 1;
+            for (let i = 0; i < 4; i++) {
+                if (inicio + i <= 31) {
+                    numeros.push(inicio + i);
+                }
+            }
+            
+            // 2 números com final repetido
+            const final = Math.floor(Math.random() * 10).toString();
+            const candidatos = [];
+            for (let i = 1; i <= 31; i++) {
+                if (i.toString().endsWith(final) && !numeros.includes(i)) {
+                    candidatos.push(i);
+                }
+            }
+            
+            for (let i = 0; i < 2 && candidatos.length > 0; i++) {
+                const num = candidatos.splice(Math.floor(Math.random() * candidatos.length), 1)[0];
+                numeros.push(num);
+            }
+            
+            // Completar
+            while (numeros.length < 7) {
+                let num;
+                do {
+                    num = Math.floor(Math.random() * 31) + 1;
+                } while (numeros.includes(num));
+                numeros.push(num);
+            }
+            
+            return numeros.slice(0, 7);
+        }
+
+        function gerarModeloSoPares() {
+            const numeros = [];
+            const pares = [];
+            for (let i = 2; i <= 30; i += 2) {
+                pares.push(i);
+            }
+            
+            while (numeros.length < 7) {
+                const num = pares[Math.floor(Math.random() * pares.length)];
+                if (!numeros.includes(num)) {
+                    numeros.push(num);
+                }
+            }
+            
+            return numeros;
+        }
+
+        function gerarModeloSoImpares() {
+            const numeros = [];
+            const impares = [];
+            for (let i = 1; i <= 31; i += 2) {
+                impares.push(i);
+            }
+            
+            while (numeros.length < 7) {
+                const num = impares[Math.floor(Math.random() * impares.length)];
+                if (!numeros.includes(num)) {
+                    numeros.push(num);
+                }
+            }
+            
+            return numeros;
+        }
+
+        // Exibir jogos gerados por modelos
+        function exibirJogosPorModelos(jogos) {
+            const container = document.getElementById('resultadosJogosModelos');
+            const lista = document.getElementById('listaJogosModelos');
+            
+            lista.innerHTML = '';
+            
+            if (jogos.length === 0) {
+                lista.innerHTML = '<p class="text-gray-500 text-center py-4">Nenhum jogo foi gerado por modelos</p>';
+                container.classList.remove('hidden');
+                return;
+            }
+            
+            jogos.forEach((jogo, index) => {
+                const jogoDiv = document.createElement('div');
+                jogoDiv.className = 'palpite-card border-2 border-orange-200';
+                
+                jogoDiv.innerHTML = `
+                    <div class="flex justify-between items-center mb-2">
+                        <span class="font-bold text-orange-700">Jogo ${index + 1} - Modelo ${jogo.modelo}</span>
+                        <div class="text-xs text-gray-600">
+                            ${jogo.pares}P/${jogo.impares}I
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-2 mb-2">
+                        <div class="flex flex-wrap gap-1">
+                            ${jogo.numeros.map(num => 
+                                `<div class="numero-palpite bg-orange-500">${num.toString().padStart(2, '0')}</div>`
+                            ).join('')}
+                        </div>
+                        <div class="mes-palpite bg-orange-400">${MESES[jogo.mes - 1].substring(0, 3)}</div>
+                    </div>
+                    <div class="text-xs text-gray-600">
+                        ${jogo.nomeModelo}
+                    </div>
+                `;
+                
+                lista.appendChild(jogoDiv);
+            });
+            
+            window.jogosPorModelos = jogos;
+            container.classList.remove('hidden');
+        }
+
+        // Adicionar jogos por modelos aos meus jogos
+        function adicionarTodosJogosPorModelos() {
+            if (window.jogosPorModelos) {
+                window.jogosPorModelos.forEach(jogo => {
+                    jogosAdicionados.push(jogo);
+                });
+                
+                atualizarVisualizacaoJogos();
+                atualizarCustoTotal();
+                showCustomAlert('✅ Sucesso', `${window.jogosPorModelos.length} jogos por modelos consolidados adicionados!`);
+            }
+        }
+
+        // 🔢 FUNÇÕES DA SEÇÃO 6: ANÁLISE E GERAÇÃO POR DÍGITOS ÚNICOS
+
+        // Gerar jogos por dígitos únicos
+        function gerarJogosPorDigitos() {
+            if (!analiseDigitosRealizada) {
+                showCustomAlert('⚠️ Análise Não Realizada', 'A análise de dígitos únicos ainda não foi executada. Aguarde o carregamento automático.');
+                return;
+            }
+
+            const quantidade = parseInt(document.getElementById('quantidadeJogosDigitos').value);
+            const metaDigitos = document.getElementById('metaDigitos').value;
+            const estrategia = document.getElementById('estrategiaDigitos').value;
+            const mes = document.getElementById('mesDigitos').value;
+
+            const jogosGerados = [];
+
+            for (let i = 0; i < quantidade; i++) {
+                const jogo = gerarJogoPorDigitos(metaDigitos, estrategia, mes);
+                if (jogo) {
+                    jogosGerados.push(jogo);
+                }
+            }
+
+            exibirJogosPorDigitos(jogosGerados);
+        }
+
+        // Gerar jogo específico por dígitos
+        function gerarJogoPorDigitos(metaDigitos, estrategia, mesEscolhido) {
+            let targetDigitos;
+            
+            if (metaDigitos === 'automatico') {
+                targetDigitos = estatisticasDigitos.digitosMaisComum;
+            } else {
+                targetDigitos = parseInt(metaDigitos);
+            }
+
+            const numeros = [];
+            let tentativas = 0;
+            const maxTentativas = 100;
+
+            while (numeros.length < 7 && tentativas < maxTentativas) {
+                numeros.length = 0; // Limpar array
+                
+                // Gerar 7 números baseados na estratégia
+                switch (estrategia) {
+                    case 'frequente':
+                        gerarNumerosPorFrequencia(numeros, true);
+                        break;
+                    case 'equilibrada':
+                        gerarNumerosEquilibrados(numeros);
+                        break;
+                    case 'aleatoria':
+                        gerarNumerosAleatorios(numeros);
+                        break;
+                    case 'raro':
+                        gerarNumerosPorFrequencia(numeros, false);
+                        break;
+                }
+
+                // Verificar se atende a meta de dígitos únicos
+                const digitosUnicos = calcularDigitosUnicos(numeros);
+                if (digitosUnicos === targetDigitos) {
+                    break; // Encontrou combinação ideal
+                }
+                
+                tentativas++;
+            }
+
+            // Se não conseguiu gerar exatamente, usar aproximação
+            if (numeros.length !== 7) {
+                gerarNumerosAleatorios(numeros);
+            }
+
+            // Determinar mês
+            let mesJogo;
+            if (mesEscolhido === 'aleatorio') {
+                mesJogo = Math.floor(Math.random() * 12) + 1;
+            } else {
+                mesJogo = parseInt(mesEscolhido);
+            }
+
+            const digitosFinais = calcularDigitosUnicos(numeros);
+
+            return {
+                id: Date.now() + Math.random(),
+                numeros: [...new Set(numeros)].sort((a, b) => a - b).slice(0, 7),
+                mes: mesJogo,
+                custo: valorAposta,
+                pares: numeros.filter(n => n % 2 === 0).length,
+                impares: numeros.filter(n => n % 2 !== 0).length,
+                origem: `Dígitos: ${digitosFinais}d (meta: ${targetDigitos}d)`,
+                digitosUnicos: digitosFinais,
+                metaDigitos: targetDigitos,
+                estrategia: estrategia
+            };
+        }
+
+        // Funções auxiliares para geração por dígitos
+        function gerarNumerosPorFrequencia(numeros, usarFrequentes) {
+            const digitosOrdenados = Object.entries(estatisticasDigitos.frequenciaIndividual)
+                .sort((a, b) => usarFrequentes ? b[1] - a[1] : a[1] - b[1])
+                .map(entry => parseInt(entry[0]));
+
+            // Preferir números que contenham os dígitos mais/menos frequentes
+            const numerosPreferidos = [];
+            for (let i = 1; i <= 31; i++) {
+                const digitosNum = i.toString().padStart(2, '0').split('').map(d => parseInt(d));
+                const score = digitosNum.reduce((sum, digito) => {
+                    const posicao = digitosOrdenados.indexOf(digito);
+                    return sum + (usarFrequentes ? (10 - posicao) : posicao);
+                }, 0);
+                numerosPreferidos.push({ numero: i, score });
+            }
+
+            numerosPreferidos.sort((a, b) => b.score - a.score);
+
+            // Selecionar os melhores números
+            for (let i = 0; i < 7 && i < numerosPreferidos.length; i++) {
+                numeros.push(numerosPreferidos[i].numero);
+            }
+        }
+
+        function gerarNumerosEquilibrados(numeros) {
+            // Misturar diferentes faixas de números para equilibrar dígitos
+            const baixos = Array.from({length: 10}, (_, i) => i + 1);
+            const medios = Array.from({length: 10}, (_, i) => i + 11);
+            const altos = Array.from({length: 11}, (_, i) => i + 21);
+
+            // 2 baixos, 3 médios, 2 altos
+            const distribucao = [
+                ...baixos.sort(() => Math.random() - 0.5).slice(0, 2),
+                ...medios.sort(() => Math.random() - 0.5).slice(0, 3),
+                ...altos.sort(() => Math.random() - 0.5).slice(0, 2)
+            ];
+
+            numeros.push(...distribucao);
+        }
+
+        function gerarNumerosAleatorios(numeros) {
+            while (numeros.length < 7) {
+                const num = Math.floor(Math.random() * 31) + 1;
+                if (!numeros.includes(num)) {
+                    numeros.push(num);
+                }
+            }
+        }
+
+        // Exibir jogos gerados por dígitos
+        function exibirJogosPorDigitos(jogos) {
+            const container = document.getElementById('resultadosJogosDigitos');
+            const lista = document.getElementById('listaJogosDigitos');
+            
+            lista.innerHTML = '';
+            
+            if (jogos.length === 0) {
+                lista.innerHTML = '<p class="text-gray-500 text-center py-4">Nenhum jogo foi gerado por dígitos</p>';
+                container.classList.remove('hidden');
+                return;
+            }
+            
+            jogos.forEach((jogo, index) => {
+                const jogoDiv = document.createElement('div');
+                jogoDiv.className = 'palpite-card border-2 border-indigo-200';
+                
+                const acertouMeta = jogo.digitosUnicos === jogo.metaDigitos;
+                const corMeta = acertouMeta ? 'text-green-600' : 'text-orange-600';
+                
+                jogoDiv.innerHTML = `
+                    <div class="flex justify-between items-center mb-2">
+                        <span class="font-bold text-indigo-700">Jogo ${index + 1} - ${jogo.estrategia}</span>
+                        <div class="text-xs text-gray-600">
+                            ${jogo.pares}P/${jogo.impares}I | <span class="${corMeta}">${jogo.digitosUnicos}d</span>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-2 mb-2">
+                        <div class="flex flex-wrap gap-1">
+                            ${jogo.numeros.map(num => 
+                                `<div class="numero-palpite bg-indigo-500">${num.toString().padStart(2, '0')}</div>`
+                            ).join('')}
+                        </div>
+                        <div class="mes-palpite bg-indigo-400">${MESES[jogo.mes - 1].substring(0, 3)}</div>
+                    </div>
+                    <div class="text-xs text-gray-600">
+                        ${jogo.origem} ${acertouMeta ? '✅' : '⚠️ (aproximação)'}
+                    </div>
+                `;
+                
+                lista.appendChild(jogoDiv);
+            });
+            
+            window.jogosPorDigitos = jogos;
+            container.classList.remove('hidden');
+        }
+
+        // Adicionar jogos por dígitos aos meus jogos
+        function adicionarTodosJogosPorDigitos() {
+            if (window.jogosPorDigitos) {
+                window.jogosPorDigitos.forEach(jogo => {
+                    jogosAdicionados.push(jogo);
+                });
+                
+                atualizarVisualizacaoJogos();
+                atualizarCustoTotal();
+                showCustomAlert('✅ Sucesso', `${window.jogosPorDigitos.length} jogos por estratégia de dígitos adicionados!`);
+            }
+        }
+
         function configurarEventListeners() {
             document.getElementById('atualizarValor').addEventListener('click', atualizarValorAposta);
             document.getElementById('limparJogo').addEventListener('click', limparJogo);
@@ -5168,26 +6611,33 @@
             document.getElementById('cancelarAtualizacao').addEventListener('click', cancelarAtualizacao);
 
             // ✨ Event listeners da SEÇÃO 3: ANÁLISE DE PADRÕES ✨
-            document.getElementById('analisarPadroesReais').addEventListener('click', analisarPadroesReais);
-            
             // Botões para selecionar/limpar padrões
             document.getElementById('selecionarTodosCrescente').addEventListener('click', selecionarTodosPadroesCrescente);
             document.getElementById('limparTodosCrescente').addEventListener('click', limparTodosPadroesCrescente);
             document.getElementById('selecionarTodosSorteio').addEventListener('click', selecionarTodosPadroesSorteio);
             document.getElementById('limparTodosSorteio').addEventListener('click', limparTodosPadroesSorteio);
             
-            // Geração de jogos por padrões
+            // Geração de jogos por padrões - CORRIGIDO
             document.getElementById('gerarJogosPadroes').addEventListener('click', gerarJogosPorPadroes);
             document.getElementById('adicionarTodosJogosPadroes').addEventListener('click', adicionarTodosJogosPorPadroes);
 
             // 📅 Event listeners da ANÁLISE DOS MESES DA SORTE
-            document.getElementById('atualizarAnaliseMeses').addEventListener('click', analisarMesesDaSorte);
             document.getElementById('analisarMesesJogos').addEventListener('change', analisarMesesDaSorte);
 
-            // 🔢 Event listeners da SEÇÃO 6: ANÁLISE E GERAÇÃO POR DÍGITOS ÚNICOS
-            document.getElementById('analisarDigitos').addEventListener('click', analisarDigitosUnicos);
+            // 🔢 Event listeners da SEÇÃO 6: ANÁLISE E GERAÇÃO POR DÍGITOS ÚNICOS - CORRIGIDO
             document.getElementById('gerarJogosDigitos').addEventListener('click', gerarJogosPorDigitos);
             document.getElementById('adicionarTodosJogosDigitos').addEventListener('click', adicionarTodosJogosPorDigitos);
+
+            // 🎲 Event listeners da SEÇÃO 7: MODELOS CONSOLIDADOS
+            document.getElementById('selecionarTodosModelos').addEventListener('click', selecionarTodosModelos);
+            document.getElementById('limparTodosModelos').addEventListener('click', limparTodosModelos);
+            document.getElementById('gerarJogosModelos').addEventListener('click', gerarJogosPorModelos);
+            document.getElementById('adicionarTodosJogosModelos').addEventListener('click', adicionarTodosJogosPorModelos);
+            
+            // Event listeners dos checkboxes de modelos
+            document.querySelectorAll('.modelo-checkbox').forEach(checkbox => {
+                checkbox.addEventListener('change', atualizarContadorModelos);
+            });
         }
     </script>
 </body>
