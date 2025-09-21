@@ -58,6 +58,85 @@
             margin: 2px;
         }
         
+        /* Volantes ULTRA COMPACTOS */
+        .volante-numero-btn {
+            width: 12px;
+            height: 12px;
+            background: linear-gradient(135deg, #D4B31A, #E6C533);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 5px;
+            cursor: pointer;
+            transition: all 0.15s;
+            border: 1px solid transparent;
+            margin: 0;
+        }
+        
+        .volante-numero-btn:hover {
+            transform: scale(1.15);
+            box-shadow: 0 1px 4px rgba(212, 179, 26, 0.4);
+        }
+        
+        .volante-numero-btn.selecionado {
+            background: linear-gradient(135deg, #dc2626, #ef4444);
+            box-shadow: 0 0 0 1px rgba(220, 38, 38, 0.4);
+            border-color: #dc2626;
+        }
+        
+        .volante-numero-btn.sorteado {
+            background: linear-gradient(135deg, #ef4444, #dc2626);
+            border: 1px solid #fbbf24;
+            position: relative;
+        }
+        
+        .volante-numero-btn.sorteado::after {
+            content: "●";
+            position: absolute;
+            top: -3px;
+            right: -3px;
+            font-size: 6px;
+            color: #fbbf24;
+        }
+        
+        /* Meses compactos para volante */
+        .volante-mes-btn {
+            min-width: 35px;
+            height: 20px;
+            background: linear-gradient(135deg, #fbbf24, #f59e0b);
+            color: white;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 7px;
+            cursor: pointer;
+            transition: all 0.15s;
+            border: 1px solid transparent;
+            margin: 1px;
+            padding: 0 2px;
+        }
+        
+        .volante-mes-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 1px 4px rgba(251, 191, 36, 0.4);
+        }
+        
+        .volante-mes-btn.selecionado {
+            background: linear-gradient(135deg, #dc2626, #ef4444);
+            box-shadow: 0 0 0 1px rgba(220, 38, 38, 0.3);
+            border-color: #dc2626;
+        }
+        
+        .volante-mes-btn.sorteado {
+            background: linear-gradient(135deg, #ef4444, #dc2626);
+            border: 1px solid #fbbf24;
+        }
+        
         .numero-btn:hover {
             transform: scale(1.1);
             box-shadow: 0 4px 15px rgba(212, 179, 26, 0.4);
@@ -322,7 +401,7 @@
         <!-- Header -->
         <div class="text-center mb-6">
 		<img src="https://i.postimg.cc/3R2PytCp/diadesorte.png" alt="Dia de Sorte Logo" class="logo">
-            <p class="text-gray-600">Gerador Completo: Manual + Minimalista com 19 Regras Avançadas</p>
+            <p class="text-gray-600">Gerador Completo com várias seções.</p>
             <div class="flex justify-center gap-4 mt-4 text-sm">
                 <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full">🔍 Análise dos Dígitos</span>
                 <span class="bg-green-100 text-green-800 px-3 py-1 rounded-full">🔄 Resultados Alterados</span>
@@ -369,7 +448,7 @@
                             <div class="text-sm font-medium text-diasorte mb-2">💡 Status do Sistema:</div>
                             <div class="text-sm text-green-600 font-bold">✅ Sistema configurado</div>
                             <div class="text-xs text-gray-600">Última atualização: <span id="ultimaAtualizacao">-</span></div>
-                            <div class="text-xs text-gray-600">Total de seções: <strong>7</strong> (Manual + Minimalista + Análise + Inimagináveis + Meses + Dígitos + Modelos)</div>
+                            <div class="text-xs text-gray-600">Total de seções: <strong>8</strong> (Manual + Minimalista + Análise + Inimagináveis + Meses + Dígitos + Modelos + Volantes)</div>
                         </div>
                         
                         <div class="bg-blue-50 p-3 rounded-lg">
@@ -1798,13 +1877,13 @@
                     
                     <div class="mt-4 grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
                         <div class="bg-white p-3 rounded border">
-                            🎯 Modelos selecionados: <span id="modelosCount" class="font-bold text-orange-600">8</span> de 24 disponíveis
+                            🎯 Modelos selecionados: <span id="modelosCount" class="font-bold text-orange-600">8</span> de 19 disponíveis
                         </div>
                         <div class="bg-white p-3 rounded border">
                             💡 Recomendação: Use 3-5 modelos para maior diversidade
                         </div>
                         <div class="bg-white p-3 rounded border text-orange-600">
-                            🆕 Novo: 24 modelos consolidados únicos
+                            🆕 Novo: 19 modelos consolidados únicos
                         </div>
                     </div>
                 </div>
@@ -1878,6 +1957,260 @@
                             <!-- Jogos por modelos aparecerão aqui -->
                         </div>
                     </div>
+                </div>
+            </div>
+
+            <!-- NOVA SEÇÃO: ANÁLISE DETALHADA DOS CONCURSOS -->
+            <div class="bg-white rounded-lg shadow-lg p-6 border-4 border-green-500">
+                <h2 class="text-2xl font-bold text-green-600 mb-6">📊 ANÁLISE DETALHADA DOS CONCURSOS (API OFICIAL)</h2>
+
+                <!-- Introdução -->
+                <div class="bg-green-50 p-4 rounded-lg border border-green-200 mb-6">
+                    <h3 class="text-lg font-bold text-green-800 mb-3">📈 Análise Completa dos Resultados Oficiais</h3>
+                    <p class="text-green-700 text-sm">
+                        Análise detalhada dos últimos concursos com dados 100% reais da API oficial da Caixa Econômica Federal.
+                        Inclui padrões, dígitos únicos, soma e distribuição par/ímpar para comparação e estratégia.
+                    </p>
+                </div>
+
+                <!-- Configurações da Análise -->
+                <div class="bg-gray-50 p-4 rounded-lg border border-gray-200 mb-6">
+                    <h3 class="text-lg font-bold text-gray-800 mb-4">⚙️ Configurações da Análise</h3>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Quantidade de Concursos:</label>
+                            <select id="quantidadeConcursosAnalise" class="w-full px-3 py-2 border border-gray-300 rounded text-base">
+                                <option value="6">Últimos 6 concursos</option>
+                                <option value="10" selected>Últimos 10 concursos</option>
+                                <option value="20">Últimos 20 concursos</option>
+                                <option value="50">Últimos 50 concursos</option>
+                                <option value="100">Últimos 100 concursos</option>
+                            </select>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Ordenação:</label>
+                            <select id="ordenacaoAnalise" class="w-full px-3 py-2 border border-gray-300 rounded text-base">
+                                <option value="recentes">Mais recentes primeiro</option>
+                                <option value="antigos">Mais antigos primeiro</option>
+                            </select>
+                        </div>
+                        
+                        <div class="flex items-end">
+                            <button id="executarAnaliseDetalhada" class="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-lg">
+                                📊 Analisar Concursos
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Status da Análise -->
+                    <div id="statusAnaliseDetalhada" class="hidden bg-blue-50 p-3 rounded-lg border border-blue-200">
+                        <div class="text-sm font-medium text-blue-800">🔄 Analisando concursos com dados reais...</div>
+                    </div>
+                </div>
+
+                <!-- Estatísticas do Último Concurso -->
+                <div id="ultimoConcursoEstatisticas" class="hidden bg-blue-50 p-4 rounded-lg border border-blue-200 mb-6">
+                    <h3 class="text-lg font-bold text-blue-800 mb-3">🎯 Estatísticas do Último Concurso (Para Comparação)</h3>
+                    
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4">
+                        <div class="bg-white p-3 rounded-lg border text-center">
+                            <div class="text-2xl font-bold text-green-600" id="ultimoPares">0</div>
+                            <div class="text-sm text-gray-600">Pares</div>
+                        </div>
+                        <div class="bg-white p-3 rounded-lg border text-center">
+                            <div class="text-2xl font-bold text-purple-600" id="ultimoImpares">0</div>
+                            <div class="text-sm text-gray-600">Ímpares</div>
+                        </div>
+                        <div class="bg-white p-3 rounded-lg border text-center">
+                            <div class="text-2xl font-bold text-blue-600" id="ultimoDigitosUnicos">0</div>
+                            <div class="text-sm text-gray-600">Dígitos Únicos</div>
+                        </div>
+                        <div class="bg-white p-3 rounded-lg border text-center">
+                            <div class="text-2xl font-bold text-orange-600" id="ultimoSoma">0</div>
+                            <div class="text-sm text-gray-600">Soma</div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white p-3 rounded-lg border">
+                        <div class="text-sm font-medium text-gray-700 mb-1">📍 Concurso <span id="ultimoConcursoInfo">-</span>:</div>
+                        <div class="text-lg font-mono font-bold text-gray-800" id="ultimosNumerosInfo">-</div>
+                        <div class="text-sm text-gray-600 mt-1">
+                            Mês: <span id="ultimoMesInfo" class="font-bold">-</span> | 
+                            Data: <span id="ultimaDataInfo" class="font-bold">-</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tabela de Análise Detalhada -->
+                <div id="resultadosAnaliseDetalhada" class="hidden">
+                    <div class="flex justify-between items-center mb-4">
+                        <h4 class="font-bold text-green-800">📋 Tabela de Análise Detalhada:</h4>
+                        <div class="flex gap-2">
+                            <button id="exportarCSV" class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-2 rounded text-sm">
+                                📁 Exportar CSV
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-white border border-green-200 rounded-lg overflow-x-auto">
+                        <table class="w-full text-sm">
+                            <thead class="bg-green-100">
+                                <tr>
+                                    <th class="px-3 py-2 text-left font-bold text-green-800">Concurso</th>
+                                    <th class="px-3 py-2 text-left font-bold text-green-800">Data</th>
+                                    <th class="px-3 py-2 text-left font-bold text-green-800">Dezenas</th>
+                                    <th class="px-3 py-2 text-left font-bold text-green-800">Mês</th>
+                                    <th class="px-3 py-2 text-center font-bold text-green-800">Dígitos Únicos</th>
+                                    <th class="px-3 py-2 text-center font-bold text-green-800">Pares</th>
+                                    <th class="px-3 py-2 text-center font-bold text-green-800">Ímpares</th>
+                                    <th class="px-3 py-2 text-center font-bold text-green-800">Soma</th>
+                                    <th class="px-3 py-2 text-left font-bold text-green-800">Padrão Início</th>
+                                    <th class="px-3 py-2 text-left font-bold text-green-800">Padrão Final</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tabelaAnaliseDetalhada">
+                                <!-- Dados serão inseridos aqui -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Aviso para Carregar Dados -->
+                <div id="avisoCarregarDadosAnalise" class="bg-yellow-50 p-6 rounded-lg border-2 border-yellow-300 text-center">
+                    <div class="text-2xl mb-4">⚠️</div>
+                    <h3 class="text-lg font-bold text-yellow-800 mb-2">Dados Não Carregados</h3>
+                    <p class="text-yellow-700 mb-4">
+                        Para usar a análise detalhada, primeiro carregue os dados reais dos concursos.
+                    </p>
+                    <p class="text-sm text-yellow-600">
+                        Clique em "🔄 Atualizar" na seção do último resultado no topo da página.
+                    </p>
+                </div>
+            </div>
+
+            <!-- SEÇÃO 8: VOLANTES VISUAIS COMPARATIVOS -->
+            <div class="bg-white rounded-lg shadow-lg p-6 border-4 border-cyan-500">
+                <h2 class="text-2xl font-bold text-cyan-600 mb-6">🎮 SEÇÃO 8: VOLANTES VISUAIS COMPARATIVOS</h2>
+
+                <!-- Introdução -->
+                <div class="bg-cyan-50 p-4 rounded-lg border border-cyan-200 mb-6">
+                    <h3 class="text-lg font-bold text-cyan-800 mb-3">🎯 Simulador de Volantes com Histórico Visual</h3>
+                    <p class="text-cyan-700 text-sm">
+                        Crie jogos usando volantes visuais que mostram automaticamente os números dos últimos sorteios destacados.
+                        Compare visualmente e gere jogos com análise estatística em tempo real.
+                    </p>
+                </div>
+
+                <!-- Configurações dos Volantes -->
+                <div class="bg-gray-50 p-4 rounded-lg border border-gray-200 mb-6">
+                    <h3 class="text-lg font-bold text-gray-800 mb-4">⚙️ Configurações dos Volantes</h3>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Quantidade de Volantes:</label>
+                            <select id="quantidadeVolantes" class="w-full px-3 py-2 border border-gray-300 rounded text-base">
+                                <option value="1" selected>1 volante</option>
+                                <option value="2">2 volantes</option>
+                                <option value="3">3 volantes</option>
+                                <option value="4">4 volantes</option>
+                                <option value="5">5 volantes</option>
+                                <option value="6">6 volantes</option>
+                            </select>
+                            <div class="text-xs text-gray-600 mt-1">
+                                💡 Cada volante mostrará um resultado diferente
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Mês da Sorte:</label>
+                            <select id="mesVolantes" class="w-full px-3 py-2 border border-gray-300 rounded text-base">
+                                <option value="auto">🎯 Sugestão por Frequência</option>
+                                <option value="1">Janeiro</option>
+                                <option value="2">Fevereiro</option>
+                                <option value="3">Março</option>
+                                <option value="4">Abril</option>
+                                <option value="5">Maio</option>
+                                <option value="6">Junho</option>
+                                <option value="7">Julho</option>
+                                <option value="8">Agosto</option>
+                                <option value="9">Setembro</option>
+                                <option value="10">Outubro</option>
+                                <option value="11">Novembro</option>
+                                <option value="12">Dezembro</option>
+                            </select>
+                        </div>
+                        
+                        <div class="flex items-end">
+                            <button id="gerarVolantes" class="w-full bg-cyan-600 hover:bg-cyan-700 text-white font-bold py-2 px-4 rounded-lg">
+                                🎮 Gerar Volantes
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Toggle para números sorteados -->
+                    <div class="bg-orange-50 border border-orange-200 rounded-lg p-3">
+                        <label class="flex items-center text-sm">
+                            <input type="checkbox" id="permitirSorteadosVolantes" class="mr-2">
+                            <span class="text-orange-700">🔓 Permitir selecionar números já sorteados (destacados em laranja)</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Frequência dos Meses -->
+                <div id="frequenciaMeses" class="hidden bg-blue-50 p-4 rounded-lg border border-blue-200 mb-6">
+                    <h3 class="text-lg font-bold text-blue-800 mb-3">📊 Frequência dos Meses da Sorte</h3>
+                    <div id="rankingMesesVolantes" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 text-sm">
+                        <!-- Frequência dos meses será inserida aqui -->
+                    </div>
+                </div>
+
+                <!-- Análise Estatística em Tempo Real -->
+                <div id="analiseTempoReal" class="hidden bg-gradient-to-r from-green-50 to-blue-50 p-4 rounded-lg border border-green-200 mb-6">
+                    <h3 class="text-lg font-bold text-green-800 mb-3">📈 Análise Estatística em Tempo Real</h3>
+                    
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4">
+                        <div class="bg-white p-3 rounded-lg border text-center">
+                            <div class="text-2xl font-bold text-green-600" id="numerosVolanteSelecionados">0</div>
+                            <div class="text-sm text-gray-600">Números</div>
+                        </div>
+                        <div class="bg-white p-3 rounded-lg border text-center">
+                            <div class="text-2xl font-bold text-blue-600" id="paresVolante">0</div>
+                            <div class="text-sm text-gray-600">Pares</div>
+                        </div>
+                        <div class="bg-white p-3 rounded-lg border text-center">
+                            <div class="text-2xl font-bold text-purple-600" id="imparesVolante">0</div>
+                            <div class="text-sm text-gray-600">Ímpares</div>
+                        </div>
+                        <div class="bg-white p-3 rounded-lg border text-center">
+                            <div class="text-2xl font-bold text-orange-600" id="digitosUnicosVolante">0</div>
+                            <div class="text-sm text-gray-600">Dígitos Únicos</div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white p-3 rounded-lg border">
+                        <div class="text-sm font-medium text-gray-700 mb-1">🎯 Estratégia Detectada:</div>
+                        <div id="estrategiaDetectada" class="text-lg font-bold text-green-700">Selecione 7 números para análise</div>
+                    </div>
+                </div>
+
+                <!-- Container dos Volantes -->
+                <div id="containerVolantes" class="hidden space-y-6 mb-6">
+                    <!-- Volantes serão gerados dinamicamente aqui -->
+                </div>
+
+                <!-- Botões de Ação -->
+                <div id="acoesVolantes" class="hidden flex flex-wrap gap-3">
+                    <button id="limparTodosVolantes" class="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded-lg">
+                        🗑️ Limpar Todos
+                    </button>
+                    <button id="randomizarVolantes" class="bg-purple-500 hover:bg-purple-600 text-white px-4 py-2 rounded-lg">
+                        🎲 Randomizar Atual
+                    </button>
+                    <button id="adicionarJogosVolantes" class="bg-cyan-600 hover:bg-cyan-700 text-white px-4 py-2 rounded-lg disabled:opacity-50" disabled>
+                        ➕ Adicionar Jogos aos Meus Jogos
+                    </button>
                 </div>
             </div>
 
@@ -2436,16 +2769,37 @@
 										<div class="border-2 border-emerald-400 rounded-lg p-4">
 											<div class="flex items-center mb-2">
 												<span class="text-2xl mr-2">🎯</span>
-												<h3 class="text-lg font-bold text-emerald-600">SEÇÃO 7: MODELOS CONSOLIDADOS</h3>
+												<h3 class="text-lg font-bold text-emerald-600">
+													SEÇÃO 7: MODELOS CONSOLIDADOS (24 ESTRATÉGIAS ÚNICAS)
+												</h3>
 											</div>
 											<p class="text-gray-700 text-sm mb-2">
-												24 modelos únicos para gerar jogos com estratégias específicas de distribuição de números.
-												Cada modelo segue uma lógica diferente de seleção e agrupamento.
+												24 modelos únicos para gerar jogos com estratégias específicas de distribuição de números. 
+												Cada modelo segue uma lógica própria de seleção e agrupamento, combinando baixas, médias, altas, sequências, pares, ímpares e padrões híbridos.
 											</p>
 											<div class="text-xs text-green-600">
-												✅ 24 estratégias consolidadas • ✅ Seleção múltipla de modelos • ✅ Recomendação: usar 3-5 modelos
+												✅ 24 estratégias consolidadas • ✅ Seleção múltipla de modelos • ✅ Recomendação: usar 3-5 modelos • 🆕 Inclui 5 novos modelos exclusivos
 											</div>
 										</div>
+
+										<!-- Seção 8 -->
+										<div class="border-2 border-indigo-400 rounded-lg p-4">
+											<div class="flex items-center mb-2">
+												<span class="text-2xl mr-2">🖼️</span>
+												<h3 class="text-lg font-bold text-indigo-600">
+													SEÇÃO 8: VOLANTES VISUAIS COMPARATIVOS
+												</h3>
+											</div>
+											<p class="text-gray-700 text-sm mb-2">
+												Ferramenta visual interativa para comparar resultados históricos do Dia de Sorte. 
+												Permite gerar até 6 volantes simultâneos, destacar concursos passados e analisar padrões em tempo real.
+											</p>
+											<div class="text-xs text-indigo-600">
+												✅ Múltiplos volantes (1-6) • ✅ Destaque automático por concurso • ✅ Análise em tempo real <br>
+												✅ Frequência de meses • ✅ Randomização inteligente • ✅ Totalmente responsivo
+											</div>
+</div>
+										
                                     </div>
 
                                     <!-- Instruções Importantes -->
@@ -4577,7 +4931,7 @@
                             </p>
                         </div>
 
-                        <!-- Grid das 7 Seções -->
+                        <!-- Grid das 8 Seções -->
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
                             <!-- Seção 1 -->
                             <div class="border-2 border-diasorte rounded-lg p-4">
@@ -4671,10 +5025,24 @@
                                     <h3 class="text-lg font-bold text-orange-600">SEÇÃO 7: MODELOS CONSOLIDADOS</h3>
                                 </div>
                                 <p class="text-gray-700 text-sm mb-2">
-                                    24 modelos únicos para gerar jogos com estratégias específicas de distribuição e agrupamento de números.
+                                    19 modelos únicos para gerar jogos com estratégias específicas de distribuição e agrupamento de números.
                                 </p>
                                 <div class="text-xs text-blue-600">
-                                    ✅ 24 modelos únicos • ✅ Estratégias consolidadas • ✅ Seleção customizada
+                                    ✅ 19 modelos únicos • ✅ Estratégias consolidadas • ✅ Seleção customizada
+                                </div>
+                            </div>
+
+                            <!-- Seção 8 -->
+                            <div class="border-2 border-cyan-500 rounded-lg p-4">
+                                <div class="flex items-center mb-2">
+                                    <span class="text-2xl mr-2">🎮</span>
+                                    <h3 class="text-lg font-bold text-cyan-600">SEÇÃO 8: VOLANTES VISUAIS</h3>
+                                </div>
+                                <p class="text-gray-700 text-sm mb-2">
+                                    Simulador de volantes visuais que compara automaticamente com resultados históricos destacados.
+                                </p>
+                                <div class="text-xs text-blue-600">
+                                    ✅ Múltiplos volantes • ✅ Histórico destacado • ✅ Análise em tempo real
                                 </div>
                             </div>
                         </div>
@@ -6566,6 +6934,644 @@
             }
         }
 
+        // 🎮 FUNÇÕES DA SEÇÃO 8: VOLANTES VISUAIS COMPARATIVOS
+        let volantesAtivos = [];
+        let volanteAtualIndex = 0;
+
+        function gerarVolantesVisuais() {
+            const quantidade = parseInt(document.getElementById('quantidadeVolantes').value);
+            const mesEscolhido = document.getElementById('mesVolantes').value;
+            
+            // Limpar volantes anteriores
+            volantesAtivos = [];
+            volanteAtualIndex = 0;
+            
+            // Obter os últimos resultados para destacar
+            const ultimosResultados = obterUltimosResultados(quantidade);
+            
+            // Mostrar frequência dos meses
+            if (mesEscolhido === 'auto') {
+                mostrarFrequenciaMeses();
+            }
+            
+            // Gerar volantes
+            for (let i = 0; i < quantidade; i++) {
+                const volante = {
+                    id: `volante-${i}`,
+                    indice: i,
+                    numerosSelecionados: [],
+                    mesSelecionado: null,
+                    resultadoDestacado: ultimosResultados[i] || null,
+                    historico: []
+                };
+                volantesAtivos.push(volante);
+            }
+            
+            // Criar interface dos volantes
+            criarInterfaceVolantes();
+            
+            // Mostrar controles
+            document.getElementById('analiseTempoReal').classList.remove('hidden');
+            document.getElementById('acoesVolantes').classList.remove('hidden');
+            
+            // Atualizar análise inicial
+            atualizarAnaliseTempoReal();
+        }
+
+        function obterUltimosResultados(quantidade) {
+            const resultados = [];
+            
+            if (todosResultados && todosResultados.length > 0) {
+                // Usar dados reais dos últimos concursos
+                for (let i = 0; i < quantidade && i < todosResultados.length; i++) {
+                    const concurso = todosResultados[todosResultados.length - 1 - i];
+                    if (concurso && concurso.listaDezenas) {
+                        resultados.push({
+                            concurso: concurso.numero,
+                            numeros: concurso.listaDezenas.map(n => parseInt(n)),
+                            mes: converterNomeMesParaNumero(concurso.nomeTimeCoracaoMesSorte),
+                            data: concurso.dataApuracao
+                        });
+                    }
+                }
+            } else if (ultimoResultado) {
+                // Usar apenas o último resultado conhecido
+                resultados.push({
+                    concurso: ultimoResultado.numero,
+                    numeros: ultimoResultado.listaDezenas.map(n => parseInt(n)),
+                    mes: converterNomeMesParaNumero(ultimoResultado.nomeTimeCoracaoMesSorte),
+                    data: ultimoResultado.dataApuracao
+                });
+            }
+            
+            return resultados;
+        }
+
+        function mostrarFrequenciaMeses() {
+            const container = document.getElementById('frequenciaMeses');
+            const ranking = document.getElementById('rankingMesesVolantes');
+            
+            // Simular frequência dos meses (usar dados reais se disponível)
+            const frequencias = {};
+            MESES.forEach((mes, index) => {
+                frequencias[index + 1] = Math.floor(Math.random() * 50) + 20;
+            });
+            
+            // Se temos dados reais, usar eles
+            if (todosResultados && todosResultados.length > 0) {
+                MESES.forEach((mes, index) => {
+                    frequencias[index + 1] = 0;
+                });
+                
+                todosResultados.forEach(concurso => {
+                    if (concurso.nomeTimeCoracaoMesSorte) {
+                        const mesIndex = MESES.findIndex(mes => 
+                            mes.toLowerCase() === concurso.nomeTimeCoracaoMesSorte.toLowerCase()
+                        );
+                        if (mesIndex !== -1) {
+                            frequencias[mesIndex + 1]++;
+                        }
+                    }
+                });
+            }
+            
+            // Ordenar por frequência
+            const ordenados = Object.entries(frequencias)
+                .map(([mes, freq]) => ({ mes: parseInt(mes), freq, nome: MESES[mes - 1] }))
+                .sort((a, b) => b.freq - a.freq);
+            
+            // Criar HTML COMPACTO
+            ranking.innerHTML = '';
+            ordenados.forEach((item, index) => {
+                const div = document.createElement('div');
+                div.className = `p-1 rounded border text-center text-xs ${index < 3 ? 'bg-green-100 border-green-300' : 'bg-gray-100'}`;
+                div.innerHTML = `
+                    <div class="font-bold">${item.nome.substring(0,3)}</div>
+                    <div class="text-xs text-gray-600">${item.freq}×</div>
+                `;
+                ranking.appendChild(div);
+            });
+            
+            container.classList.remove('hidden');
+        }
+
+        function criarInterfaceVolantes() {
+            const container = document.getElementById('containerVolantes');
+            container.innerHTML = '';
+            
+            // Container em grid para múltiplas colunas
+            container.className = 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2';
+            
+            volantesAtivos.forEach((volante, index) => {
+                const volanteDiv = document.createElement('div');
+                volanteDiv.className = 'bg-white rounded border border-cyan-300 p-2';
+                volanteDiv.id = volante.id;
+                
+                volanteDiv.innerHTML = `
+                    <!-- Cabeçalho COMPACTO -->
+                    <div class="flex justify-between items-center mb-2">
+                        <h4 class="text-sm font-bold text-cyan-700">V${index + 1}</h4>
+                        <div class="text-xs">
+                            <span class="text-cyan-600" id="${volante.id}-contador">0/7</span>
+                            ${volante.resultadoDestacado ? 
+                                `<span class="ml-1 text-orange-600">#${volante.resultadoDestacado.concurso}</span>` : 
+                                ''
+                            }
+                        </div>
+                    </div>
+                    
+                    ${volante.resultadoDestacado ? `
+                        <div class="bg-orange-50 border border-orange-200 rounded p-1 mb-2">
+                            <div class="text-xs text-orange-800 mb-1">
+                                🎯 #${volante.resultadoDestacado.concurso}:
+                            </div>
+                            <div class="flex flex-wrap gap-1">
+                                ${volante.resultadoDestacado.numeros.map(num => 
+                                    `<span class="inline-block bg-orange-200 text-orange-800 px-1 rounded text-xs font-bold">
+                                        ${num.toString().padStart(2, '0')}
+                                    </span>`
+                                ).join('')}
+                                <span class="inline-block bg-amber-200 text-amber-800 px-1 rounded text-xs font-bold">
+                                    ${MESES[volante.resultadoDestacado.mes - 1].substring(0,3)}
+                                </span>
+                            </div>
+                        </div>
+                    ` : ''}
+                    
+                    <!-- Grid SUPER COMPACTO de Números -->
+                    <div class="mb-2">
+                        <div class="text-xs text-gray-600 mb-1">Números:</div>
+                        <div class="grid grid-cols-6 gap-0.5" id="${volante.id}-grid">
+                            ${criarGridVolante(volante)}
+                        </div>
+                    </div>
+                    
+                    <!-- Mês SELECT COMPACTO -->
+                    <div class="mb-2">
+                        <div class="text-xs text-gray-600 mb-1">Mês:</div>
+                        <select class="w-full text-xs border border-gray-300 rounded p-1" id="${volante.id}-select-mes" onchange="selecionarMesVolante('${volante.id}', parseInt(this.value))">
+                            <option value="">Escolha...</option>
+                            ${MESES.map((mes, i) => {
+                                const mesNum = i + 1;
+                                const ehSorteado = volante.resultadoDestacado && volante.resultadoDestacado.mes === mesNum;
+                                const classe = ehSorteado ? '🎯' : '';
+                                return `<option value="${mesNum}">${classe}${mes}</option>`;
+                            }).join('')}
+                        </select>
+                    </div>
+                    
+                    <!-- Análise MINI COM SOMA -->
+                    <div class="bg-gray-50 rounded p-1">
+                        <div class="grid grid-cols-2 gap-1 text-xs text-center mb-1">
+                            <div><span class="font-bold text-green-600" id="${volante.id}-pares">0</span>P</div>
+                            <div><span class="font-bold text-purple-600" id="${volante.id}-impares">0</span>I</div>
+                        </div>
+                        <div class="grid grid-cols-2 gap-1 text-xs text-center">
+                            <div><span class="font-bold text-blue-600" id="${volante.id}-digitos">0</span>D</div>
+                            <div><span class="font-bold text-orange-600" id="${volante.id}-soma">0</span>S</div>
+                        </div>
+                    </div>
+                `;
+                
+                container.appendChild(volanteDiv);
+            });
+            
+            container.classList.remove('hidden');
+        }
+
+        function criarGridVolante(volante) {
+            let html = '';
+            
+            // Números 01-30 em grid 6x5
+            for (let i = 1; i <= 30; i++) {
+                const ehSorteado = volante.resultadoDestacado && volante.resultadoDestacado.numeros.includes(i);
+                const classe = ehSorteado ? 'numero-btn sorteado' : 'numero-btn';
+                
+                html += `
+                    <button class="${classe}" 
+                            data-volante="${volante.id}" 
+                            data-numero="${i}"
+                            onclick="toggleNumeroVolante('${volante.id}', ${i})">
+                        ${i.toString().padStart(2, '0')}
+                    </button>
+                `;
+            }
+            
+            // Número 31 separado
+            const eh31Sorteado = volante.resultadoDestacado && volante.resultadoDestacado.numeros.includes(31);
+            const classe31 = eh31Sorteado ? 'numero-btn sorteado' : 'numero-btn';
+            
+            html += `
+                <button class="${classe31}" 
+                        data-volante="${volante.id}" 
+                        data-numero="31"
+                        onclick="toggleNumeroVolante('${volante.id}', 31)">
+                    31
+                </button>
+            `;
+            
+            return html;
+        }
+
+        function criarMesesVolante(volante) {
+            let html = '';
+            
+            MESES.forEach((mes, index) => {
+                const mesNum = index + 1;
+                const ehSorteado = volante.resultadoDestacado && volante.resultadoDestacado.mes === mesNum;
+                const classe = ehSorteado ? 'mes-btn sorteado' : 'mes-btn';
+                
+                html += `
+                    <button class="${classe}" 
+                            data-volante="${volante.id}" 
+                            data-mes="${mesNum}"
+                            onclick="toggleMesVolante('${volante.id}', ${mesNum})">
+                        ${mes}
+                    </button>
+                `;
+            });
+            
+            return html;
+        }
+
+        function toggleNumeroVolante(volanteId, numero) {
+            const volante = volantesAtivos.find(v => v.id === volanteId);
+            if (!volante) return;
+            
+            const permitirSorteados = document.getElementById('permitirSorteadosVolantes').checked;
+            const ehSorteado = volante.resultadoDestacado && volante.resultadoDestacado.numeros.includes(numero);
+            
+            if (ehSorteado && !permitirSorteados) {
+                showCustomAlert('🎯 Número Sorteado', `O número ${numero.toString().padStart(2, '0')} saiu no concurso ${volante.resultadoDestacado.concurso}.`);
+                return;
+            }
+            
+            const btn = document.querySelector(`[data-volante="${volanteId}"][data-numero="${numero}"]`);
+            
+            if (volante.numerosSelecionados.includes(numero)) {
+                // Remover número
+                volante.numerosSelecionados = volante.numerosSelecionados.filter(n => n !== numero);
+                btn.classList.remove('selecionado');
+            } else if (volante.numerosSelecionados.length < 7) {
+                // Adicionar número
+                volante.numerosSelecionados.push(numero);
+                btn.classList.add('selecionado');
+            }
+            
+            atualizarContadorVolante(volante);
+            atualizarAnaliseVolante(volante);
+            atualizarAnaliseTempoReal();
+            atualizarBotaoAdicionarVolantes();
+        }
+
+        function toggleMesVolante(volanteId, mes) {
+            const volante = volantesAtivos.find(v => v.id === volanteId);
+            if (!volante) return;
+            
+            const permitirSorteados = document.getElementById('permitirSorteadosVolantes').checked;
+            const ehSorteado = volante.resultadoDestacado && volante.resultadoDestacado.mes === mes;
+            
+            if (ehSorteado && !permitirSorteados) {
+                showCustomAlert('🎯 Mês Sorteado', `O mês ${MESES[mes - 1]} saiu no concurso ${volante.resultadoDestacado.concurso}.`);
+                return;
+            }
+            
+            // Limpar seleção anterior
+            if (volante.mesSelecionado) {
+                const btnAnterior = document.querySelector(`[data-volante="${volanteId}"][data-mes="${volante.mesSelecionado}"]`);
+                if (btnAnterior) btnAnterior.classList.remove('selecionado');
+            }
+            
+            const btn = document.querySelector(`[data-volante="${volanteId}"][data-mes="${mes}"]`);
+            
+            if (volante.mesSelecionado === mes) {
+                volante.mesSelecionado = null;
+                btn.classList.remove('selecionado');
+            } else {
+                volante.mesSelecionado = mes;
+                btn.classList.add('selecionado');
+            }
+            
+            atualizarAnaliseTempoReal();
+            atualizarBotaoAdicionarVolantes();
+        }
+
+        function atualizarContadorVolante(volante) {
+            const contador = document.getElementById(`${volante.id}-contador`);
+            if (contador) {
+                contador.textContent = `${volante.numerosSelecionados.length}/7 números`;
+            }
+        }
+
+        function atualizarAnaliseVolante(volante) {
+            const pares = volante.numerosSelecionados.filter(n => n % 2 === 0).length;
+            const impares = volante.numerosSelecionados.filter(n => n % 2 !== 0).length;
+            const digitos = calcularDigitosUnicos(volante.numerosSelecionados);
+            const soma = volante.numerosSelecionados.reduce((acc, num) => acc + num, 0);
+            
+            const paresEl = document.getElementById(`${volante.id}-pares`);
+            const imparesEl = document.getElementById(`${volante.id}-impares`);
+            const digitosEl = document.getElementById(`${volante.id}-digitos`);
+            const somaEl = document.getElementById(`${volante.id}-soma`);
+            
+            if (paresEl) paresEl.textContent = pares;
+            if (imparesEl) imparesEl.textContent = impares;
+            if (digitosEl) digitosEl.textContent = digitos;
+            if (somaEl) somaEl.textContent = soma;
+        }
+
+        function atualizarAnaliseTempoReal() {
+            // Somar estatísticas de todos os volantes
+            let totalNumeros = 0;
+            let totalPares = 0;
+            let totalImpares = 0;
+            let totalDigitos = 0;
+            let estrategias = new Set();
+            
+            volantesAtivos.forEach(volante => {
+                totalNumeros += volante.numerosSelecionados.length;
+                totalPares += volante.numerosSelecionados.filter(n => n % 2 === 0).length;
+                totalImpares += volante.numerosSelecionados.filter(n => n % 2 !== 0).length;
+                
+                if (volante.numerosSelecionados.length === 7) {
+                    const digitosVolante = calcularDigitosUnicos(volante.numerosSelecionados);
+                    totalDigitos += digitosVolante;
+                    
+                    // Detectar estratégia do volante
+                    const pares = volante.numerosSelecionados.filter(n => n % 2 === 0).length;
+                    const impares = volante.numerosSelecionados.filter(n => n % 2 !== 0).length;
+                    
+                    if (pares === 3 && impares === 4) {
+                        estrategias.add('Padrão Histórico (3P/4I)');
+                    } else if (pares === 4 && impares === 3) {
+                        estrategias.add('Mais Pares (4P/3I)');
+                    } else if (pares === 2 && impares === 5) {
+                        estrategias.add('Mais Ímpares (2P/5I)');
+                    } else {
+                        estrategias.add('Estratégia Própria');
+                    }
+                }
+            });
+            
+            // Atualizar interface
+            document.getElementById('numerosVolanteSelecionados').textContent = totalNumeros;
+            document.getElementById('paresVolante').textContent = totalPares;
+            document.getElementById('imparesVolante').textContent = totalImpares;
+            document.getElementById('digitosUnicosVolante').textContent = Math.round(totalDigitos / Math.max(1, volantesAtivos.filter(v => v.numerosSelecionados.length === 7).length));
+            
+            // Estratégia detectada
+            const estrategiaEl = document.getElementById('estrategiaDetectada');
+            if (estrategias.size > 0) {
+                estrategiaEl.textContent = Array.from(estrategias).join(', ');
+                estrategiaEl.className = 'text-lg font-bold text-green-700';
+            } else {
+                estrategiaEl.textContent = 'Selecione 7 números em pelo menos um volante';
+                estrategiaEl.className = 'text-lg font-bold text-gray-700';
+            }
+        }
+
+        function atualizarBotaoAdicionarVolantes() {
+            const btn = document.getElementById('adicionarJogosVolantes');
+            const jogosCompletos = volantesAtivos.filter(v => v.numerosSelecionados.length === 7 && v.mesSelecionado).length;
+            
+            btn.disabled = jogosCompletos === 0;
+            
+            if (jogosCompletos > 0) {
+                btn.textContent = `➕ Adicionar ${jogosCompletos} Jogos aos Meus Jogos`;
+            } else {
+                btn.textContent = '➕ Adicionar Jogos aos Meus Jogos';
+            }
+        }
+
+        function limparTodosVolantes() {
+            volantesAtivos.forEach(volante => {
+                volante.numerosSelecionados = [];
+                volante.mesSelecionado = null;
+                
+                // Limpar interface
+                document.querySelectorAll(`[data-volante="${volante.id}"]`).forEach(btn => {
+                    btn.classList.remove('selecionado');
+                });
+                
+                atualizarContadorVolante(volante);
+                atualizarAnaliseVolante(volante);
+            });
+            
+            atualizarAnaliseTempoReal();
+            atualizarBotaoAdicionarVolantes();
+        }
+
+        function randomizarVolanteAtual() {
+            if (volanteAtualIndex >= volantesAtivos.length) return;
+            
+            const volante = volantesAtivos[volanteAtualIndex];
+            
+            // Limpar volante atual
+            volante.numerosSelecionados = [];
+            volante.mesSelecionado = null;
+            
+            document.querySelectorAll(`[data-volante="${volante.id}"]`).forEach(btn => {
+                btn.classList.remove('selecionado');
+            });
+            
+            const permitirSorteados = document.getElementById('permitirSorteadosVolantes').checked;
+            
+            // Gerar números aleatórios
+            const numerosDisponiveis = Array.from({length: 31}, (_, i) => i + 1);
+            if (!permitirSorteados && volante.resultadoDestacado) {
+                volante.resultadoDestacado.numeros.forEach(num => {
+                    const index = numerosDisponiveis.indexOf(num);
+                    if (index > -1) numerosDisponiveis.splice(index, 1);
+                });
+            }
+            
+            while (volante.numerosSelecionados.length < 7 && numerosDisponiveis.length > 0) {
+                const index = Math.floor(Math.random() * numerosDisponiveis.length);
+                const numero = numerosDisponiveis.splice(index, 1)[0];
+                volante.numerosSelecionados.push(numero);
+                
+                const btn = document.querySelector(`[data-volante="${volante.id}"][data-numero="${numero}"]`);
+                if (btn) btn.classList.add('selecionado');
+            }
+            
+            // Gerar mês aleatório
+            const mesesDisponiveis = Array.from({length: 12}, (_, i) => i + 1);
+            if (!permitirSorteados && volante.resultadoDestacado && volante.resultadoDestacado.mes) {
+                const index = mesesDisponiveis.indexOf(volante.resultadoDestacado.mes);
+                if (index > -1) mesesDisponiveis.splice(index, 1);
+            }
+            
+            if (mesesDisponiveis.length > 0) {
+                const mesAleatorio = mesesDisponiveis[Math.floor(Math.random() * mesesDisponiveis.length)];
+                volante.mesSelecionado = mesAleatorio;
+                
+                const btnMes = document.querySelector(`[data-volante="${volante.id}"][data-mes="${mesAleatorio}"]`);
+                if (btnMes) btnMes.classList.add('selecionado');
+            }
+            
+            atualizarContadorVolante(volante);
+            atualizarAnaliseVolante(volante);
+            atualizarAnaliseTempoReal();
+            atualizarBotaoAdicionarVolantes();
+            
+            // Avançar para próximo volante
+            volanteAtualIndex = (volanteAtualIndex + 1) % volantesAtivos.length;
+        }
+
+        function adicionarJogosVolantes() {
+            const jogosCompletos = volantesAtivos.filter(v => v.numerosSelecionados.length === 7 && v.mesSelecionado);
+            
+            if (jogosCompletos.length === 0) {
+                showCustomAlert('⚠️ Nenhum Jogo Completo', 'Complete pelo menos um volante com 7 números + mês para adicionar.');
+                return;
+            }
+            
+            let adicionados = 0;
+            
+            jogosCompletos.forEach((volante, index) => {
+                const jogo = {
+                    id: Date.now() + Math.random() + index,
+                    numeros: [...volante.numerosSelecionados].sort((a, b) => a - b),
+                    mes: volante.mesSelecionado,
+                    custo: valorAposta,
+                    pares: volante.numerosSelecionados.filter(n => n % 2 === 0).length,
+                    impares: volante.numerosSelecionados.filter(n => n % 2 !== 0).length,
+                    origem: `Volante Visual ${volante.indice + 1}${volante.resultadoDestacado ? ` (vs Concurso ${volante.resultadoDestacado.concurso})` : ''}`,
+                    digitosUnicos: calcularDigitosUnicos(volante.numerosSelecionados)
+                };
+                
+                jogosAdicionados.push(jogo);
+                adicionados++;
+            });
+            
+            atualizarVisualizacaoJogos();
+            atualizarCustoTotal();
+            
+            showCustomAlert('✅ Sucesso', `${adicionados} jogo(s) dos volantes visuais adicionados com sucesso!`);
+        }
+
+        // 📊 FUNÇÕES DA NOVA SEÇÃO: ANÁLISE DETALHADA DOS CONCURSOS
+
+        // Executar análise detalhada dos concursos
+        function executarAnaliseDetalhada() {
+            const quantidade = parseInt(document.getElementById('quantidadeConcursosAnalise').value);
+            const ordenacao = document.getElementById('ordenacaoAnalise').value;
+            
+            if (todosResultados.length === 0) {
+                showCustomAlert('⚠️ Sem Dados', 'Primeiro carregue os resultados clicando em "🔄 Recarregar" no cabeçalho.');
+                return;
+            }
+
+            // Mostrar status
+            document.getElementById('statusAnaliseDetalhada').classList.remove('hidden');
+
+            try {
+                // Selecionar concursos
+                let concursosSelecionados = todosResultados.slice(-quantidade);
+                if (ordenacao === 'antigos') {
+                    concursosSelecionados.reverse();
+                }
+
+                // Analisar último concurso para estatísticas
+                const ultimoConcurso = todosResultados[todosResultados.length - 1];
+                if (ultimoConcurso) {
+                    const numerosUltimo = ultimoConcurso.listaDezenas.map(n => parseInt(n));
+                    const paresUltimo = numerosUltimo.filter(n => n % 2 === 0).length;
+                    const imparesUltimo = numerosUltimo.filter(n => n % 2 !== 0).length;
+                    const digitosUltimo = calcularDigitosUnicos(numerosUltimo);
+                    const somaUltimo = numerosUltimo.reduce((acc, num) => acc + num, 0);
+
+                    // Atualizar estatísticas do último concurso
+                    document.getElementById('ultimoPares').textContent = paresUltimo;
+                    document.getElementById('ultimoImpares').textContent = imparesUltimo;
+                    document.getElementById('ultimoDigitosUnicos').textContent = digitosUltimo;
+                    document.getElementById('ultimoSoma').textContent = somaUltimo;
+                    document.getElementById('ultimoConcursoInfo').textContent = ultimoConcurso.numero;
+                    document.getElementById('ultimosNumerosInfo').textContent = 
+                        numerosUltimo.map(n => n.toString().padStart(2, '0')).join(' ');
+                    document.getElementById('ultimoMesInfo').textContent = ultimoConcurso.nomeTimeCoracaoMesSorte;
+                    document.getElementById('ultimaDataInfo').textContent = ultimoConcurso.dataApuracao;
+
+                    document.getElementById('ultimoConcursoEstatisticas').classList.remove('hidden');
+                }
+
+                // Gerar tabela
+                const tabela = document.getElementById('tabelaAnaliseDetalhada');
+                tabela.innerHTML = '';
+
+                concursosSelecionados.forEach(concurso => {
+                    const numeros = concurso.listaDezenas.map(n => parseInt(n));
+                    const numerosOrdenados = [...numeros].sort((a, b) => a - b);
+                    const pares = numeros.filter(n => n % 2 === 0).length;
+                    const impares = numeros.filter(n => n % 2 !== 0).length;
+                    const digitosUnicos = calcularDigitosUnicos(numeros);
+                    const soma = numeros.reduce((acc, num) => acc + num, 0);
+
+                    // Padrões
+                    const padraoInicio = numerosOrdenados.map(n => Math.floor(n / 10)).join('-');
+                    const padraoFinal = numerosOrdenados.map(n => n % 10).join('-');
+
+                    const row = document.createElement('tr');
+                    row.className = 'border-b border-green-100 hover:bg-green-50';
+                    row.innerHTML = `
+                        <td class="px-3 py-2 font-medium">${concurso.numero}</td>
+                        <td class="px-3 py-2">${concurso.dataApuracao}</td>
+                        <td class="px-3 py-2 font-mono">${numerosOrdenados.map(n => n.toString().padStart(2, '0')).join(' ')}</td>
+                        <td class="px-3 py-2">${concurso.nomeTimeCoracaoMesSorte}</td>
+                        <td class="px-3 py-2 text-center font-bold text-blue-600">${digitosUnicos}</td>
+                        <td class="px-3 py-2 text-center font-bold text-green-600">${pares}</td>
+                        <td class="px-3 py-2 text-center font-bold text-purple-600">${impares}</td>
+                        <td class="px-3 py-2 text-center font-bold text-orange-600">${soma}</td>
+                        <td class="px-3 py-2 font-mono text-xs">${padraoInicio}</td>
+                        <td class="px-3 py-2 font-mono text-xs">${padraoFinal}</td>
+                    `;
+                    tabela.appendChild(row);
+                });
+
+                // Mostrar resultados
+                document.getElementById('resultadosAnaliseDetalhada').classList.remove('hidden');
+                document.getElementById('avisoCarregarDadosAnalise').classList.add('hidden');
+
+                showCustomAlert('✅ Análise Concluída', `Análise detalhada executada com sucesso!\n\n📊 ${concursosSelecionados.length} concursos analisados\n🎯 Incluindo soma e dígitos únicos por jogo`);
+
+            } catch (error) {
+                console.error('❌ Erro na análise detalhada:', error);
+                showCustomAlert('❌ Erro na Análise', 'Erro ao processar análise detalhada. Verifique os dados carregados.');
+            } finally {
+                document.getElementById('statusAnaliseDetalhada').classList.add('hidden');
+            }
+        }
+
+        // Exportar CSV da análise detalhada
+        function exportarCSVAnalise() {
+            const quantidade = parseInt(document.getElementById('quantidadeConcursosAnalise').value);
+            
+            if (todosResultados.length === 0) {
+                showCustomAlert('⚠️ Sem Dados', 'Primeiro execute a análise detalhada.');
+                return;
+            }
+
+            const concursosSelecionados = todosResultados.slice(-quantidade);
+            
+            // Cabeçalho CSV
+            let csv = 'Concurso,Data,Dezenas,Mês,Dígitos Únicos,Pares,Ímpares,Soma,Padrão Início,Padrão Final\n';
+            
+            concursosSelecionados.forEach(concurso => {
+                const numeros = concurso.listaDezenas.map(n => parseInt(n));
+                const numerosOrdenados = [...numeros].sort((a, b) => a - b);
+                const pares = numeros.filter(n => n % 2 === 0).length;
+                const impares = numeros.filter(n => n % 2 !== 0).length;
+                const digitosUnicos = calcularDigitosUnicos(numeros);
+                const soma = numeros.reduce((acc, num) => acc + num, 0);
+                const padraoInicio = numerosOrdenados.map(n => Math.floor(n / 10)).join('-');
+                const padraoFinal = numerosOrdenados.map(n => n % 10).join('-');
+                
+                csv += `${concurso.numero},${concurso.dataApuracao},"${numerosOrdenados.map(n => n.toString().padStart(2, '0')).join(' ')}",${concurso.nomeTimeCoracaoMesSorte},${digitosUnicos},${pares},${impares},${soma},${padraoInicio},${padraoFinal}\n`;
+            });
+            
+            baixarArquivo(csv, 'dia-de-sorte-analise-detalhada.csv', 'text/csv');
+        }
+
         function configurarEventListeners() {
             document.getElementById('atualizarValor').addEventListener('click', atualizarValorAposta);
             document.getElementById('limparJogo').addEventListener('click', limparJogo);
@@ -6587,6 +7593,10 @@
             document.getElementById('downloadHTML').addEventListener('click', downloadHTML);
             document.getElementById('downloadTXT').addEventListener('click', downloadTXT);
             document.getElementById('downloadXLSX').addEventListener('click', downloadXLSX);
+
+            // 📊 Event listeners da ANÁLISE DETALHADA DOS CONCURSOS
+            document.getElementById('executarAnaliseDetalhada').addEventListener('click', executarAnaliseDetalhada);
+            document.getElementById('exportarCSV').addEventListener('click', exportarCSVAnalise);
             
             // Event listeners das regras minimalistas
             document.getElementById('selecionarTodas').addEventListener('click', selecionarTodasRegras);
@@ -6638,6 +7648,12 @@
             document.querySelectorAll('.modelo-checkbox').forEach(checkbox => {
                 checkbox.addEventListener('change', atualizarContadorModelos);
             });
+
+            // 🎮 Event listeners da SEÇÃO 8: VOLANTES VISUAIS COMPARATIVOS
+            document.getElementById('gerarVolantes').addEventListener('click', gerarVolantesVisuais);
+            document.getElementById('limparTodosVolantes').addEventListener('click', limparTodosVolantes);
+            document.getElementById('randomizarVolantes').addEventListener('click', randomizarVolanteAtual);
+            document.getElementById('adicionarJogosVolantes').addEventListener('click', adicionarJogosVolantes);
         }
     </script>
 </body>
