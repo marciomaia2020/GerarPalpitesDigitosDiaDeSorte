@@ -448,7 +448,7 @@
                             <div class="text-sm font-medium text-diasorte mb-2">💡 Status do Sistema:</div>
                             <div class="text-sm text-green-600 font-bold">✅ Sistema configurado</div>
                             <div class="text-xs text-gray-600">Última atualização: <span id="ultimaAtualizacao">-</span></div>
-                            <div class="text-xs text-gray-600">Total de seções: <strong>8</strong> (Manual + Minimalista + Análise + Inimagináveis + Meses + Dígitos + Modelos + Volantes)</div>
+                            <div class="text-xs text-gray-600">Total de seções: <strong>9</strong> (Manual + Minimalista + Análise + Inimagináveis + Meses + Dígitos + Modelos + Volantes + Pocisão)</div>
                         </div>
                         
                         <div class="bg-blue-50 p-3 rounded-lg">
@@ -2213,6 +2213,243 @@
                     </button>
                 </div>
             </div>
+			
+			<!-- SEÇÃO 9: ANÁLISE POSICIONAL E GERAÇÃO ESTRATÉGICA -->
+            <div class="bg-white rounded-lg shadow-lg p-6 border-4 border-emerald-500">
+                <h2 class="text-2xl font-bold text-emerald-600 mb-6">🎯 SEÇÃO 9: ANÁLISE POSICIONAL E GERAÇÃO ESTRATÉGICA</h2>
+
+                <!-- Introdução -->
+                <div class="bg-emerald-50 p-4 rounded-lg border border-emerald-200 mb-6">
+                    <h3 class="text-lg font-bold text-emerald-800 mb-3">📊 Análise por Posição do Último Sorteio</h3>
+                    <p class="text-emerald-700 text-sm">
+                        Esta seção analisa qual número saiu em cada posição (P1 a P7) do último sorteio e gera jogos 
+                        usando apenas os números que NÃO saíram em cada posição específica. Estratégia baseada na 
+                        teoria de que números tendem a não repetir na mesma posição consecutivamente.
+                    </p>
+                </div>
+
+                <!-- Análise do Último Sorteio -->
+                <div id="analiseUltimoSorteio" class="bg-gradient-to-r from-blue-50 to-emerald-50 p-6 rounded-lg border-2 border-emerald-200 mb-6">
+                    <h3 class="text-xl font-bold text-emerald-800 mb-4 text-center">🔍 Análise do Último Sorteio por Posição</h3>
+                    
+                    <!-- Dados do Último Sorteio -->
+                    <div class="bg-white p-4 rounded-lg border border-emerald-200 mb-4">
+                        <div class="text-center mb-3">
+                            <div class="text-lg font-bold text-emerald-700">
+                                Concurso <span id="concursoAnalisePosicional">-</span> - <span id="dataAnalisePosicional">-</span>
+                            </div>
+                            <div class="text-sm text-gray-600">Ordem de sorteio original</div>
+                        </div>
+                        
+                        <div class="grid grid-cols-7 gap-2 mb-4">
+                            <div class="text-center">
+                                <div class="text-sm font-bold text-emerald-700 mb-1">P1</div>
+                                <div class="numero-jogo text-lg" id="numeroP1">-</div>
+                            </div>
+                            <div class="text-center">
+                                <div class="text-sm font-bold text-emerald-700 mb-1">P2</div>
+                                <div class="numero-jogo text-lg" id="numeroP2">-</div>
+                            </div>
+                            <div class="text-center">
+                                <div class="text-sm font-bold text-emerald-700 mb-1">P3</div>
+                                <div class="numero-jogo text-lg" id="numeroP3">-</div>
+                            </div>
+                            <div class="text-center">
+                                <div class="text-sm font-bold text-emerald-700 mb-1">P4</div>
+                                <div class="numero-jogo text-lg" id="numeroP4">-</div>
+                            </div>
+                            <div class="text-center">
+                                <div class="text-sm font-bold text-emerald-700 mb-1">P5</div>
+                                <div class="numero-jogo text-lg" id="numeroP5">-</div>
+                            </div>
+                            <div class="text-center">
+                                <div class="text-sm font-bold text-emerald-700 mb-1">P6</div>
+                                <div class="numero-jogo text-lg" id="numeroP6">-</div>
+                            </div>
+                            <div class="text-center">
+                                <div class="text-sm font-bold text-emerald-700 mb-1">P7</div>
+                                <div class="numero-jogo text-lg" id="numeroP7">-</div>
+                            </div>
+                        </div>
+
+                        <div class="text-center">
+                            <div class="text-sm font-bold text-amber-700 mb-1">Mês da Sorte:</div>
+                            <div class="mes-jogo inline-block" id="mesAnalisePosicional">-</div>
+                        </div>
+                    </div>
+
+                    <!-- Resumo da Estratégia -->
+                    <div class="bg-yellow-50 p-4 rounded-lg border border-yellow-200">
+                        <h4 class="text-lg font-bold text-yellow-800 mb-2">💡 Estratégia Aplicada:</h4>
+                        <div class="text-sm text-yellow-700 space-y-1">
+                            <div>• <strong>P1:</strong> Usar números 01-31 EXCETO <span id="estrategiaP1" class="font-bold">-</span> (<span id="countP1" class="font-bold">30</span> opções)</div>
+                            <div>• <strong>P2:</strong> Usar números 01-31 EXCETO <span id="estrategiaP2" class="font-bold">-</span> (<span id="countP2" class="font-bold">30</span> opções)</div>
+                            <div>• <strong>P3:</strong> Usar números 01-31 EXCETO <span id="estrategiaP3" class="font-bold">-</span> (<span id="countP3" class="font-bold">30</span> opções)</div>
+                            <div>• <strong>P4:</strong> Usar números 01-31 EXCETO <span id="estrategiaP4" class="font-bold">-</span> (<span id="countP4" class="font-bold">30</span> opções)</div>
+                            <div>• <strong>P5:</strong> Usar números 01-31 EXCETO <span id="estrategiaP5" class="font-bold">-</span> (<span id="countP5" class="font-bold">30</span> opções)</div>
+                            <div>• <strong>P6:</strong> Usar números 01-31 EXCETO <span id="estrategiaP6" class="font-bold">-</span> (<span id="countP6" class="font-bold">30</span> opções)</div>
+                            <div>• <strong>P7:</strong> Usar números 01-31 EXCETO <span id="estrategiaP7" class="font-bold">-</span> (<span id="countP7" class="font-bold">30</span> opções)</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Configurações de Geração -->
+                <div class="bg-gray-50 p-4 rounded-lg border border-gray-200 mb-6">
+                    <h3 class="text-lg font-bold text-gray-800 mb-4">⚙️ Configurações de Geração</h3>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-4">
+							<div>
+								<label class="block text-sm font-medium text-gray-700 mb-1">Modo de Seleção:</label>
+								<select id="modoSelecaoPosicional" class="w-full px-3 py-2 border border-gray-300 rounded text-base">
+									<option value="automatico" selected>🎲 Automático (usar todos)</option>
+									<option value="manual">✋ Manual (selecionar)</option>
+								</select>
+							</div>
+
+							<div>
+								<label class="block text-sm font-medium text-gray-700 mb-1">Quantidade de Jogos:</label>
+								<select id="quantidadeJogosPosicional" class="w-full px-3 py-2 border border-gray-300 rounded text-base">
+									<option value="1">1 jogo</option>
+									<option value="3">3 jogos</option>
+									<option value="5" selected>5 jogos</option>
+									<option value="10">10 jogos</option>
+									<option value="15">15 jogos</option>
+									<option value="20">20 jogos</option>
+									<option value="25">25 jogos</option>
+									<option value="30">30 jogos</option>
+								</select>
+							</div>
+
+							<div>
+								<label class="block text-sm font-medium text-gray-700 mb-1">Mês da Sorte:</label>
+								<select id="mesPosicional" class="w-full px-3 py-2 border border-gray-300 rounded text-base">
+									<option value="aleatorio" selected>🎲 Aleatório</option>
+									<option value="diferente">🚫 Diferente do último</option>
+									<option value="1">Janeiro</option>
+									<option value="2">Fevereiro</option>
+									<option value="3">Março</option>
+									<option value="4">Abril</option>
+									<option value="5">Maio</option>
+									<option value="6">Junho</option>
+									<option value="7">Julho</option>
+									<option value="8">Agosto</option>
+									<option value="9">Setembro</option>
+									<option value="10">Outubro</option>
+									<option value="11">Novembro</option>
+									<option value="12">Dezembro</option>
+								</select>
+							</div>
+							
+							<div>
+								<label class="block text-sm font-medium text-gray-700 mb-1">🎯 Modo 30 Jogos:</label>
+								<div class="flex items-center space-x-2 mt-2">
+									<input type="checkbox" id="modoTrintaJogos" class="form-checkbox h-4 w-4 text-emerald-600">
+									<span class="text-sm text-gray-700">Sempre 30<br><span class="text-xs text-gray-500">Ignora quantidade</span></span>
+								</div>
+							</div>
+							
+							<div>
+								<label class="block text-sm font-medium text-gray-700 mb-1">🎨 Diversificação:</label>
+								<div class="flex items-center space-x-2 mt-2">
+									<input type="checkbox" id="diversificarPosicional" checked class="form-checkbox h-4 w-4 text-emerald-600">
+									<span class="text-sm text-gray-700">Automática<br><span class="text-xs text-gray-500">Mistura faixas</span></span>
+								</div>
+							</div>
+					</div>
+                        <div class="flex items-end">
+                            <button id="gerarJogosPosicional" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2 px-4 rounded-lg">
+                                🚀 Gerar Jogos
+                            </button>
+                        </div>
+                </div>
+
+                    <!-- Modo Manual: Selects por Posição -->
+                    <div id="selecaoPosicionalManual" class="hidden">
+                        <h4 class="text-lg font-bold text-gray-800 mb-3">✋ Seleção Manual por Posição</h4>
+                        <div class="text-sm text-gray-600 mb-3">
+                            Escolha um número para cada posição. Os selects mostram apenas os números que NÃO saíram naquela posição no último sorteio.
+                        </div>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-7 gap-3">
+                            <div>
+                                <label class="block text-sm font-bold text-emerald-700 mb-1">P1:</label>
+                                <select id="selectP1" class="w-full px-2 py-1 border border-emerald-300 rounded text-sm">
+                                    <option value="">Escolha...</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-bold text-emerald-700 mb-1">P2:</label>
+                                <select id="selectP2" class="w-full px-2 py-1 border border-emerald-300 rounded text-sm">
+                                    <option value="">Escolha...</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-bold text-emerald-700 mb-1">P3:</label>
+                                <select id="selectP3" class="w-full px-2 py-1 border border-emerald-300 rounded text-sm">
+                                    <option value="">Escolha...</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-bold text-emerald-700 mb-1">P4:</label>
+                                <select id="selectP4" class="w-full px-2 py-1 border border-emerald-300 rounded text-sm">
+                                    <option value="">Escolha...</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-bold text-emerald-700 mb-1">P5:</label>
+                                <select id="selectP5" class="w-full px-2 py-1 border border-emerald-300 rounded text-sm">
+                                    <option value="">Escolha...</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-bold text-emerald-700 mb-1">P6:</label>
+                                <select id="selectP6" class="w-full px-2 py-1 border border-emerald-300 rounded text-sm">
+                                    <option value="">Escolha...</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-bold text-emerald-700 mb-1">P7:</label>
+                                <select id="selectP7" class="w-full px-2 py-1 border border-emerald-300 rounded text-sm">
+                                    <option value="">Escolha...</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="mt-3 p-3 bg-blue-50 rounded-lg border border-blue-200">
+                            <div class="text-sm text-blue-700">
+                                💡 <strong>Modo Manual:</strong> Selecione um número diferente em cada posição. 
+                                O sistema garantirá que não haja duplicatas no jogo final.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Resultados dos Jogos Posicionais -->
+                <div id="resultadosJogosPosicional" class="hidden bg-emerald-50 p-6 rounded-lg border border-emerald-200 mb-6">
+                    <div class="flex justify-between items-center mb-4">
+                        <h4 class="font-bold text-emerald-800">🎯 Jogos Gerados por Análise Posicional:</h4>
+                        <button id="adicionarTodosJogosPosicional" class="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-lg">
+                            ➕ Adicionar Todos aos Meus Jogos
+                        </button>
+                    </div>
+                    
+                    <div class="bg-white border border-emerald-200 rounded-lg p-4 max-h-80 overflow-y-auto">
+                        <div id="listaJogosPosicional" class="space-y-2">
+                            <!-- Jogos posicionais aparecerão aqui -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Aviso para Carregar Dados -->
+				<div class="bg-emerald-50 p-4 rounded-lg border border-emerald-200 mb-6">
+					<div class="text-emerald-700 text-sm">
+						✅ <strong>Análise Posicional Executada Automaticamente</strong><br>
+						A análise posicional foi processada automaticamente durante o carregamento inicial.
+						<br>💡 Para reprocessar, use o botão "🔄 Recarregar" no cabeçalho
+					</div>
+				</div>
+            </div>
+
 
             <!-- SEÇÃO: MEUS JOGOS -->
             <div class="bg-white rounded-lg shadow-lg p-6 border-2 border-diasorte">
@@ -2798,7 +3035,21 @@
 												✅ Múltiplos volantes (1-6) • ✅ Destaque automático por concurso • ✅ Análise em tempo real <br>
 												✅ Frequência de meses • ✅ Randomização inteligente • ✅ Totalmente responsivo
 											</div>
-</div>
+										</div>
+										<!-- Seção 9 -->
+										<div class="border-2 border-emerald-500 rounded-lg p-4">
+											<div class="flex items-center mb-2">
+												<span class="text-2xl mr-2">🎯</span>
+												<h3 class="text-lg font-bold text-emerald-600">SEÇÃO 9: ANÁLISE POSICIONAL</h3>
+											</div>
+											<p class="text-gray-700 text-sm mb-2">
+												Analisa números por posição (P1-P7) do último sorteio e gera jogos excluindo números que saíram em cada posição específica.
+											</p>
+											<div class="text-xs text-blue-600">
+												✅ Análise por posição • ✅ Modo manual e automático • ✅ Até 30 jogos estratégicos
+											</div>
+										</div>
+										
 										
                                     </div>
 
@@ -5045,6 +5296,23 @@
                                     ✅ Múltiplos volantes • ✅ Histórico destacado • ✅ Análise em tempo real
                                 </div>
                             </div>
+							
+							<!-- Seção 9 -->
+                            <div class="border-2 border-emerald-500 rounded-lg p-4">
+                                <div class="flex items-center mb-2">
+                                    <span class="text-2xl mr-2">🎯</span>
+                                    <h3 class="text-lg font-bold text-emerald-600">SEÇÃO 9: ANÁLISE POSICIONAL</h3>
+                                </div>
+                                <p class="text-gray-700 text-sm mb-2">
+                                    Analisa números por posição (P1-P7) do último sorteio e gera jogos excluindo números que saíram em cada posição específica.
+                                </p>
+                                <div class="text-xs text-blue-600">
+                                    ✅ Análise por posição • ✅ Modo manual e automático • ✅ Até 30 jogos estratégicos
+                                </div>
+                            </div>
+							
+							
+							
                         </div>
 
                         <!-- Instruções Importantes -->
@@ -7655,6 +7923,861 @@
             document.getElementById('randomizarVolantes').addEventListener('click', randomizarVolanteAtual);
             document.getElementById('adicionarJogosVolantes').addEventListener('click', adicionarJogosVolantes);
         }
-    </script>
+		// 🚨 SEÇÃO 9: ANÁLISE POSICIONAL - REUTILIZAR DADOS REAIS JÁ CARREGADOS
+// 🚨 SEÇÃO 9: ANÁLISE POSICIONAL COM CORREÇÕES E MELHORIAS
+
+// Variáveis globais da seção posicional
+let dadosPosicionais = {
+    analisado: false,
+    concurso: null,
+    numerosOrdemSorteio: [],
+    numerosPorPosicao: {
+        P1: null, P2: null, P3: null, P4: null, P5: null, P6: null, P7: null
+    },
+    numerosDisponiveis: {
+        P1: [], P2: [], P3: [], P4: [], P5: [], P6: [], P7: []
+    },
+    mesUltimoSorteio: null,
+    dadosOriginaisAPI: null
+};
+
+// 🔥 EXECUTAR ANÁLISE AUTOMATICAMENTE - BUSCAR SEMPRE O ÚLTIMO RESULTADO
+function executarAnalisePosticionalAutomatica() {
+    console.log('🎯 Seção 9: Verificando dados disponíveis...');
+    
+    // 🚨 PRIORIDADE 1: ultimoResultado global
+    if (typeof ultimoResultado !== 'undefined' && ultimoResultado && ultimoResultado.listaDezenas) {
+        console.log(`✅ Seção 9: Usando ultimoResultado - Concurso ${ultimoResultado.numero}`);
+        analisarDadosPosicionaisReais();
+        return;
+    }
+    
+    // 🚨 PRIORIDADE 2: último item de todosResultados
+    if (typeof todosResultados !== 'undefined' && todosResultados && todosResultados.length > 0) {
+        const ultimoDoArray = todosResultados[todosResultados.length - 1];
+        console.log(`✅ Seção 9: Usando último de todosResultados - Concurso ${ultimoDoArray.numero}`);
+        // Atualizar ultimoResultado para sincronizar
+        window.ultimoResultado = ultimoDoArray;
+        analisarDadosPosicionaisReais();
+        return;
+    }
+    
+    // 🚨 AGUARDAR CARREGAMENTO
+    console.log('⏳ Seção 9: Aguardando carregamento do sistema...');
+    setTimeout(executarAnalisePosticionalAutomatica, 2000);
+}
+
+// 🎯 ANALISAR DADOS POSICIONAIS COM DADOS REAIS
+function analisarDadosPosicionaisReais() {
+    console.log('🎯 SEÇÃO 9: Iniciando análise posicional automática...');
+    
+    try {
+        // ✅ SEMPRE USAR O MAIS RECENTE DISPONÍVEL
+        let ultimoConcursoReal = ultimoResultado;
+        
+        // Verificar se todosResultados tem algo mais recente
+        if (typeof todosResultados !== 'undefined' && todosResultados && todosResultados.length > 0) {
+            const ultimoDoArray = todosResultados[todosResultados.length - 1];
+            
+            // Se o último do array é mais recente que ultimoResultado, usar ele
+            if (!ultimoConcursoReal || ultimoDoArray.numero > ultimoConcursoReal.numero) {
+                ultimoConcursoReal = ultimoDoArray;
+                console.log(`🔄 USANDO CONCURSO MAIS RECENTE: ${ultimoConcursoReal.numero}`);
+            }
+        }
+
+        console.log(`🔍 ANALISANDO CONCURSO REAL: ${ultimoConcursoReal.numero}`);
+        console.log('📊 listaDezenas (CRESCENTE):', ultimoConcursoReal.listaDezenas);
+        console.log('🎲 dezenasSorteadasOrdemSorteio:', ultimoConcursoReal.dezenasSorteadasOrdemSorteio);
+        
+        // 🎲 ORDEM DE SORTEIO: Usar dezenasSorteadasOrdemSorteio
+        let numerosOrdemSorteio;
+        if (ultimoConcursoReal.dezenasSorteadasOrdemSorteio && ultimoConcursoReal.dezenasSorteadasOrdemSorteio.length === 7) {
+            numerosOrdemSorteio = ultimoConcursoReal.dezenasSorteadasOrdemSorteio.map(n => parseInt(n));
+            console.log('✅ USANDO dezenasSorteadasOrdemSorteio (ORDEM ORIGINAL)');
+        } else {
+            // Fallback: usar listaDezenas com embaralhamento
+            numerosOrdemSorteio = [...ultimoConcursoReal.listaDezenas.map(n => parseInt(n))];
+            if (numerosOrdemSorteio.length > 3) {
+                const temp = numerosOrdemSorteio[0];
+                numerosOrdemSorteio[0] = numerosOrdemSorteio[numerosOrdemSorteio.length - 1];
+                numerosOrdemSorteio[numerosOrdemSorteio.length - 1] = temp;
+            }
+            console.log('⚠️ Campo dezenasSorteadasOrdemSorteio não encontrado, usando simulação');
+        }
+
+        console.log('🎲 NÚMEROS REAIS ORDEM SORTEIO:', numerosOrdemSorteio);
+
+        // ✅ PROCESSAR ANÁLISE POSICIONAL
+        dadosPosicionais.analisado = true;
+        dadosPosicionais.concurso = ultimoConcursoReal.numero;
+        dadosPosicionais.numerosOrdemSorteio = numerosOrdemSorteio;
+        dadosPosicionais.mesUltimoSorteio = typeof converterNomeMesParaNumero === 'function' ? 
+            converterNomeMesParaNumero(ultimoConcursoReal.nomeTimeCoracaoMesSorte) : 1;
+        dadosPosicionais.dadosOriginaisAPI = ultimoConcursoReal;
+
+        // Identificar número por posição
+        numerosOrdemSorteio.forEach((numero, index) => {
+            const posicao = `P${index + 1}`;
+            dadosPosicionais.numerosPorPosicao[posicao] = numero;
+            
+            // Criar lista de números disponíveis (01-31 EXCETO o que saiu nesta posição)
+            const disponiveis = [];
+            for (let i = 1; i <= 31; i++) {
+                if (i !== numero) {
+                    disponiveis.push(i);
+                }
+            }
+            dadosPosicionais.numerosDisponiveis[posicao] = disponiveis;
+            
+            console.log(`📍 ${posicao}: Saiu ${numero} (real), disponíveis: ${disponiveis.length} números`);
+        });
+
+        // Atualizar interface
+        atualizarInterfaceAnalisePosticionalReal();
+        
+        // Mostrar status de sucesso
+        mostrarStatusAnalisePosticionalConcluida();
+        
+        console.log('✅ ANÁLISE POSICIONAL CONCLUÍDA COM DADOS ATUALIZADOS!');
+
+    } catch (error) {
+        console.error('❌ Erro na análise posicional automática:', error);
+        mostrarErroAnalisePosticional('Erro ao processar dados posicionais automaticamente.');
+    }
+}
+
+// 🖥️ ATUALIZAR INTERFACE COM DADOS REAIS
+function atualizarInterfaceAnalisePosticionalReal() {
+    const dadosReais = dadosPosicionais.dadosOriginaisAPI;
+    
+    // Informações do concurso
+    const elements = {
+        concurso: document.getElementById('concursoAnalisePosicional'),
+        data: document.getElementById('dataAnalisePosicional'),
+        mes: document.getElementById('mesAnalisePosicional')
+    };
+    
+    if (elements.concurso) elements.concurso.textContent = dadosReais.numero;
+    if (elements.data) elements.data.textContent = dadosReais.dataApuracao;
+    if (elements.mes) elements.mes.textContent = dadosReais.nomeTimeCoracaoMesSorte;
+
+    // Números por posição
+    for (let i = 1; i <= 7; i++) {
+        const posicao = `P${i}`;
+        const numero = dadosPosicionais.numerosPorPosicao[posicao];
+        
+        const numeroEl = document.getElementById(`numero${posicao}`);
+        const estrategiaEl = document.getElementById(`estrategia${posicao}`);
+        const countEl = document.getElementById(`count${posicao}`);
+        
+        if (numeroEl) numeroEl.textContent = numero.toString().padStart(2, '0');
+        if (estrategiaEl) estrategiaEl.textContent = numero.toString().padStart(2, '0');
+        if (countEl) countEl.textContent = dadosPosicionais.numerosDisponiveis[posicao].length;
+    }
+
+    // Popular selects
+    popularSelectsPosicionaisReais();
+    
+    console.log('✅ Interface da Seção 9 atualizada com dados sincronizados');
+}
+
+// 📋 POPULAR SELECTS COM DADOS REAIS
+function popularSelectsPosicionaisReais() {
+    for (let i = 1; i <= 7; i++) {
+        const posicao = `P${i}`;
+        const select = document.getElementById(`select${posicao}`);
+        
+        if (!select) continue;
+        
+        const disponiveis = dadosPosicionais.numerosDisponiveis[posicao];
+        select.innerHTML = '<option value="">Escolha...</option>';
+        
+        disponiveis.forEach(numero => {
+            const option = document.createElement('option');
+            option.value = numero;
+            option.textContent = numero.toString().padStart(2, '0');
+            select.appendChild(option);
+        });
+    }
+}
+
+// ✅ MOSTRAR STATUS DE ANÁLISE CONCLUÍDA
+function mostrarStatusAnalisePosticionalConcluida() {
+    const avisoDiv = document.getElementById('avisoCarregarDadosPosicional');
+    if (avisoDiv) {
+        avisoDiv.innerHTML = `
+            <div class="bg-emerald-50 p-4 rounded-lg border border-emerald-200">
+                <div class="text-emerald-700 text-sm">
+                    ✅ <strong>Análise Posicional Executada Automaticamente</strong><br>
+                    A análise posicional foi processada automaticamente durante o carregamento inicial.
+                    <br>💡 Para reprocessar, use o botão "🔄 Recarregar" no cabeçalho
+                </div>
+            </div>
+        `;
+        avisoDiv.classList.remove('hidden');
+    }
+}
+
+// ❌ MOSTRAR ERRO (FALLBACK)
+function mostrarErroAnalisePosticional(mensagem) {
+    const avisoDiv = document.getElementById('avisoCarregarDadosPosicional');
+    if (avisoDiv) {
+        avisoDiv.innerHTML = `
+            <div class="text-2xl mb-4">❌</div>
+            <h3 class="text-lg font-bold text-red-800 mb-2">Erro na Análise Automática</h3>
+            <p class="text-red-700 mb-4">${mensagem}</p>
+            <button onclick="executarAnalisePosticionalAutomatica()" class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg font-bold">
+                🔄 Tentar Novamente
+            </button>
+        `;
+        avisoDiv.classList.remove('hidden');
+    }
+}
+
+// 🎮 TOGGLE MODO SELEÇÃO
+function toggleModoSelecaoPosicional() {
+    const modo = document.getElementById('modoSelecaoPosicional');
+    const divManual = document.getElementById('selecaoPosicionalManual');
+    
+    if (modo && divManual) {
+        if (modo.value === 'manual') {
+            divManual.classList.remove('hidden');
+        } else {
+            divManual.classList.add('hidden');
+        }
+    }
+}
+
+// 🔄 TOGGLE MODO DE QUANTIDADE
+function toggleModoQuantidade() {
+    const checkbox = document.getElementById('modoTrintaJogos');
+    const selectQuantidade = document.getElementById('quantidadeJogosPosicional');
+    
+    if (checkbox && selectQuantidade) {
+        if (checkbox.checked) {
+            selectQuantidade.disabled = true;
+            selectQuantidade.style.opacity = '0.5';
+            console.log('🎯 Modo 30 jogos automáticos ativado');
+        } else {
+            selectQuantidade.disabled = false;
+            selectQuantidade.style.opacity = '1';
+            console.log('🎯 Modo quantidade manual ativado');
+        }
+    }
+}
+
+// 🚀 GERAR JOGOS POSICIONAIS COM SISTEMA APRIMORADO
+function gerarJogosPorAnalisePosicional() {
+    if (!dadosPosicionais.analisado || !dadosPosicionais.dadosOriginaisAPI) {
+        if (typeof showCustomAlert === 'function') {
+            showCustomAlert('⚠️ Análise Necessária', 'A análise posicional está sendo processada. Aguarde alguns segundos e tente novamente.');
+        } else {
+            alert('Análise posicional não concluída. Aguarde...');
+        }
+        return;
+    }
+
+    const modoEl = document.getElementById('modoSelecaoPosicional');
+    const mesEl = document.getElementById('mesPosicional');
+    const checkboxTrinta = document.getElementById('modoTrintaJogos');
+    
+    if (!modoEl || !mesEl) {
+        console.log('❌ Elementos da interface não encontrados');
+        return;
+    }
+
+    const modo = modoEl.value;
+    const mesEscolhido = mesEl.value;
+    
+    // 🎯 DETERMINAR QUANTIDADE
+    let quantidade;
+    if (checkboxTrinta && checkboxTrinta.checked) {
+        quantidade = 30; // Sempre 30 quando checkbox ativado
+        console.log('🎯 MODO 30 JOGOS AUTOMÁTICOS ATIVADO');
+    } else {
+        const quantidadeEl = document.getElementById('quantidadeJogosPosicional');
+        quantidade = quantidadeEl ? parseInt(quantidadeEl.value) : 5;
+        console.log(`🎯 MODO QUANTIDADE MANUAL: ${quantidade} jogos`);
+    }
+
+    console.log(`🚀 GERANDO ${quantidade} JOGOS POSICIONAIS - MODO ${modo}...`);
+
+    const jogosGerados = [];
+
+    if (modo === 'manual') {
+        const jogo = gerarJogoManualPosicional(mesEscolhido);
+        if (jogo) {
+            for (let i = 0; i < quantidade; i++) {
+                const jogoVariacao = gerarVariacaoJogoManual(jogo, i);
+                if (jogoVariacao) {
+                    jogosGerados.push(jogoVariacao);
+                }
+            }
+        }
+    } else {
+        // 🎯 MODO AUTOMÁTICO OTIMIZADO PARA 30 JOGOS
+        if (quantidade === 30) {
+            const jogosOtimizados = gerarTrintaJogosOtimizados(mesEscolhido);
+            jogosGerados.push(...jogosOtimizados);
+        } else {
+            for (let i = 0; i < quantidade; i++) {
+                const jogo = gerarJogoAutomaticoPosicional(mesEscolhido);
+                if (jogo) {
+                    jogosGerados.push(jogo);
+                }
+            }
+        }
+    }
+
+    if (jogosGerados.length > 0) {
+        exibirJogosPosicionais(jogosGerados);
+        console.log(`✅ ${jogosGerados.length} JOGOS POSICIONAIS GERADOS`);
+    } else {
+        if (typeof showCustomAlert === 'function') {
+            showCustomAlert('❌ Erro na Geração', 'Não foi possível gerar jogos posicionais.');
+        }
+    }
+}
+
+// 🎯 GERAR 30 JOGOS OTIMIZADOS USANDO MÁXIMO DE NÚMEROS DISPONÍVEIS
+function gerarTrintaJogosOtimizados(mesEscolhido) {
+    console.log('🎯 GERANDO 30 JOGOS OTIMIZADOS COM MÁXIMA DIVERSIDADE...');
+    
+    const jogos = [];
+    const numerosGlobaisUsados = new Set(); // Controlar números já usados globalmente
+    
+    // 📊 ESTRATÉGIAS DE DISTRIBUIÇÃO PARA 30 JOGOS
+    const distribuicoes = [
+        {baixos: 2, medios: 3, altos: 2, nome: 'Equilibrada'},
+        {baixos: 3, medios: 2, altos: 2, nome: 'Mais Baixos'},
+        {baixos: 2, medios: 2, altos: 3, nome: 'Mais Altos'},
+        {baixos: 1, medios: 4, altos: 2, nome: 'Centro Forte'},
+        {baixos: 3, medios: 1, altos: 3, nome: 'Extremos'},
+        {baixos: 1, medios: 2, altos: 4, nome: 'Alto Extremo'},
+        {baixos: 4, medios: 2, altos: 1, nome: 'Baixo Extremo'},
+        {baixos: 2, medios: 4, altos: 1, nome: 'Médio Forte'}
+    ];
+    
+    // 🔄 COLETAR TODOS OS NÚMEROS DISPONÍVEIS
+    const todosDisponiveis = new Set();
+    for (let i = 1; i <= 7; i++) {
+        const posicao = `P${i}`;
+        dadosPosicionais.numerosDisponiveis[posicao].forEach(num => {
+            todosDisponiveis.add(num);
+        });
+    }
+    
+    console.log(`📊 Total de números únicos disponíveis: ${todosDisponiveis.size}`);
+    
+    // 🎲 GERAR 30 JOGOS COM MÁXIMA DIVERSIDADE
+    for (let jogoIndex = 0; jogoIndex < 30; jogoIndex++) {
+        const distribuicao = distribuicoes[jogoIndex % distribuicoes.length];
+        
+        // 📊 SEPARAR NÚMEROS DISPONÍVEIS POR FAIXA (que ainda não foram muito usados)
+        const numerosPorFaixa = {
+            baixos: Array.from(todosDisponiveis).filter(n => n >= 1 && n <= 10),
+            medios: Array.from(todosDisponiveis).filter(n => n >= 11 && n <= 20),
+            altos: Array.from(todosDisponiveis).filter(n => n >= 21 && n <= 31)
+        };
+        
+        const numerosEscolhidos = [];
+        const numerosUsadosJogo = new Set();
+        
+        // 🎯 SELECIONAR NÚMEROS SEGUINDO A DISTRIBUIÇÃO
+        
+        // Baixos
+        for (let i = 0; i < distribuicao.baixos; i++) {
+            const candidatos = numerosPorFaixa.baixos.filter(n => 
+                !numerosUsadosJogo.has(n) && 
+                validarNumeroDisponivel(n)
+            );
+            
+            if (candidatos.length > 0) {
+                // Priorizar números menos usados globalmente
+                candidatos.sort((a, b) => {
+                    const usosA = contarUsosGlobais(a, numerosGlobaisUsados);
+                    const usosB = contarUsosGlobais(b, numerosGlobaisUsados);
+                    return usosA - usosB;
+                });
+                
+                const numero = candidatos[0];
+                numerosEscolhidos.push(numero);
+                numerosUsadosJogo.add(numero);
+                numerosGlobaisUsados.add(numero);
+            }
+        }
+        
+        // Médios
+        for (let i = 0; i < distribuicao.medios; i++) {
+            const candidatos = numerosPorFaixa.medios.filter(n => 
+                !numerosUsadosJogo.has(n) && 
+                validarNumeroDisponivel(n)
+            );
+            
+            if (candidatos.length > 0) {
+                candidatos.sort((a, b) => {
+                    const usosA = contarUsosGlobais(a, numerosGlobaisUsados);
+                    const usosB = contarUsosGlobais(b, numerosGlobaisUsados);
+                    return usosA - usosB;
+                });
+                
+                const numero = candidatos[0];
+                numerosEscolhidos.push(numero);
+                numerosUsadosJogo.add(numero);
+                numerosGlobaisUsados.add(numero);
+            }
+        }
+        
+        // Altos
+        for (let i = 0; i < distribuicao.altos; i++) {
+            const candidatos = numerosPorFaixa.altos.filter(n => 
+                !numerosUsadosJogo.has(n) && 
+                validarNumeroDisponivel(n)
+            );
+            
+            if (candidatos.length > 0) {
+                candidatos.sort((a, b) => {
+                    const usosA = contarUsosGlobais(a, numerosGlobaisUsados);
+                    const usosB = contarUsosGlobais(b, numerosGlobaisUsados);
+                    return usosA - usosB;
+                });
+                
+                const numero = candidatos[0];
+                numerosEscolhidos.push(numero);
+                numerosUsadosJogo.add(numero);
+                numerosGlobaisUsados.add(numero);
+            }
+        }
+        
+        // 🔧 COMPLETAR SE FALTOU ALGUM NÚMERO
+        while (numerosEscolhidos.length < 7) {
+            const todosDisponivelArray = Array.from(todosDisponiveis);
+            const candidatos = todosDisponivelArray.filter(n => 
+                !numerosUsadosJogo.has(n) && 
+                validarNumeroDisponivel(n)
+            );
+            
+            if (candidatos.length > 0) {
+                const numero = candidatos[Math.floor(Math.random() * candidatos.length)];
+                numerosEscolhidos.push(numero);
+                numerosUsadosJogo.add(numero);
+                numerosGlobaisUsados.add(numero);
+            } else {
+                break;
+            }
+        }
+        
+        if (numerosEscolhidos.length === 7) {
+            const jogo = criarJogoPosicional(numerosEscolhidos, mesEscolhido, `Otimizado-${distribuicao.nome}`, numerosEscolhidos);
+            jogos.push(jogo);
+        }
+    }
+    
+    console.log(`✅ 30 jogos otimizados gerados usando ${numerosGlobaisUsados.size} números únicos`);
+    return jogos;
+}
+
+// 🔍 VALIDAR SE NÚMERO ESTÁ DISPONÍVEL EM ALGUMA POSIÇÃO
+function validarNumeroDisponivel(numero) {
+    for (let i = 1; i <= 7; i++) {
+        const posicao = `P${i}`;
+        if (dadosPosicionais.numerosDisponiveis[posicao].includes(numero)) {
+            return true;
+        }
+    }
+    return false;
+}
+
+// 📊 CONTAR USOS GLOBAIS DE UM NÚMERO
+function contarUsosGlobais(numero, setUsados) {
+    let count = 0;
+    setUsados.forEach(n => {
+        if (n === numero) count++;
+    });
+    return count;
+}
+
+// 🎯 GERAR JOGO AUTOMÁTICO COM DIVERSIFICAÇÃO INTELIGENTE
+function gerarJogoAutomaticoPosicional(mesEscolhido) {
+    const diversificarEl = document.getElementById('diversificarPosicional');
+    const diversificar = diversificarEl ? diversificarEl.checked : true;
+    
+    if (diversificar) {
+        return gerarJogoComDiversificacao(mesEscolhido);
+    } else {
+        return gerarJogoSemDiversificacao(mesEscolhido);
+    }
+}
+
+// 🎨 GERAÇÃO COM DIVERSIFICAÇÃO AUTOMÁTICA
+function gerarJogoComDiversificacao(mesEscolhido) {
+    const numerosPorFaixa = {
+        baixos: new Set(),
+        medios: new Set(),
+        altos: new Set()
+    };
+    
+    for (let i = 1; i <= 7; i++) {
+        const posicao = `P${i}`;
+        const disponiveis = dadosPosicionais.numerosDisponiveis[posicao];
+        
+        disponiveis.forEach(numero => {
+            if (numero >= 1 && numero <= 10) {
+                numerosPorFaixa.baixos.add(numero);
+            } else if (numero >= 11 && numero <= 20) {
+                numerosPorFaixa.medios.add(numero);
+            } else if (numero >= 21 && numero <= 31) {
+                numerosPorFaixa.altos.add(numero);
+            }
+        });
+    }
+    
+    const baixosDisponiveis = Array.from(numerosPorFaixa.baixos);
+    const mediosDisponiveis = Array.from(numerosPorFaixa.medios);
+    const altosDisponiveis = Array.from(numerosPorFaixa.altos);
+    
+    const distribuicoes = [
+        {baixos: 2, medios: 3, altos: 2, nome: 'Equilibrada'},
+        {baixos: 3, medios: 2, altos: 2, nome: 'Mais Baixos'},
+        {baixos: 2, medios: 2, altos: 3, nome: 'Mais Altos'},
+        {baixos: 1, medios: 4, altos: 2, nome: 'Centro Forte'},
+        {baixos: 3, medios: 1, altos: 3, nome: 'Extremos'},
+        {baixos: 1, medios: 2, altos: 4, nome: 'Alto Extremo'}
+    ];
+    
+    const distribuicao = distribuicoes[Math.floor(Math.random() * distribuicoes.length)];
+    
+    const numerosEscolhidos = [];
+    const numerosUsados = new Set();
+    
+    // Baixos
+    for (let i = 0; i < distribuicao.baixos; i++) {
+        const candidatos = baixosDisponiveis.filter(n => !numerosUsados.has(n));
+        if (candidatos.length > 0) {
+            const numero = candidatos[Math.floor(Math.random() * candidatos.length)];
+            numerosEscolhidos.push(numero);
+            numerosUsados.add(numero);
+        }
+    }
+    
+    // Médios
+    for (let i = 0; i < distribuicao.medios; i++) {
+        const candidatos = mediosDisponiveis.filter(n => !numerosUsados.has(n));
+        if (candidatos.length > 0) {
+            const numero = candidatos[Math.floor(Math.random() * candidatos.length)];
+            numerosEscolhidos.push(numero);
+            numerosUsados.add(numero);
+        }
+    }
+    
+    // Altos
+    for (let i = 0; i < distribuicao.altos; i++) {
+        const candidatos = altosDisponiveis.filter(n => !numerosUsados.has(n));
+        if (candidatos.length > 0) {
+            const numero = candidatos[Math.floor(Math.random() * candidatos.length)];
+            numerosEscolhidos.push(numero);
+            numerosUsados.add(numero);
+        }
+    }
+    
+    // Completar se necessário
+    while (numerosEscolhidos.length < 7) {
+        const todasOpcoes = [...baixosDisponiveis, ...mediosDisponiveis, ...altosDisponiveis];
+        const candidatos = todasOpcoes.filter(n => !numerosUsados.has(n));
+        
+        if (candidatos.length > 0) {
+            const numero = candidatos[Math.floor(Math.random() * candidatos.length)];
+            numerosEscolhidos.push(numero);
+            numerosUsados.add(numero);
+        } else {
+            break;
+        }
+    }
+    
+    return criarJogoPosicional(numerosEscolhidos, mesEscolhido, `Auto-${distribuicao.nome}`, numerosEscolhidos);
+}
+
+// 🎲 GERAÇÃO SEM DIVERSIFICAÇÃO
+function gerarJogoSemDiversificacao(mesEscolhido) {
+    const numerosEscolhidos = [];
+    const numerosUsados = new Set();
+    
+    for (let i = 1; i <= 7; i++) {
+        const posicao = `P${i}`;
+        const disponiveis = dadosPosicionais.numerosDisponiveis[posicao];
+        const candidatos = disponiveis.filter(n => !numerosUsados.has(n));
+        
+        if (candidatos.length > 0) {
+            const numeroEscolhido = candidatos[Math.floor(Math.random() * candidatos.length)];
+            numerosEscolhidos.push(numeroEscolhido);
+            numerosUsados.add(numeroEscolhido);
+        }
+    }
+    
+    return criarJogoPosicional(numerosEscolhidos, mesEscolhido, 'Auto-Livre', numerosEscolhidos);
+}
+
+// 🎯 GERAR JOGO MANUAL
+function gerarJogoManualPosicional(mesEscolhido) {
+    const numerosEscolhidos = [];
+    
+    for (let i = 1; i <= 7; i++) {
+        const select = document.getElementById(`selectP${i}`);
+        if (!select) {
+            if (typeof showCustomAlert === 'function') {
+                showCustomAlert('❌ Erro', `Select P${i} não encontrado.`);
+            }
+            return null;
+        }
+        
+        const valor = select.value;
+        if (!valor) {
+            if (typeof showCustomAlert === 'function') {
+                showCustomAlert('⚠️ Seleção Incompleta', `Selecione um número para a posição P${i}.`);
+            }
+            return null;
+        }
+        
+        const numero = parseInt(valor);
+        if (numerosEscolhidos.includes(numero)) {
+            if (typeof showCustomAlert === 'function') {
+                showCustomAlert('⚠️ Número Duplicado', `O número ${numero.toString().padStart(2, '0')} foi selecionado em mais de uma posição.`);
+            }
+            return null;
+        }
+        
+        numerosEscolhidos.push(numero);
+    }
+
+    return criarJogoPosicional(numerosEscolhidos, mesEscolhido, 'Manual', numerosEscolhidos);
+}
+
+// 🔧 VARIAÇÃO JOGO MANUAL
+function gerarVariacaoJogoManual(jogoBase, indice) {
+    if (indice === 0) return jogoBase;
+
+    const numerosVariacao = [];
+    
+    for (let i = 1; i <= 7; i++) {
+        const posicao = `P${i}`;
+        const numeroOriginal = jogoBase.numerosPorPosicao[i - 1];
+        const disponiveis = dadosPosicionais.numerosDisponiveis[posicao];
+        
+        if (Math.random() < 0.7) {
+            numerosVariacao.push(numeroOriginal);
+        } else {
+            const candidatos = disponiveis.filter(n => !numerosVariacao.includes(n));
+            if (candidatos.length > 0) {
+                const novoNumero = candidatos[Math.floor(Math.random() * candidatos.length)];
+                numerosVariacao.push(novoNumero);
+            } else {
+                numerosVariacao.push(numeroOriginal);
+            }
+        }
+    }
+
+    return criarJogoPosicional(numerosVariacao, jogoBase.mes, `Manual Var. ${indice + 1}`, numerosVariacao);
+}
+
+// 🏗️ CRIAR JOGO POSICIONAL
+function criarJogoPosicional(numeros, mesEscolhido, tipo, numerosPorPosicao) {
+    let mesJogo;
+    if (mesEscolhido === 'aleatorio') {
+        mesJogo = Math.floor(Math.random() * 12) + 1;
+    } else if (mesEscolhido === 'diferente') {
+        const mesesDisponiveis = Array.from({length: 12}, (_, i) => i + 1)
+            .filter(m => m !== dadosPosicionais.mesUltimoSorteio);
+        mesJogo = mesesDisponiveis[Math.floor(Math.random() * mesesDisponiveis.length)];
+    } else {
+        mesJogo = parseInt(mesEscolhido);
+    }
+
+    const numerosUnicos = [...new Set(numeros)];
+    if (numerosUnicos.length < 7) {
+        const todosNumeros = Array.from({length: 31}, (_, i) => i + 1);
+        while (numerosUnicos.length < 7) {
+            const candidatos = todosNumeros.filter(n => !numerosUnicos.includes(n));
+            if (candidatos.length > 0) {
+                numerosUnicos.push(candidatos[Math.floor(Math.random() * candidatos.length)]);
+            } else {
+                break;
+            }
+        }
+    }
+
+    const numerosFinais = numerosUnicos.slice(0, 7);
+    
+    const baixos = numerosFinais.filter(n => n >= 1 && n <= 10).length;
+    const medios = numerosFinais.filter(n => n >= 11 && n <= 20).length;
+    const altos = numerosFinais.filter(n => n >= 21 && n <= 31).length;
+
+    return {
+        id: Date.now() + Math.random(),
+        numeros: numerosFinais,
+        mes: mesJogo,
+        custo: typeof valorAposta !== 'undefined' ? valorAposta : 2.50,
+        pares: numerosFinais.filter(n => n % 2 === 0).length,
+        impares: numerosFinais.filter(n => n % 2 !== 0).length,
+        origem: `Posicional ${tipo} (vs Concurso ${dadosPosicionais.concurso})`,
+        numerosPorPosicao: numerosPorPosicao,
+        tipo: tipo,
+        baseConcurso: dadosPosicionais.concurso,
+        faixas: { baixos, medios, altos }
+    };
+}
+
+// 📊 EXIBIR JOGOS POSICIONAIS
+function exibirJogosPosicionais(jogos) {
+    const container = document.getElementById('resultadosJogosPosicional');
+    const lista = document.getElementById('listaJogosPosicional');
+    
+    if (!container || !lista) return;
+    
+    lista.innerHTML = '';
+    
+    if (jogos.length === 0) {
+        lista.innerHTML = '<p class="text-gray-500 text-center py-4">Nenhum jogo posicional foi gerado</p>';
+        container.classList.remove('hidden');
+        return;
+    }
+    
+    jogos.forEach((jogo, index) => {
+        const jogoDiv = document.createElement('div');
+        jogoDiv.className = 'palpite-card border-2 border-emerald-200';
+        
+        const analiseDetalhada = analisarJogoPosicional(jogo);
+        const diversificacao = jogo.faixas ? `${jogo.faixas.baixos}B/${jogo.faixas.medios}M/${jogo.faixas.altos}A` : '';
+        
+        jogoDiv.innerHTML = `
+            <div class="flex justify-between items-center mb-2">
+                <span class="font-bold text-emerald-700">Jogo ${index + 1} - ${jogo.tipo}</span>
+                <div class="text-xs text-gray-600">
+                    ${jogo.pares}P/${jogo.impares}I | ${diversificacao} | ${analiseDetalhada.diferentes}/${analiseDetalhada.total} diferentes
+                </div>
+            </div>
+            <div class="flex items-center gap-2 mb-2">
+                <div class="flex flex-wrap gap-1">
+                    ${jogo.numeros.map((num, idx) => {
+                        const foiTrocado = dadosPosicionais.numerosPorPosicao[`P${idx + 1}`] !== num;
+                        const classeExtra = foiTrocado ? 'border-2 border-green-400' : 'border-2 border-orange-400';
+                        
+                        let corFaixa = 'bg-emerald-500';
+                        if (num >= 1 && num <= 10) corFaixa = 'bg-blue-500';
+                        else if (num >= 11 && num <= 20) corFaixa = 'bg-emerald-500';
+                        else if (num >= 21 && num <= 31) corFaixa = 'bg-purple-500';
+                        
+                        return `<div class="numero-palpite ${corFaixa} ${classeExtra}" title="P${idx + 1}: ${foiTrocado ? 'Trocado' : 'Mantido'} | Faixa: ${num <= 10 ? 'Baixo' : num <= 20 ? 'Médio' : 'Alto'}">${num.toString().padStart(2, '0')}</div>`;
+                    }).join('')}
+                </div>
+                <div class="mes-palpite bg-emerald-400">${typeof MESES !== 'undefined' ? MESES[jogo.mes - 1].substring(0, 3) : `M${jogo.mes}`}</div>
+            </div>
+            <div class="text-xs text-gray-600">
+                ${jogo.origem} • 
+                <span class="text-green-600">✅ ${analiseDetalhada.diferentes} trocas</span> • 
+                <span class="text-orange-600">🔄 ${analiseDetalhada.mantidos} mantidos</span>
+                ${diversificacao ? ` • 🎨 ${diversificacao}` : ''}
+            </div>
+        `;
+        
+        lista.appendChild(jogoDiv);
+    });
+    
+    window.jogosPosicionais = jogos;
+    container.classList.remove('hidden');
+}
+
+// 🔍 ANALISAR JOGO POSICIONAL
+function analisarJogoPosicional(jogo) {
+    let diferentes = 0;
+    let mantidos = 0;
+    
+    jogo.numeros.forEach((numero, index) => {
+        const posicao = `P${index + 1}`;
+        const numeroOriginal = dadosPosicionais.numerosPorPosicao[posicao];
+        
+        if (numero === numeroOriginal) {
+            mantidos++;
+        } else {
+            diferentes++;
+        }
+    });
+    
+    return { diferentes, mantidos, total: 7 };
+}
+
+// ➕ ADICIONAR JOGOS
+function adicionarTodosJogosPosicionais() {
+    if (window.jogosPosicionais && typeof jogosAdicionados !== 'undefined') {
+        window.jogosPosicionais.forEach(jogo => {
+            jogosAdicionados.push(jogo);
+        });
+        
+        if (typeof atualizarVisualizacaoJogos === 'function') {
+            atualizarVisualizacaoJogos();
+        }
+        if (typeof atualizarCustoTotal === 'function') {
+            atualizarCustoTotal();
+        }
+        
+        if (typeof showCustomAlert === 'function') {
+            showCustomAlert('✅ Sucesso', `${window.jogosPosicionais.length} jogos posicionais adicionados aos seus jogos!`);
+        }
+    }
+}
+
+// 🚀 EVENT LISTENERS E INTEGRAÇÃO AUTOMÁTICA
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('🎯 Seção 9: Inicializando sistema corrigido...');
+    
+    const modoSelect = document.getElementById('modoSelecaoPosicional');
+    if (modoSelect) {
+        modoSelect.addEventListener('change', toggleModoSelecaoPosicional);
+    }
+    
+    const gerarBtn = document.getElementById('gerarJogosPosicional');
+    if (gerarBtn) {
+        gerarBtn.addEventListener('click', gerarJogosPorAnalisePosicional);
+    }
+    
+    const adicionarBtn = document.getElementById('adicionarTodosJogosPosicionais');
+    if (adicionarBtn) {
+        adicionarBtn.addEventListener('click', adicionarTodosJogosPosicionais);
+    }
+    
+    const checkboxTrinta = document.getElementById('modoTrintaJogos');
+    if (checkboxTrinta) {
+        checkboxTrinta.addEventListener('change', toggleModoQuantidade);
+    }
+    
+    // 🎯 INTEGRAÇÃO AUTOMÁTICA APRIMORADA
+    setTimeout(() => {
+        executarAnalisePosticionalAutomatica();
+    }, 1000);
+    
+    const intervalos = [3000, 6000, 10000];
+    intervalos.forEach(tempo => {
+        setTimeout(() => {
+            if (!dadosPosicionais.analisado) {
+                console.log(`🔄 Seção 9: Tentativa backup em ${tempo}ms...`);
+                executarAnalisePosticionalAutomatica();
+            }
+        }, tempo);
+    });
+});
+
+// 🔄 INTEGRAÇÃO COM SISTEMA DE RECARREGAMENTO
+function reprocessarAnalisePosticional() {
+    console.log('🔄 Seção 9: Reprocessando análise posicional...');
+    dadosPosicionais.analisado = false;
+    setTimeout(() => {
+        executarAnalisePosticionalAutomatica();
+    }, 1000);
+}
+
+console.log('✅ Seção 9: JavaScript CORRIGIDO carregado com sincronização aprimorada');
+   
+
+   </script>
 </body>
 </html>

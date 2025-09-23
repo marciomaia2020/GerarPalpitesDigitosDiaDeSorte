@@ -1,3 +1,14 @@
-ajuste
+o que esta acontcendo é que na SEÇÃO 9: ANÁLISE POSICIONAL E GERAÇÃO ESTRATÉGICA
+o ultimo concurso não está batendo com o resultado geral.. que é 1118
 
-os numeros destacado que vem dos concursos realizados ao gerar o volante que venha zinza (tipo desabilitado) e os que o usuário marcar qe fique verde.. ok... e caso ele selecione um que ja tenha saido fique amarelo... 
+vou lhe mostar no print.. 
+
+aproveita e resolva a questão do sistema usar os numeros que restam.. que é 210 para gerar os trinta jogos quando o usaário NÃO CLICAR EM NADA.. 
+VEJO QUE TEM UM SELECT PARA SELECIONAR A QUANTIDADE DE JOGOS.. DE 1 A 30 
+MAS QUERO QUE INDEPENDENTEMENTE DISSO SEJA GERADO 30 JJOGOS COM AS CONDIÇÕES QUE PEDI.. 
+ACHO QUE SERIA INTERESANTE COLOCAR UM ATIVADOR NA QUANTIDADE DE JOGOS.. 
+EXEMPLO SE O USUARIO DESATIVAR A ESCOLHA O SISTEMA GERA 30 JOGOS USANDO OS 210 NUMEROS QUE SOBRARAM... DIVERSIFICANDO ENTRE BAIXO, MEDEOS E ALTOS LEVANDO EM CONTA PARA TER NUMEROS UNICOS EM CADA SEGUENCIA E CASO O USUARIO QUERI ASELECIONAR A QUANTIDADE DE JOGOS QUE SEJA LIMITADO ATÉ 30 USANDO O MESMO METODO PARA A GERAÇÃO... 
+E NÃO PODE TER NUMEROS NA POSIÇÃO SE CASO ELE ESTIVER ENTRE O NUMERO QUE SAIO NO ULTIMO SORTEIO
+
+
+1118 CONTRA 1072 NÃO PODE OS DOIS TEM QUE TER O MESMO RESULTADO...  
