@@ -1,14 +1,37 @@
-o que esta acontcendo é que na SEÇÃO 9: ANÁLISE POSICIONAL E GERAÇÃO ESTRATÉGICA
-o ultimo concurso não está batendo com o resultado geral.. que é 1118
 
-vou lhe mostar no print.. 
+TRAGA TABELAS DINÂMICAS, INTELIGENTES E PRINCIPALMENTE PEQUENAS QUE OCUPAM PEQUENOS ESPAÇOS NA TELA SEM MUITO EXAGERO.. 
+FICA MAIS FÁCIL PARA COMOPARAR ETC... INDICADORES VISUAL SERÁ BEM VINDOS.. POR EXEMPLO O VALOR DENTRO DO INDICADOR VISUAL... 
+////////////////////////////////////////////////////////USAR ESTE PRONPT NO ARQUIVO ONDE USAR PARA GERAR JOGOS...SEÇÃO 10 e 11
 
-aproveita e resolva a questão do sistema usar os numeros que restam.. que é 210 para gerar os trinta jogos quando o usaário NÃO CLICAR EM NADA.. 
-VEJO QUE TEM UM SELECT PARA SELECIONAR A QUANTIDADE DE JOGOS.. DE 1 A 30 
-MAS QUERO QUE INDEPENDENTEMENTE DISSO SEJA GERADO 30 JJOGOS COM AS CONDIÇÕES QUE PEDI.. 
-ACHO QUE SERIA INTERESANTE COLOCAR UM ATIVADOR NA QUANTIDADE DE JOGOS.. 
-EXEMPLO SE O USUARIO DESATIVAR A ESCOLHA O SISTEMA GERA 30 JOGOS USANDO OS 210 NUMEROS QUE SOBRARAM... DIVERSIFICANDO ENTRE BAIXO, MEDEOS E ALTOS LEVANDO EM CONTA PARA TER NUMEROS UNICOS EM CADA SEGUENCIA E CASO O USUARIO QUERI ASELECIONAR A QUANTIDADE DE JOGOS QUE SEJA LIMITADO ATÉ 30 USANDO O MESMO METODO PARA A GERAÇÃO... 
-E NÃO PODE TER NUMEROS NA POSIÇÃO SE CASO ELE ESTIVER ENTRE O NUMERO QUE SAIO NO ULTIMO SORTEIO
+UMA SEÇÃO PARA...BUSCAR APENAS OS PADRÕES INICIAIS TANTO NA ORDEM CRESCENTE QUANTO NA ORDEM DE SORTEIO (TODOS AO LOGO DA HISTORIA)
+use a api para buscar os resultados nunca use dados ficticios DADOS REAIS SEMPRE (https://servicebus2.caixa.gov.br/portaldeloterias/api/diadesorte)
+BOTÕES - EXCLUIR, LIMPAR, RESETAR, EDITAR, MOSTRAR se for o caso e tbm DOWNLOAD DOS JOGOS GERADOS(.TXT - SOMENTE NUMEROS EX: 01 02 03 04 05 06 07 - .HTML e .xlsx)
+Campo para pesquisa INTELIGENTE (MUITO IMPORTANTE)
+listar todos padrões inicias ordenando pelo que mais saiu.. tanto em "ordem crescente" como "ordem de sorteio"
+Poder de selecionar quantos jogos gerar e selecionar tbm qual padrão usar para esta geração.
+Poder de selecionar quantos jogos gerar e selecionar tbm qual padrão usar para esta geração.
+Poder de selecionar quantos jogos gerar e selecionar tbm qual padrão usar para esta geração.
+Poder de selecionar quantos jogos gerar e selecionar tbm qual padrão usar para esta geração.
 
+ou seja a app lista os padrões, adiciona um checkbox na frente, usuario seleciona, gera o jogos baseado no padrão que escolheu
 
-1118 CONTRA 1072 NÃO PODE OS DOIS TEM QUE TER O MESMO RESULTADO...  
+Obs: quando escolher um padrão que os demais fiquem desabilitados... 
+os jogos gerados deve vir preferivelmente na ordem de sua geração e não na ordem crescente.. ou ter um tongle para alterar...
+Gerar Custo total desta geração atrelado ao valor inserido geral no inicio da app (CONFIGURAÇÃO PRINCIPAL - VALORES DO DIA DE SORTE)
+
+OUTRA SEÇÃO PARA... MOSTRAR QUANTAS VEZES SAIU AQUELE NUMERO NAQUELA POSIÇÃO
+DE AO USUARIO O PODER DE SELECIONAR PELO MENOS OS 10 TOP DE CADA POSIÇÃO
+N P1 	P2 	P3 	P4 	P5 	P6 	P7 
+1 100 	10  300 123 23  12  20  
+2
+4
+5
+6
+7
+8
+...
+ATÉ 31
+
+todas estas informações vc pode pegar deste site... 
+https://gerarpalpitesdigitosdiadesorte.netlify.app
+
